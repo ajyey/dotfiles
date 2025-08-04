@@ -44,6 +44,12 @@ function iterm2_print_user_vars
     # iterm2_set_user_var javaVersion (java --version | grep 'openjdk' | awk '{print $2}')
 end
 
+if test -d ~/.fzf
+    source ~/.fzf/shell/key-bindings.fish
+    source ~/.fzf/shell/completion.fish
+end
+
+
 # fzf colors and layout
 set -gx FZF_DEFAULT_OPTS '--height 40% --reverse --border'
 
