@@ -49,6 +49,8 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias please='sudo'
+# wake up cachyos machine using wakeonlan
+alias cachywake='wakeonlan 2c:fd:a1:e0:54:3c'
 
 # ==========================
 # Functions
