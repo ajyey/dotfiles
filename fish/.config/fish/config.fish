@@ -48,15 +48,17 @@ function iterm2_print_user_vars
     # iterm2_set_user_var javaVersion (java --version | grep 'openjdk' | awk '{print $2}')
 end
 
+
+# fzf 
+# Ctrl+R → Fuzzy search your command history
+# Ctrl+T → Fuzzy search files and insert path
+# Alt+C → Fuzzy search directories and cd into them
 if test -d ~/.fzf
     source ~/.fzf/shell/key-bindings.fish
     source ~/.fzf/shell/completion.fish
 end
-
-
 # fzf colors and layout
 set -gx FZF_DEFAULT_OPTS '--height 40% --reverse --border'
-
 # Use fd (if installed) instead of find for faster file search
 if type -q fd
     set -gx FZF_DEFAULT_COMMAND 'fd --type f --hidden --exclude .git'
@@ -83,6 +85,7 @@ end
 
 
 
+
 # # ==========================
 # # Plugins & Prompt
 # # ==========================
@@ -92,16 +95,10 @@ end
 #     fisher install jorgebucaran/fisher
 # end
 
-# # Syntax highlighting, autosuggestions, fzf integration, zoxide, and Tide prompt
-# if not test -e ~/.config/fish/functions/tide.fish
-#     fisher install PatrickF1/fzf.fish jethrokuan/z IlanCosman/tide@v5
-#     tide configure
-# end
-
-# # zoxide
-# if type -q zoxide
-#     zoxide init fish | source
-# end
+# zoxide
+if type -q zoxide
+    zoxide init fish | source
+end
 
 # # ==========================
 # # Conda Initialization
