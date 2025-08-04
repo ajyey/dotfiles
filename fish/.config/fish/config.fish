@@ -41,12 +41,17 @@ function gc
     git commit -m "$argv"
 end
 
-# iTerm2 user vars for showing Node/Python/Java versions in the status bar
 function iterm2_print_user_vars
-    iterm2_set_user_var nodeVersion (node --version)
-    iterm2_set_user_var pythonVersion (python3 --version | awk '{ print $2 }')
-    # iterm2_set_user_var javaVersion (java --version | grep 'openjdk' | awk '{print $2}')
+    set nodeVersion (node --version)
+    iterm2_set_user_var nodeVersion $nodeVersion
+
+    set pythonVersion (python3 --version | awk '{ print $2 }')
+    iterm2_set_user_var pythonVersion $pythonVersion
+
+    set javaVersion (java --version | grep 'openjdk' | awk '{print $2}')
+    iterm2_set_user_var javaVersion $javaVersion
 end
+
 
 
 # fzf 
