@@ -58,16 +58,13 @@ function gc
     git commit -m "$argv"
 end
 
-function iterm2_print_user_vars
-    set nodeVersion (node --version)
-    iterm2_set_user_var nodeVersion $nodeVersion
-
-    set pythonVersion (python3 --version | awk '{ print $2 }')
-    iterm2_set_user_var pythonVersion $pythonVersion
-
-    set javaVersion (java --version | grep 'openjdk' | awk '{print $2}')
-    iterm2_set_user_var javaVersion $javaVersion
-end
+# Set version env vars so they populate in iterm
+set nodeVersion (node --version)
+iterm2_set_user_var nodeVersion $nodeVersion
+set pythonVersion (python3 --version | awk '{ print $2 }')
+iterm2_set_user_var pythonVersion $pythonVersion
+set javaVersion (java --version | grep 'openjdk' | awk '{print $2}')
+iterm2_set_user_var javaVersion $javaVersion
 
 
 
