@@ -1,3 +1,9 @@
+## Run fastfetch as welcome message
+function fish_greeting
+    fastfetch
+end
+
+
 # ==========================
 # PATH setup
 # ==========================
@@ -26,12 +32,23 @@ test -e "$HOME/.iterm2_shell_integration.fish"; and source "$HOME/.iterm2_shell_
 # ==========================
 alias reload="exec fish"
 alias python="python3"
-alias ls="eza --header --long"
 alias ubuntu="ssh aj@192.168.68.66"
 alias pi="ssh dietpi@192.168.68.44"
 alias synology="ssh aj@192.168.68.69"
-alias dev="cd ~/Development"
-alias f="fzf"
+alias cachy="ssh aj@192.168.68.210"
+
+alias ls='eza -al --color=always --group-directories-first --icons' # preferred listing
+alias la='eza -a --color=always --group-directories-first --icons'  # all files and dirs
+alias ll='eza -l --color=always --group-directories-first --icons'  # long format
+alias lt='eza -aT --color=always --group-directories-first --icons' # tree listing
+alias l.="eza -a | grep -e '^\.'"                                     # show only dotfiles
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias please='sudo'
 
 # ==========================
 # Functions
@@ -104,6 +121,8 @@ end
 if type -q zoxide
     zoxide init fish | source
 end
+# use zoxide in place of cd
+alias cd='z'
 
 # # ==========================
 # # Conda Initialization
