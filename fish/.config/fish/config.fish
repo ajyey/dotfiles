@@ -9,6 +9,10 @@ set -x PATH /opt/homebrew/bin $PATH
 set -x PATH ~/.npm-global/bin $PATH
 set -x PATH $PATH $HOME/.local/bin
 
+# Add asdf
+set -gx PATH $HOME/.asdf/shims $PATH
+
+
 # 1Password SSH Agent
 set -x SSH_AUTH_SOCK ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
@@ -62,6 +66,24 @@ end
 
 
 # # ==========================
+# # asdf Initialization
+# # ==========================
+
+# Set ASDF_DIR
+set -x ASDF_DIR $HOME/.asdf
+
+# Source asdf Fish completions and functions
+if test -f /opt/homebrew/share/fish/vendor_completions.d/asdf.fish
+    source /opt/homebrew/share/fish/vendor_completions.d/asdf.fish
+end
+
+if test -f $ASDF_DIR/asdf.fish
+    source $ASDF_DIR/asdf.fish
+end
+
+
+
+# # ==========================
 # # Plugins & Prompt
 # # ==========================
 # # Install Fisher (Fish plugin manager) if not installed
@@ -81,23 +103,11 @@ end
 #     zoxide init fish | source
 # end
 
-# # fzf
-# if type -q fzf
-#     fzf --fish | source
-# end
-
 # # ==========================
 # # Conda Initialization
 # # ==========================
 # if test -f /opt/homebrew/Caskroom/miniconda/base/bin/conda
 #     eval (/opt/homebrew/Caskroom/miniconda/base/bin/conda shell.fish hook)
-# end
-
-# # ==========================
-# # asdf Initialization
-# # ==========================
-# if test -f ~/.asdf/asdf.fish
-#     source ~/.asdf/asdf.fish
 # end
 
 # # Java & Golang environment setup via asdf plugins
