@@ -113,7 +113,7 @@
             "type": "command",
             "key": "  OS Age ",
             "keyColor": "magenta",
-            "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
+            "text": "os=$(uname -s); if [ \"$os\" = Darwin ]; then birth=$(stat -f %B / 2>/dev/null); else birth=$(stat -c %W / 2>/dev/null); fi; now=$(date +%s); if [ -n \"$birth\" ] && [ \"$birth\" -gt 0 ]; then echo $(((now - birth) / 86400)) days; else echo unknown; fi"
         },
         {
             "type": "uptime",
