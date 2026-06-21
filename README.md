@@ -139,6 +139,8 @@ stow fastfetch
 stow starship
 ```
 
+When install scripts run with `--stow`, they first back up conflicting real files from `$HOME` into `~/.dotfiles-backup/<timestamp>/`. This handles fresh machines that already have files such as `~/.config/fish/config.fish` before Stow creates symlinks.
+
 To remove symlinks without deleting files:
 
 ```bash

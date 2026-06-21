@@ -116,11 +116,46 @@ install_fisher_plugins() {
   '
 }
 
+backup_stow_conflicts() {
+  local backup_dir="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
+  local backed_up=0
+  local package
+  local source
+  local relative_path
+  local target
+  local backup_target
+
+  for package in fish fastfetch starship; do
+    while IFS= read -r -d '' source; do
+      relative_path="${source#"$DOTFILES_DIR/$package/"}"
+      target="$HOME/$relative_path"
+
+      if [ -L "$target" ]; then
+        continue
+      fi
+
+      if [ -e "$target" ]; then
+        backup_target="$backup_dir/$relative_path"
+        mkdir -p "$(dirname "$backup_target")"
+        mv "$target" "$backup_target"
+        backed_up=1
+        warn "backed up existing $target to $backup_target"
+      fi
+    done < <(find "$DOTFILES_DIR/$package" -type f -print0)
+  done
+
+  if [ "$backed_up" -eq 1 ]; then
+    warn "existing dotfiles were backed up under $backup_dir"
+  fi
+}
+
 stow_configs() {
   if ! has stow; then
     warn "stow is not installed; skipping config stow."
     return
   fi
+
+  backup_stow_conflicts
 
   log "Stowing dotfile packages"
   cd "$DOTFILES_DIR"
