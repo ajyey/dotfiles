@@ -4,16 +4,19 @@
 
 This is a GNU Stow dotfiles repository. Each top-level directory is a Stow package whose internal paths mirror `$HOME`.
 
-- `fish/.config/fish/` contains Fish shell configuration, completions, and `fish_plugins`.
+- `fish/.config/fish/` contains Fish shell configuration, completions, and `fish_plugins`. OS-specific configurations are in `fish/.config/fish/os_specific/`.
 - `fastfetch/.config/fastfetch/config.jsonc` contains the Fastfetch startup display.
 - `starship/.config/starship.toml` contains the Starship prompt theme.
+- `wezterm/.config/wezterm/wezterm.lua` contains the WezTerm configuration with fzf.fish keybindings.
+- `zellij/.config/zellij/config.kdl` contains the Zellij terminal multiplexer configuration.
+- `mise/.config/mise/config.toml` manages global runtimes and tools (Node, Python, Go, Zellij, Ripgrep).
 - `README.md` documents setup and restore steps.
 
 Do not commit generated or machine-specific Fish files. `.gitignore` excludes `fish_variables`, `functions/`, and `conf.d/`; keep `fish_plugins` tracked.
 
 ## Build, Test, and Development Commands
 
-- `stow fish`, `stow fastfetch`, `stow starship`: symlink a package into `$HOME`.
+- `stow fish`, `stow fastfetch`, `stow starship`, `stow wezterm`, `stow zellij`, `stow mise`: symlink a package into `$HOME`.
 - `stow -D fish`: remove Fish symlinks without deleting repository files.
 - `fish -n fish/.config/fish/config.fish`: syntax-check the main Fish config.
 - `fastfetch --config fastfetch/.config/fastfetch/config.jsonc`: preview Fastfetch output.
@@ -36,4 +39,7 @@ There is no formal automated test suite. Validate changed configs with the relev
 
 Recent commits use short, imperative messages such as `adds starship`, `add zoxide`, and `fix iterm vars`. Keep messages concise and focused on one config change.
 
-Pull requests should describe the affected package, list validation commands run, and call out machine-specific assumptions such as macOS paths, LAN host aliases, or required tools like `eza`, `zoxide`, `mise`, `fastfetch`, and `starship`.
+Pull requests should describe the affected package, list validation commands run, and call out machine-specific assumptions such as macOS paths, LAN host aliases, or required tools like `eza`, `zoxide`, `mise`, `fastfetch`, `starship`, and `zellij`.
+
+## Documentation Maintenance
+**CRITICAL RULE:** Whenever you add a new tool, package, script, or make architectural changes to this repository, you **MUST** ensure that both `AGENTS.md` and `README.md` are simultaneously updated to document the new work. Never leave the documentation out of sync with the actual repository state.

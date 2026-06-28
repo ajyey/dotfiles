@@ -1,6 +1,6 @@
 # Dotfiles Managed with GNU Stow
 
-This repo manages dotfiles with [GNU Stow](https://www.gnu.org/software/stow/) by symlinking package directories into `$HOME`. It currently tracks Fish shell, Fastfetch, Starship, and WezTerm configuration.
+This repo manages dotfiles with [GNU Stow](https://www.gnu.org/software/stow/) by symlinking package directories into `$HOME`. It currently tracks Fish shell, Fastfetch, Starship, WezTerm, Zellij, and global Mise configuration.
 
 ## Requirements
 
@@ -23,8 +23,12 @@ The install scripts set up GNU Stow, Fish, Fisher plugins, Fastfetch, Starship, 
 │   └── .config/fastfetch/config.jsonc
 ├── starship/
 │   └── .config/starship.toml
-└── wezterm/
-    └── .config/wezterm/wezterm.lua
+├── wezterm/
+│   └── .config/wezterm/wezterm.lua
+├── zellij/
+│   └── .config/zellij/config.kdl
+└── mise/
+    └── .config/mise/config.toml
 ```
 
 Each top-level directory is a Stow package whose internal paths mirror `$HOME`.
@@ -141,6 +145,8 @@ stow -t ~ fish
 stow -t ~ fastfetch
 stow -t ~ starship
 stow -t ~ wezterm
+stow -t ~ zellij
+stow -t ~ mise
 ```
 
 When install scripts run with `--stow`, they first back up conflicting real files from `$HOME` into `~/.dotfiles-backup/<timestamp>/`. This handles fresh machines that already have files such as `~/.config/fish/config.fish` before Stow creates symlinks.
@@ -181,9 +187,9 @@ fisher list > ~/.config/fish/fish_plugins
 
 ## Cross-Platform Notes
 
-`config.fish` guards optional integrations so the shell can start on macOS and Linux even when tools are missing. Homebrew, Linuxbrew, mise, LM Studio, iTerm2, 1Password SSH agent, Fastfetch, Starship, Zoxide, and Eza are enabled only when their files or commands exist.
+`config.fish` dynamically sources OS-specific configurations from `os_specific/*.fish` to ensure the correct Homebrew/Linuxbrew paths, 1Password sockets, and update aliases are loaded based on your machine (`macOS`, `Debian`, or `Arch`). Optional integrations are guarded so the shell can start cleanly even when tools are missing.
 
-Personal SSH aliases and Wake-on-LAN shortcuts remain available but may only work on your home network. Machine-specific Fish files are ignored: `fish_variables`, `functions/`, and `conf.d/`.
+Personal SSH aliases and Wake-on-LAN shortcuts remain available globally but may only work on your home network. Machine-specific Fish files are ignored: `fish_variables`, `functions/`, and `conf.d/`.
 
 ## Saving Changes
 

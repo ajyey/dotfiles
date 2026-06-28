@@ -33,24 +33,22 @@ function __add_path_if_dir
     end
 end
 
-# Homebrew paths for Apple Silicon macOS, Intel macOS, and Linuxbrew
-__add_path_if_dir /opt/homebrew/bin
-__add_path_if_dir /usr/local/bin
-__add_path_if_dir /home/linuxbrew/.linuxbrew/bin
-
 # User-specific binary directories
 __add_path_if_dir $HOME/.npm-global/bin
 __add_path_if_dir $HOME/.local/bin
 __add_path_if_dir $HOME/.lmstudio/bin
 
-# Configure 1Password SSH Agent when its socket exists
-if not set -q SSH_AUTH_SOCK
-    set -l onepassword_macos "$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-    set -l onepassword_linux "$HOME/.1password/agent.sock"
-    if test -S "$onepassword_macos"
-        set -gx SSH_AUTH_SOCK "$onepassword_macos"
-    else if test -S "$onepassword_linux"
-        set -gx SSH_AUTH_SOCK "$onepassword_linux"
+# ====================================================================
+# OS-Specific Configuration Loading
+# ====================================================================
+set -l os (uname)
+if test "$os" = "Darwin"
+    source ~/.config/fish/os_specific/mac.fish
+else if test "$os" = "Linux"
+    if test -f /etc/debian_version
+        source ~/.config/fish/os_specific/debian.fish
+    else if test -f /etc/arch-release
+        source ~/.config/fish/os_specific/arch.fish
     end
 end
 
@@ -87,17 +85,7 @@ end
 alias reload="exec fish"                    # Reload Fish shell
 
 # System Update
-# Source CachyOS default configurations if present
-if test -f /usr/share/cachyos-fish-config/cachyos-config.fish
-    source /usr/share/cachyos-fish-config/cachyos-config.fish
-end
-
-# Debian / macOS System Update
-if type -q apt
-    alias update="sudo apt update && sudo apt upgrade -y"
-else if type -q brew
-    alias update="brew update && brew upgrade && brew cleanup"
-end
+# (Update aliases are configured in os_specific files)
 
 # Python
 if type -q python3
@@ -215,20 +203,7 @@ if type -q starship
 end
 
 # ====================================================================
-# Wrap brew install and uninstall to keep Brewfile updated on MacOS
-# ====================================================================
-if test (uname) = Darwin
-    function brew
-        if test (count $argv) -ge 1
-            if test $argv[1] = install -o $argv[1] = uninstall
-                command brew $argv
-                and brew bundle dump --file=~/Development/dotfiles/Brewfile --force
-                return
-            end
-        end
-        command brew $argv
-    end
-end
+# (OS-specific wrapper functions have been moved to os_specific/ directories)
 
 # ====================================================================
 
