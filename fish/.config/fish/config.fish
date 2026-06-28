@@ -18,7 +18,7 @@ end
 # Syntax Highlighting Colors
 # ====================================================================
 # Turn valid commands green and invalid commands red
-set -g fish_color_command green
+set -g fish_color_command 4ade80  # Solid true green
 set -g fish_color_error red
 # ====================================================================
 # Environment Variables & PATH Configuration
