@@ -51,6 +51,39 @@ config.keys = {
     action = wezterm.action.ActivateCommandPalette,
   },
 
+  -- ==================== fzf.fish Keybindings ====================
+  -- Map CMD+SHIFT+<key> to send Esc+Ctrl+<key> (fzf.fish default for Alt+Ctrl+<key>)
+  -- Search files and directories (fzf.fish)
+  {
+    key = 'f',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action.SendString '\x1b\x06', -- \x1b is ESC, \x06 is Ctrl-F
+  },
+  -- Search git commit log (fzf.fish)
+  {
+    key = 'l',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action.SendString '\x1b\x0c', -- \x0c is Ctrl-L
+  },
+  -- Search git status / modified files (fzf.fish)
+  {
+    key = 's',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action.SendString '\x1b\x13', -- \x13 is Ctrl-S
+  },
+  -- Search terminal history (Atuin)
+  {
+    key = 'r',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action.SendString '\x12', -- \x12 is Ctrl-R
+  },
+  -- Search shell variables (fzf.fish)
+  {
+    key = 'v',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action.SendString '\x16', -- \x16 is Ctrl-V
+  },
+
   -- ==================== Panes & Splits ====================
   -- Split pane (iTerm2 style: CMD+D / CMD+Shift+D)
   -- Note: WezTerm's SplitHorizontal means left/right panes, 
