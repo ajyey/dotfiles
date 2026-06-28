@@ -85,8 +85,10 @@ if test -f /usr/share/cachyos-fish-config/cachyos-config.fish
     source /usr/share/cachyos-fish-config/cachyos-config.fish
 end
 
-# macOS System Update
-if type -q brew
+# Debian / macOS System Update
+if type -q apt
+    alias update="sudo apt update && sudo apt upgrade -y"
+else if type -q brew
     alias update="brew update && brew upgrade"
 end
 
