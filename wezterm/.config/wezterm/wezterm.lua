@@ -6,6 +6,8 @@ config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_frame = {
   font = wezterm.font("Hack Nerd Font", { weight = "Bold" }),
 }
+config.window_padding = { left = '0.5cell', right = '0.5cell', top = '0.5cell', bottom = '0.5cell' }
+config.default_cursor_style = 'BlinkingBar'
 config.inactive_pane_hsb = {
   saturation = 0.0,
   brightness = 0.5,
@@ -60,6 +62,25 @@ config.keys = {
     key = '}',
     mods = 'CMD|SHIFT',
     action = wezterm.action.ActivateTabRelative(1),
+  },
+
+  -- Go to beginning/end of line (CMD+Left/Right)
+  {
+    key = 'LeftArrow',
+    mods = 'CMD',
+    action = wezterm.action.SendString '\x01', -- Ctrl-A
+  },
+  {
+    key = 'RightArrow',
+    mods = 'CMD',
+    action = wezterm.action.SendString '\x05', -- Ctrl-E
+  },
+
+  -- Delete line (CMD+Backspace)
+  {
+    key = 'Backspace',
+    mods = 'CMD',
+    action = wezterm.action.SendString '\x15', -- Ctrl-U
   },
 
   -- Navigate panes (CMD+Option+Arrows)
