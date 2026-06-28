@@ -43,12 +43,12 @@ __add_path_if_dir $HOME/.lmstudio/bin
 # ====================================================================
 set -l os (uname)
 if test "$os" = "Darwin"
-    source ~/.config/fish/os_specific/mac.fish
+    source (status dirname)/os_specific/mac.fish
 else if test "$os" = "Linux"
     if test -f /etc/debian_version
-        source ~/.config/fish/os_specific/debian.fish
+        source (status dirname)/os_specific/debian.fish
     else if test -f /etc/arch-release
-        source ~/.config/fish/os_specific/arch.fish
+        source (status dirname)/os_specific/arch.fish
     end
 end
 
