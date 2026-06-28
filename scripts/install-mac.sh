@@ -62,7 +62,7 @@ install_packages() {
   fi
 
   warn "Brewfile not found; installing the fallback package list."
-  warn "Add these formulas to Brewfile: git, curl, stow, fish, fastfetch, starship, wezterm, eza, zoxide, fzf, fd, wakeonlan, mise."
+  warn "Add these formulas to Brewfile: git, curl, stow, fish, fastfetch, starship, wezterm, zellij, eza, zoxide, fzf, fd, wakeonlan, mise."
 
   log "Installing macOS packages with Homebrew"
   brew update
@@ -108,7 +108,7 @@ backup_stow_conflicts() {
   local target
   local backup_target
 
-  for package in fish fastfetch starship wezterm mise; do
+  for package in fish fastfetch starship wezterm zellij mise; do
     while IFS= read -r -d '' source; do
       relative_path="${source#"$DOTFILES_DIR/$package/"}"
       target="$HOME/$relative_path"
@@ -142,7 +142,7 @@ stow_configs() {
 
   log "Stowing dotfile packages"
   cd "$DOTFILES_DIR"
-  stow -t "$HOME" fish fastfetch starship wezterm mise
+  stow -t "$HOME" fish fastfetch starship wezterm zellij mise
 }
 
 set_default_shell() {
