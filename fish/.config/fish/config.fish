@@ -78,7 +78,6 @@ end
 
 # Shell Management
 alias reload="exec fish"                    # Reload Fish shell
-alias please='sudo'                         # Polite sudo
 
 # System Update
 # Source CachyOS default configurations if present
