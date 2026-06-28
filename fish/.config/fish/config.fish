@@ -122,11 +122,11 @@ end
 alias ubuntu="ssh aj@192.168.68.66"         # Connect to Ubuntu server
 alias pi="ssh dietpi@192.168.68.44"         # Connect to Raspberry Pi
 alias synology="ssh aj@192.168.68.69"       # Connect to Synology NAS
-alias cachy="ssh aj@192.168.68.210"         # Connect to CachyOS machine
+alias cachy="ssh aj@192.168.68.166"         # Connect to CachyOS machine (Ethernet)
 
 # Network Tools
 if type -q wakeonlan
-    alias cachywake='wakeonlan 2c:fd:a1:e0:54:3c'  # Wake up CachyOS machine
+    alias cachywake='wakeonlan d8:43:ae:fa:7b:2d'  # Wake up CachyOS machine (Ethernet MAC)
 end
 
 # ====================================================================
