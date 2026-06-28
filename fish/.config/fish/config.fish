@@ -96,7 +96,7 @@ end
 if type -q apt
     alias update="sudo apt update && sudo apt upgrade -y"
 else if type -q brew
-    alias update="brew update && brew upgrade"
+    alias update="brew update && brew upgrade && brew cleanup"
 end
 
 # Python
