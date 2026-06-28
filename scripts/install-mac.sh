@@ -54,11 +54,11 @@ install_packages() {
   fi
 
   warn "Brewfile not found; installing the fallback package list."
-  warn "Add these formulas to Brewfile: git, curl, stow, fish, fastfetch, starship, eza, zoxide, fzf, fd, wakeonlan."
+  warn "Add these formulas to Brewfile: git, curl, stow, fish, fastfetch, starship, wezterm, eza, zoxide, fzf, fd, wakeonlan."
 
   log "Installing macOS packages with Homebrew"
   brew update
-  brew install git curl stow fish fastfetch starship eza zoxide fzf fd wakeonlan
+  brew install git curl stow fish fastfetch starship wezterm eza zoxide fzf fd wakeonlan
 }
 
 install_fisher_plugins() {
@@ -100,7 +100,7 @@ backup_stow_conflicts() {
   local target
   local backup_target
 
-  for package in fish fastfetch starship; do
+  for package in fish fastfetch starship wezterm; do
     while IFS= read -r -d '' source; do
       relative_path="${source#"$DOTFILES_DIR/$package/"}"
       target="$HOME/$relative_path"
@@ -134,7 +134,7 @@ stow_configs() {
 
   log "Stowing dotfile packages"
   cd "$DOTFILES_DIR"
-  stow fish fastfetch starship
+  stow -t "$HOME" fish fastfetch starship wezterm
 }
 
 set_default_shell() {

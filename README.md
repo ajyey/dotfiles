@@ -1,6 +1,6 @@
 # Dotfiles Managed with GNU Stow
 
-This repo manages dotfiles with [GNU Stow](https://www.gnu.org/software/stow/) by symlinking package directories into `$HOME`. It currently tracks Fish shell, Fastfetch, and Starship configuration.
+This repo manages dotfiles with [GNU Stow](https://www.gnu.org/software/stow/) by symlinking package directories into `$HOME`. It currently tracks Fish shell, Fastfetch, Starship, and WezTerm configuration.
 
 ## Requirements
 
@@ -21,8 +21,10 @@ The install scripts set up GNU Stow, Fish, Fisher plugins, Fastfetch, Starship, 
 │       └── completions/
 ├── fastfetch/
 │   └── .config/fastfetch/config.jsonc
-└── starship/
-    └── .config/starship.toml
+├── starship/
+│   └── .config/starship.toml
+└── wezterm/
+    └── .config/wezterm/wezterm.lua
 ```
 
 Each top-level directory is a Stow package whose internal paths mirror `$HOME`.
@@ -51,6 +53,7 @@ brew "stow"
 brew "fish"
 brew "fastfetch"
 brew "starship"
+brew "wezterm"
 brew "eza"
 brew "zoxide"
 brew "fzf"
@@ -98,7 +101,7 @@ scripts/install-debian.sh --stow
 scripts/install-debian.sh --set-default-shell
 ```
 
-Some Debian releases may not package every tool, such as `fastfetch`, `starship`, `eza`, or `zoxide`. The script skips unavailable packages with a warning so the rest of the setup can finish.
+Some Debian releases may not package every tool, such as `fastfetch`, `starship`, `wezterm`, `eza`, or `zoxide`. The script skips unavailable packages with a warning so the rest of the setup can finish.
 
 ## CachyOS / Arch Setup
 
@@ -137,6 +140,7 @@ Stow packages manually:
 stow fish
 stow fastfetch
 stow starship
+stow wezterm
 ```
 
 When install scripts run with `--stow`, they first back up conflicting real files from `$HOME` into `~/.dotfiles-backup/<timestamp>/`. This handles fresh machines that already have files such as `~/.config/fish/config.fish` before Stow creates symlinks.

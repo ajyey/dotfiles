@@ -52,6 +52,7 @@ install_packages() {
     fish
     fastfetch
     starship
+    wezterm
     eza
     zoxide
     fzf
@@ -125,7 +126,7 @@ backup_stow_conflicts() {
   local target
   local backup_target
 
-  for package in fish fastfetch starship; do
+  for package in fish fastfetch starship wezterm; do
     while IFS= read -r -d '' source; do
       relative_path="${source#"$DOTFILES_DIR/$package/"}"
       target="$HOME/$relative_path"
@@ -159,7 +160,7 @@ stow_configs() {
 
   log "Stowing dotfile packages"
   cd "$DOTFILES_DIR"
-  stow fish fastfetch starship
+  stow -t "$HOME" fish fastfetch starship wezterm
 }
 
 set_default_shell() {
