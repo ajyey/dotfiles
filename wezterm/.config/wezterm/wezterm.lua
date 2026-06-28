@@ -3,6 +3,12 @@ local config = wezterm.config_builder()
 
 config.color_scheme = 'rose-pine'
 
+-- Override highlight/selection colors for better contrast
+config.colors = {
+  selection_fg = '#191724', -- Dark background color for text
+  selection_bg = '#c4a7e7', -- Iris (Purple) for high contrast highlight
+}
+
 config.keys = {
   -- Split pane (like iTerm2 CMD+D and CMD+Shift+D)
   -- Note: WezTerm's SplitHorizontal means left/right panes, 
