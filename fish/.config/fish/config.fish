@@ -128,10 +128,12 @@ if type -q zoxide
 end
 
 # SSH Connections
-alias debian="ssh aj@192.168.68.211" # Connect to Proxmox Debian VM
+
+# alias debian="ssh -t aj@192.168.68.211"
+# Connect to Proxmox Debian VM and automatically attach to zellij session
+alias debian="ssh -t aj@192.168.68.211 'fish -C \"zellij attach -c debian\"'" 
 alias proxmox="ssh root@192.168.68.208" # Connect to Proxmox VE
 alias pbs="ssh root@192.168.68.66" # Connect to Proxmox Backup Server
-alias ubuntu="ssh aj@192.168.68.66"         # Connect to Ubuntu server
 alias pi="ssh dietpi@192.168.68.44"         # Connect to Raspberry Pi
 alias synology="ssh aj@192.168.68.69"       # Connect to Synology NAS
 alias cachy="ssh aj@192.168.68.166"         # Connect to CachyOS machine (Ethernet)

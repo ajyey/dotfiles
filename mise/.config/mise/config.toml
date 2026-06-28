@@ -5,6 +5,7 @@ terraform = "latest"
 go = "latest"
 bun = "latest"
 yarn = "latest"
+zellij = "latest"
 
 [settings]
 python.compile = true
