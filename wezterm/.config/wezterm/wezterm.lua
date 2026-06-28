@@ -24,6 +24,13 @@ config.colors = {
 }
 
 config.keys = {
+  -- Command Palette (CMD+Shift+P)
+  {
+    key = 'p',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action.ActivateCommandPalette,
+  },
+
   -- Split pane (like iTerm2 CMD+D and CMD+Shift+D)
   -- Note: WezTerm's SplitHorizontal means left/right panes, 
   -- which is what iTerm2 calls a vertical split.
