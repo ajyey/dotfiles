@@ -6,3 +6,7 @@ go = "latest"
 bun = "latest"
 ruby = "latest"
 yarn = "latest"
+
+[settings]
+python.compile = true
+ruby.compile = true
