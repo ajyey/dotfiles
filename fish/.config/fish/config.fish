@@ -80,6 +80,17 @@ end
 alias reload="exec fish"                    # Reload Fish shell
 alias please='sudo'                         # Polite sudo
 
+# System Update
+# Source CachyOS default configurations if present
+if test -f /usr/share/cachyos-fish-config/cachyos-config.fish
+    source /usr/share/cachyos-fish-config/cachyos-config.fish
+end
+
+# macOS System Update
+if type -q brew
+    alias update="brew update && brew upgrade"
+end
+
 # Python
 if type -q python3
     alias python="python3"                  # Use Python 3 by default
