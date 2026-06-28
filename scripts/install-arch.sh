@@ -57,6 +57,15 @@ install_packages() {
     fd
     wakeonlan
     mise
+    base-devel
+    openssl
+    zlib
+    xz
+    tk
+    libffi
+    readline
+    sqlite
+    bzip2
   )
 
   local available=()
