@@ -36,4 +36,4 @@ There is no formal automated test suite. Validate changed configs with the relev
 
 Recent commits use short, imperative messages such as `adds starship`, `add zoxide`, and `fix iterm vars`. Keep messages concise and focused on one config change.
 
-Pull requests should describe the affected package, list validation commands run, and call out machine-specific assumptions such as macOS paths, LAN host aliases, or required tools like `eza`, `zoxide`, `asdf`, `fastfetch`, and `starship`.
+Pull requests should describe the affected package, list validation commands run, and call out machine-specific assumptions such as macOS paths, LAN host aliases, or required tools like `eza`, `zoxide`, `mise`, `fastfetch`, and `starship`.

@@ -181,7 +181,7 @@ fisher list > ~/.config/fish/fish_plugins
 
 ## Cross-Platform Notes
 
-`config.fish` guards optional integrations so the shell can start on macOS and Linux even when tools are missing. Homebrew, Linuxbrew, ASDF, LM Studio, iTerm2, 1Password SSH agent, Fastfetch, Starship, Zoxide, and Eza are enabled only when their files or commands exist.
+`config.fish` guards optional integrations so the shell can start on macOS and Linux even when tools are missing. Homebrew, Linuxbrew, mise, LM Studio, iTerm2, 1Password SSH agent, Fastfetch, Starship, Zoxide, and Eza are enabled only when their files or commands exist.
 
 Personal SSH aliases and Wake-on-LAN shortcuts remain available but may only work on your home network. Machine-specific Fish files are ignored: `fish_variables`, `functions/`, and `conf.d/`.
 

@@ -35,7 +35,6 @@ brew "tree"
 brew "ansible"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
-
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Connect and disconnect Bluetooth devices
@@ -238,8 +237,6 @@ brew "supabase/tap/supabase", trusted: true
 cask "1password"
 # Command-line interface for 1Password
 cask "1password-cli"
-# AeroSpace is an i3-like tiling window manager for macOS
-cask "nikitabobko/tap/aerospace"
 # Note editor and whiteboard
 cask "affine"
 # Application launcher and productivity software
@@ -631,6 +628,3 @@ vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
 vscode "zhuangtongfa.material-theme"
 vscode "zignd.html-css-class-completion"
-npm "@anthropic-ai/claude-code"
-npm "@qwen-code/qwen-code"
-npm "md-to-pdf"

@@ -4,6 +4,7 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 STOW_CONFIGS=0
 SET_DEFAULT_SHELL=0
+SKIP_BREW=0
 
 usage() {
   cat <<'EOF'
@@ -14,6 +15,7 @@ Install dependencies for this dotfiles repo on macOS.
 Options:
   --stow               Stow fish, fastfetch, and starship configs after install
   --set-default-shell  Change the user's login shell to fish
+  --skip-brew          Skip installing Homebrew packages (useful for testing)
   -h, --help           Show this help
 EOF
 }
@@ -35,12 +37,18 @@ for arg in "$@"; do
   case "$arg" in
     --stow) STOW_CONFIGS=1 ;;
     --set-default-shell) SET_DEFAULT_SHELL=1 ;;
+    --skip-brew) SKIP_BREW=1 ;;
     -h|--help) usage; exit 0 ;;
     *) usage; die "unknown option: $arg" ;;
   esac
 done
 
 install_packages() {
+  if [ "$SKIP_BREW" -eq 1 ]; then
+    log "Skipping macOS package installation (--skip-brew)"
+    return
+  fi
+
   if ! has brew; then
     die "Homebrew is required on macOS. Install it from https://brew.sh, then rerun this script."
   fi
