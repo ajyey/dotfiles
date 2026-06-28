@@ -305,14 +305,10 @@ cask "discord"
 cask "docker-desktop"
 # Configurable Dock replacement with widgets, Launchpad and a window switcher
 cask "josejuanqm/tap/docky", trusted: true
-# Music player
-cask "doppler-app"
 # Online diagram software
 cask "drawio"
 # Drive health diagnostic & monitoring tool
 cask "drivedx"
-# Outlining app for your work
-cask "dynalist"
 # Bitcoin thin client
 cask "electrum"
 # Web browser
@@ -398,8 +394,6 @@ cask "mediainfo"
 cask "microsoft-auto-update"
 # Multi-platform web browser
 cask "microsoft-edge"
-# Remote desktop client
-cask "microsoft-remote-desktop"
 # Meet, chat, call, and collaborate in just one place
 cask "microsoft-teams"
 # Minimal installer for conda
@@ -506,6 +500,8 @@ cask "vlc"
 cask "vmware-fusion"
 # GPU-accelerated cross-platform terminal emulator and multiplexer
 cask "wezterm"
+# Connect to Windows
+cask "windows-app"
 # VPN client for secure internet access and private browsing
 cask "windscribe"
 # Lossless audio decoder
@@ -515,7 +511,6 @@ cask "zed"
 # Video communication and virtual meeting platform
 cask "zoom"
 mas "1Password for Safari", id: 1569813296
-mas "Amperfy", id: 1530145038
 mas "Amphetamine", id: 937984704
 mas "Anybox", id: 1593408455
 mas "Bitdefender Virus Scanner", id: 500154009
