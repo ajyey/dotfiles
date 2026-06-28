@@ -59,7 +59,6 @@ install_packages() {
     mise
     base-devel
     openssl
-    zlib
     xz
     tk
     libffi
