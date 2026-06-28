@@ -119,6 +119,9 @@ if type -q zoxide
 end
 
 # SSH Connections
+alias debian="ssh aj@192.168.68.211" # Connect to Proxmox Debian VM
+alias proxmox="ssh root@192.168.68.208" # Connect to Proxmox VE
+alias pbs="ssh root@192.168.68.66" # Connect to Proxmox Backup Server
 alias ubuntu="ssh aj@192.168.68.66"         # Connect to Ubuntu server
 alias pi="ssh dietpi@192.168.68.44"         # Connect to Raspberry Pi
 alias synology="ssh aj@192.168.68.69"       # Connect to Synology NAS
@@ -213,6 +216,24 @@ end
 if type -q starship
     starship init fish | source
 end
+
+# ====================================================================
+# Wrap brew install and uninstall to keep Brewfile updated on MacOS
+# ====================================================================
+if test (uname) = Darwin
+    function brew
+        if test (count $argv) -ge 1
+            if test $argv[1] = install -o $argv[1] = uninstall
+                command brew $argv
+                and brew bundle dump --file=~/Development/dotfiles/Brewfile --force
+                return
+            end
+        end
+        command brew $argv
+    end
+end
+
+# ====================================================================
 
 # ====================================================================
 # Commented Out Configurations
