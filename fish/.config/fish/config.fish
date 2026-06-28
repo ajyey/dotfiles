@@ -33,7 +33,6 @@ __add_path_if_dir /home/linuxbrew/.linuxbrew/bin
 # User-specific binary directories
 __add_path_if_dir $HOME/.npm-global/bin
 __add_path_if_dir $HOME/.local/bin
-__add_path_if_dir $HOME/.asdf/shims
 __add_path_if_dir $HOME/.lmstudio/bin
 
 # Configure 1Password SSH Agent when its socket exists
@@ -180,25 +179,11 @@ end
 # Version Manager Initialization
 # ====================================================================
 
-# ASDF Version Manager Setup
-if test -d $HOME/.asdf
-    set -gx ASDF_DIR $HOME/.asdf
-end
-
-# Load ASDF completions and functions
-for asdf_completion in \
-        /opt/homebrew/share/fish/vendor_completions.d/asdf.fish \
-        /usr/local/share/fish/vendor_completions.d/asdf.fish \
-        /home/linuxbrew/.linuxbrew/share/fish/vendor_completions.d/asdf.fish \
-        /usr/share/fish/vendor_completions.d/asdf.fish
-    if test -f $asdf_completion
-        source $asdf_completion
-        break
-    end
-end
-
-if set -q ASDF_DIR; and test -f $ASDF_DIR/asdf.fish
-    source $ASDF_DIR/asdf.fish
+# Mise Version Manager Setup
+if type -q mise
+    mise activate fish | source
+else if test -x ~/.local/bin/mise
+    ~/.local/bin/mise activate fish | source
 end
 
 # ====================================================================
@@ -253,10 +238,4 @@ end
 #     eval (/opt/homebrew/Caskroom/miniconda/base/bin/conda shell.fish hook)
 # end
 
-# ASDF Language-Specific Environment Setup
-# if test -f ~/.asdf/plugins/java/set-java-home.fish
-#     source ~/.asdf/plugins/java/set-java-home.fish
-# end
-# if test -f ~/.asdf/plugins/golang/set-env.fish
-#     source ~/.asdf/plugins/golang/set-env.fish
-# end
+

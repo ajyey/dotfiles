@@ -87,6 +87,16 @@ install_packages() {
   fi
 }
 
+install_mise() {
+  if ! has mise; then
+    log "Installing mise via apt"
+    run_sudo apt-get install -y extrepo
+    run_sudo extrepo enable mise
+    run_sudo apt-get update
+    run_sudo apt-get install -y mise
+  fi
+}
+
 install_fisher_plugins() {
   if ! has fish; then
     warn "fish is not installed; skipping Fisher plugin setup."
@@ -126,7 +136,7 @@ backup_stow_conflicts() {
   local target
   local backup_target
 
-  for package in fish fastfetch starship wezterm; do
+  for package in fish fastfetch starship wezterm mise; do
     while IFS= read -r -d '' source; do
       relative_path="${source#"$DOTFILES_DIR/$package/"}"
       target="$HOME/$relative_path"
@@ -160,7 +170,7 @@ stow_configs() {
 
   log "Stowing dotfile packages"
   cd "$DOTFILES_DIR"
-  stow -t "$HOME" fish fastfetch starship wezterm
+  stow -t "$HOME" fish fastfetch starship wezterm mise
 }
 
 set_default_shell() {
@@ -181,9 +191,18 @@ set_default_shell() {
   chsh -s "$fish_path"
 }
 
+install_mise_runtimes() {
+  if has mise; then
+    log "Installing mise runtimes (node, python, terraform, etc.)"
+    mise install
+  fi
+}
+
 cd "$DOTFILES_DIR"
 install_packages
+install_mise
 install_fisher_plugins
 [ "$STOW_CONFIGS" -eq 1 ] && stow_configs
+[ "$STOW_CONFIGS" -eq 1 ] && install_mise_runtimes
 [ "$SET_DEFAULT_SHELL" -eq 1 ] && set_default_shell
 log "Done"

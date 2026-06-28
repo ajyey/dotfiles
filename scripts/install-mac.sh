@@ -54,11 +54,11 @@ install_packages() {
   fi
 
   warn "Brewfile not found; installing the fallback package list."
-  warn "Add these formulas to Brewfile: git, curl, stow, fish, fastfetch, starship, wezterm, eza, zoxide, fzf, fd, wakeonlan."
+  warn "Add these formulas to Brewfile: git, curl, stow, fish, fastfetch, starship, wezterm, eza, zoxide, fzf, fd, wakeonlan, mise."
 
   log "Installing macOS packages with Homebrew"
   brew update
-  brew install git curl stow fish fastfetch starship wezterm eza zoxide fzf fd wakeonlan
+  brew install git curl stow fish fastfetch starship wezterm eza zoxide fzf fd wakeonlan mise
 }
 
 install_fisher_plugins() {
@@ -100,7 +100,7 @@ backup_stow_conflicts() {
   local target
   local backup_target
 
-  for package in fish fastfetch starship wezterm; do
+  for package in fish fastfetch starship wezterm mise; do
     while IFS= read -r -d '' source; do
       relative_path="${source#"$DOTFILES_DIR/$package/"}"
       target="$HOME/$relative_path"
@@ -134,7 +134,7 @@ stow_configs() {
 
   log "Stowing dotfile packages"
   cd "$DOTFILES_DIR"
-  stow -t "$HOME" fish fastfetch starship wezterm
+  stow -t "$HOME" fish fastfetch starship wezterm mise
 }
 
 set_default_shell() {
@@ -155,9 +155,17 @@ set_default_shell() {
   chsh -s "$fish_path"
 }
 
+install_mise_runtimes() {
+  if has mise; then
+    log "Installing mise runtimes (node, python, terraform, etc.)"
+    mise install
+  fi
+}
+
 cd "$DOTFILES_DIR"
 install_packages
 install_fisher_plugins
 [ "$STOW_CONFIGS" -eq 1 ] && stow_configs
+[ "$STOW_CONFIGS" -eq 1 ] && install_mise_runtimes
 [ "$SET_DEFAULT_SHELL" -eq 1 ] && set_default_shell
 log "Done"

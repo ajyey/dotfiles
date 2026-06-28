@@ -1,0 +1,8 @@
+[tools]
+node = "lts"
+python = "latest"
+terraform = "latest"
+go = "latest"
+bun = "latest"
+ruby = "latest"
+yarn = "latest"

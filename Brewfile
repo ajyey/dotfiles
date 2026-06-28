@@ -35,8 +35,7 @@ brew "tree"
 brew "ansible"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
-# Extendable version manager with support for Ruby, Node.js, Erlang & more
-brew "asdf"
+
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Connect and disconnect Bluetooth devices
