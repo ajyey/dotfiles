@@ -137,10 +137,10 @@ If `wakeonlan` is not available from the enabled pacman repositories, the script
 Stow packages manually:
 
 ```bash
-stow fish
-stow fastfetch
-stow starship
-stow wezterm
+stow -t ~ fish
+stow -t ~ fastfetch
+stow -t ~ starship
+stow -t ~ wezterm
 ```
 
 When install scripts run with `--stow`, they first back up conflicting real files from `$HOME` into `~/.dotfiles-backup/<timestamp>/`. This handles fresh machines that already have files such as `~/.config/fish/config.fish` before Stow creates symlinks.

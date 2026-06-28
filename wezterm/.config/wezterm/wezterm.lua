@@ -1,6 +1,8 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
+config.color_scheme = 'rose-pine'
+
 config.keys = {
   -- Split pane (like iTerm2 CMD+D and CMD+Shift+D)
   -- Note: WezTerm's SplitHorizontal means left/right panes, 
