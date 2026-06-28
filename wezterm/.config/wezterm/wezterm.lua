@@ -20,6 +20,7 @@ config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.window_background_opacity = 0.8
 config.macos_window_background_blur = 50
 config.window_padding = { left = '0.5cell', right = '0.5cell', top = '0.5cell', bottom = '0.5cell' }
+config.window_close_confirmation = "NeverPrompt"
 
 config.window_frame = {
   font = wezterm.font("Hack Nerd Font", { weight = "Bold" }),
