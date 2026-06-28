@@ -29,7 +29,7 @@ $time\
 [ ](fg:color_bg1)\
 $line_break$character"""
 
-palette = 'rose_pine'
+palette = 'gruvbox_dark'
 
 [palettes.gruvbox_dark]
 color_fg0 = '#fbf1c7'
@@ -42,18 +42,6 @@ color_orange = '#d65d0e'
 color_purple = '#b16286'
 color_red = '#cc241d'
 color_yellow = '#d79921'
-
-[palettes.rose_pine]
-color_fg0 = '#e0def4'
-color_bg1 = '#1f1d2e'
-color_bg3 = '#26233a'
-color_blue = '#31748f'
-color_aqua = '#9ccfd8'
-color_green = '#9ccfd8'
-color_orange = '#ebbcba'
-color_purple = '#c4a7e7'
-color_red = '#eb6f92'
-color_yellow = '#f6c177'
 
 [os]
 disabled = false
