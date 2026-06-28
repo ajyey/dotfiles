@@ -65,6 +65,8 @@ install_packages() {
     readline
     sqlite
     bzip2
+    libxcrypt
+    gdbm
   )
 
   local available=()
