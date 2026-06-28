@@ -1,0 +1,10 @@
+[tools]
+node = "lts"
+python = "latest"
+terraform = "latest"
+go = "latest"
+bun = "latest"
+yarn = "latest"
+
+[settings]
+python.compile = true
