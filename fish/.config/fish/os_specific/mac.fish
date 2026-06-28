@@ -29,3 +29,28 @@ function brew
     end
     command brew $argv
 end
+
+# ====================================================================
+# Terminal Integration
+# ====================================================================
+
+# iTerm2 shell integration
+test -e "$HOME/.iterm2_shell_integration.fish"; and source "$HOME/.iterm2_shell_integration.fish"
+
+# Set version environment variables for iTerm2 status bar
+if functions -q iterm2_set_user_var
+    if type -q node
+        set nodeVersion (node --version)
+        iterm2_set_user_var nodeVersion $nodeVersion
+    end
+
+    if type -q python3
+        set pythonVersion (python3 --version | awk '{ print $2 }')
+        iterm2_set_user_var pythonVersion $pythonVersion
+    end
+
+    if type -q java
+        set javaVersion (java --version 2>&1 | string match -r '\d+(\.\d+)+' | head -n 1)
+        iterm2_set_user_var javaVersion $javaVersion
+    end
+end
