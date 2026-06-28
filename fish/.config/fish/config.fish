@@ -19,7 +19,9 @@ end
 # ====================================================================
 # Turn valid commands green and invalid commands red
 set -g fish_color_command 4ade80  # Solid true green
-set -g fish_color_error red
+set -g fish_color_error eb6f92    # Rose Pine "Love" (Soft Red) for invalid commands/args
+set -g fish_color_param 9ccfd8    # Rose Pine "Foam" (Cyan) for regular parameters
+set -g fish_color_quote f6c177    # Rose Pine "Gold" for strings
 # ====================================================================
 # Environment Variables & PATH Configuration
 # ====================================================================
