@@ -215,8 +215,6 @@ brew "weasyprint"
 brew "wget"
 # VNC server for real X displays
 brew "x11vnc"
-# Pluggable terminal workspace, with terminal multiplexer as the base feature
-brew "zellij"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # UNIX shell (command interpreter)
@@ -630,6 +628,8 @@ vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
 vscode "zhuangtongfa.material-theme"
 vscode "zignd.html-css-class-completion"
+go "cmd/go"
+go "cmd/gofmt"
 npm "@anthropic-ai/claude-code"
 npm "@qwen-code/qwen-code"
 npm "md-to-pdf"

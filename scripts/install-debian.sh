@@ -58,7 +58,6 @@ install_packages() {
     fzf
     fd-find
     wakeonlan
-    zellij
     build-essential
     libssl-dev
     zlib1g-dev

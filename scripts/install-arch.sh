@@ -57,7 +57,6 @@ install_packages() {
     fd
     wakeonlan
     mise
-    zellij
     base-devel
     openssl
     xz
