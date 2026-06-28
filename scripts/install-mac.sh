@@ -105,11 +105,11 @@ backup_stow_conflicts() {
       relative_path="${source#"$DOTFILES_DIR/$package/"}"
       target="$HOME/$relative_path"
 
-      if [ -L "$target" ]; then
+      if [ -e "$target" ] && [ "$target" -ef "$DOTFILES_DIR/$package/$relative_path" ]; then
         continue
       fi
 
-      if [ -e "$target" ]; then
+      if [ -e "$target" ] || [ -L "$target" ]; then
         backup_target="$backup_dir/$relative_path"
         mkdir -p "$(dirname "$backup_target")"
         mv "$target" "$backup_target"
