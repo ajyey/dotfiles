@@ -6,6 +6,8 @@ go = "latest"
 bun = "latest"
 yarn = "latest"
 zellij = "latest"
+neovim = "latest"
+
 
 [settings]
 python.compile = true

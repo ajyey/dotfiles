@@ -143,8 +143,6 @@ brew "mise"
 brew "mpd"
 # Open source relational database management system
 brew "mysql"
-# Ambitious Vim-fork focused on extensibility and agility
-brew "neovim"
 # HTTP(S) server and reverse proxy, and IMAP/POP3 proxy server
 brew "nginx"
 # Graphical client for the Soulseek peer-to-peer network
@@ -432,8 +430,6 @@ cask "plex-media-server"
 cask "postman"
 # Peer to peer Bitorrent client
 cask "qbittorrent"
-# Control your tools with a few keystrokes
-cask "raycast"
 # Move and resize windows using keyboard shortcuts or snap areas
 cask "rectangle"
 # Binary newsreader
@@ -529,8 +525,8 @@ mas "Microsoft Outlook", id: 985367838
 mas "Microsoft To Do", id: 1274495053
 mas "Notability", id: 360593530
 mas "Notion Web Clipper", id: 1559269364
-mas "Numbers", id: 361304891
 mas "Numbers", id: 409203825
+mas "Numbers", id: 361304891
 mas "Pages", id: 409201541
 mas "Parcel Classic", id: 639968404
 mas "PDFgear", id: 6469021132
@@ -625,6 +621,3 @@ vscode "zhuangtongfa.material-theme"
 vscode "zignd.html-css-class-completion"
 go "cmd/go"
 go "cmd/gofmt"
-npm "@anthropic-ai/claude-code"
-npm "@qwen-code/qwen-code"
-npm "md-to-pdf"
