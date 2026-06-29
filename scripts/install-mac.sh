@@ -5,6 +5,7 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 STOW_CONFIGS=0
 SET_DEFAULT_SHELL=0
 SKIP_BREW=0
+INSTALL_BREWFILE=0
 
 usage() {
   cat <<'EOF'
@@ -15,6 +16,7 @@ Install dependencies for this dotfiles repo on macOS.
 Options:
   --stow               Stow fish, fastfetch, and starship configs after install
   --set-default-shell  Change the user's login shell to fish
+  --brewfile           Install packages from Brewfile instead of defaults
   --skip-brew          Skip installing Homebrew packages (useful for testing)
   -h, --help           Show this help
 EOF
@@ -37,6 +39,7 @@ for arg in "$@"; do
   case "$arg" in
     --stow) STOW_CONFIGS=1 ;;
     --set-default-shell) SET_DEFAULT_SHELL=1 ;;
+    --brewfile) INSTALL_BREWFILE=1 ;;
     --skip-brew) SKIP_BREW=1 ;;
     -h|--help) usage; exit 0 ;;
     *) usage; die "unknown option: $arg" ;;
@@ -55,13 +58,15 @@ install_packages() {
 
   cd "$DOTFILES_DIR"
 
-  if [ -f Brewfile ]; then
-    log "Installing macOS packages from Brewfile"
-    brew bundle --file Brewfile
-    return
+  if [ "$INSTALL_BREWFILE" -eq 1 ]; then
+    if [ -f Brewfile ]; then
+      log "Installing macOS packages from Brewfile"
+      brew bundle --file Brewfile
+      return
+    else
+      warn "Brewfile not found; falling back to default package list."
+    fi
   fi
-
-  warn "Brewfile not found; installing the fallback package list."
   warn "Add these formulas to Brewfile: git, curl, stow, fish, fastfetch, starship, wezterm, zellij, eza, zoxide, fzf, fd, wakeonlan, mise."
 
   log "Installing macOS packages with Homebrew"

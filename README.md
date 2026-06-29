@@ -125,13 +125,19 @@ cd ~/.dotfiles
 3. Install packages, Fisher plugins, and symlink configs:
 
 ```bash
-scripts/install-arch.sh --stow
+./install.sh --stow
 ```
 
 4. Optionally make Fish your login shell:
 
 ```bash
-scripts/install-arch.sh --set-default-shell
+./install.sh --set-default-shell
+```
+
+5. Optionally install everything from a Brewfile on macOS (instead of defaults):
+
+```bash
+./install.sh --brewfile
 ```
 
 If `wakeonlan` is not available from the enabled pacman repositories, the script skips it with a warning. Install it manually or from the AUR if you need the `cachywake` alias.
