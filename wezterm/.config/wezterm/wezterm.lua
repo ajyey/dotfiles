@@ -46,7 +46,7 @@ config.keys = {
   -- ==================== General ====================
   -- Command Palette
   {
-    key = 'p',
+    key = 'a',
     mods = 'CMD|SHIFT',
     action = wezterm.action.ActivateCommandPalette,
   },
