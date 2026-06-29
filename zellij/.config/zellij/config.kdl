@@ -5,10 +5,7 @@ theme "rose-pine-moon"
 
 // Optional: you can customize UI and default layouts here
 default_layout "default"
-
-// Do not automatically copy on select. 
-// Use Shift+Drag to bypass Zellij and copy via WezTerm natively with CMD+C
-copy_on_select false
+copy_on_select true
 
 themes {
     rose-pine-moon {
