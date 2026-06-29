@@ -110,7 +110,7 @@ install_ctop() {
     log "Adding azlux repository and installing ctop..."
     run_sudo apt-get install -y ca-certificates curl gnupg lsb-release
     curl -fsSL https://azlux.fr/repo.gpg.key | run_sudo gpg --dearmor -o /usr/share/keyrings/azlux-archive-keyring.gpg --yes
-    echo "deb [arch=\$(dpkg --print-architecture) signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian \$(lsb_release -cs) main" | run_sudo tee /etc/apt/sources.list.d/azlux.list >/dev/null
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian $(lsb_release -cs) main" | run_sudo tee /etc/apt/sources.list.d/azlux.list >/dev/null
     run_sudo apt-get update
     run_sudo apt-get install -y docker-ctop
   fi
