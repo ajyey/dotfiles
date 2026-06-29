@@ -6,8 +6,9 @@ theme "rose-pine-moon"
 // Optional: you can customize UI and default layouts here
 default_layout "default"
 
-// Don't auto-copy on selection if you prefer WezTerm's copy handler
-copy_on_select false
+// Automatically copy to system clipboard using OSC52 (works over SSH!)
+copy_on_select true
+copy_command "osc52"
 
 themes {
     rose-pine-moon {
