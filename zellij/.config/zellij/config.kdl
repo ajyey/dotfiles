@@ -9,7 +9,7 @@ copy_on_select true
 
 themes {
     rose-pine-moon {
-        bg "#232136"
+        bg "#c4a7e7"
         fg "#e0def4"
         red "#eb6f92"
         green "#3e8fb0"
