@@ -67,11 +67,11 @@ install_packages() {
       warn "Brewfile not found; falling back to default package list."
     fi
   fi
-  warn "Add these formulas to Brewfile: git, curl, stow, fish, fastfetch, starship, wezterm, zellij, eza, zoxide, fzf, fd, wakeonlan, mise."
+  warn "Add these formulas to Brewfile: git, curl, stow, fish, fastfetch, starship, wezterm, zellij, eza, zoxide, fzf, fd, bat, wakeonlan, mise."
 
   log "Installing macOS packages with Homebrew"
   brew update
-  brew install git curl stow fish fastfetch starship wezterm eza zoxide fzf fd wakeonlan mise
+  brew install git curl stow fish fastfetch starship wezterm eza zoxide fzf fd bat wakeonlan mise
 }
 
 install_fisher_plugins() {

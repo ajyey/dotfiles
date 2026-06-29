@@ -57,6 +57,7 @@ install_packages() {
     zoxide
     fzf
     fd-find
+    bat
     wakeonlan
     build-essential
     libssl-dev
@@ -96,6 +97,11 @@ install_packages() {
   if has fdfind && ! has fd; then
     mkdir -p "$HOME/.local/bin"
     ln -sfn "$(command -v fdfind)" "$HOME/.local/bin/fd"
+  fi
+
+  if has batcat && ! has bat; then
+    mkdir -p "$HOME/.local/bin"
+    ln -sfn "$(command -v batcat)" "$HOME/.local/bin/bat"
   fi
 }
 

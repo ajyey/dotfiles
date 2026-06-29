@@ -175,7 +175,7 @@ exec fish
 To upgrade your system-level packages (installed via Homebrew, apt, or pacman), you can use the aliases provided in your Fish shell (e.g., typing `update` on macOS).
 
 ### Mise Packages (Runtimes & Tools)
-Because most of the modern CLI tools and runtimes (like Node, Python, Zellij, Neovim, etc.) are managed by `mise`, they won't update automatically with your system packages.
+Because most of the modern CLI tools and runtimes (like Node, Python, Zellij, Neovim, Ripgrep) are managed by `mise`, they won't update automatically with your system packages.
 
 To update all your `mise` packages to their latest versions, simply run:
 

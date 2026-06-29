@@ -80,6 +80,11 @@ else
     alias l.='ls -d .*'
 end
 
+# File Viewing (using bat for enhanced cat)
+if type -q bat
+    alias cat='bat --paging=never'
+end
+
 # Navigation
 alias ..='cd ..'                            # Go up one directory
 alias ...='cd ../..'                        # Go up two directories
@@ -175,6 +180,14 @@ end
 # Starship prompt initialization
 if type -q starship
     starship init fish | source
+end
+
+# ====================================================================
+# fzf.fish Configuration
+# ====================================================================
+set fzf_preview_dir_cmd eza --all --color=always
+if type -q bat
+    set fzf_preview_file_cmd bat --color=always --style=numbers,changes
 end
 
 # ====================================================================

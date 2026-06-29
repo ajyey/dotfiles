@@ -55,6 +55,7 @@ install_packages() {
     zoxide
     fzf
     fd
+    bat
     wakeonlan
     mise
     base-devel
