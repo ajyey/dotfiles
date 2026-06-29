@@ -23,3 +23,30 @@ else if type -q yay
 else
     alias update="sudo pacman -Syu"
 end
+
+# Package Search
+if type -q paru
+    alias search="paru -Ss"
+else if type -q yay
+    alias search="yay -Ss"
+else
+    alias search="pacman -Ss"
+end
+
+# Package Install
+if type -q paru
+    alias install="paru -S"
+else if type -q yay
+    alias install="yay -S"
+else
+    alias install="sudo pacman -S"
+end
+
+# Package Uninstall (-Rns: remove package + unneeded deps + config files)
+if type -q paru
+    alias uninstall="paru -Rns"
+else if type -q yay
+    alias uninstall="yay -Rns"
+else
+    alias uninstall="sudo pacman -Rns"
+end

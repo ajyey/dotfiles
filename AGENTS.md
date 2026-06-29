@@ -33,6 +33,8 @@ Use the style already present in each config file. Fish scripts use 4-space inde
 
 TOML files use quoted strings and grouped module sections. JSONC files use 4-space indentation and may include comments where supported.
 
+Cross-platform aliases (such as `update` and `search`) are defined in each `os_specific/*.fish` file separately. When adding a new cross-platform alias, add it to all three files — `mac.fish`, `arch.fish`, and `debian.fish` — using the appropriate package-manager command for each OS. Use `if type -q <tool>` guards where needed so the alias degrades gracefully.
+
 ## Testing Guidelines
 
 There is no formal automated test suite. Validate changed configs with the relevant tool before committing. For Fish changes, run `fish -n` and open a new Fish shell or `exec fish` to verify aliases, PATH changes, and startup behavior. For visual prompt or Fastfetch changes, test in a terminal that supports Nerd Font glyphs.

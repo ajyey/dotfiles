@@ -14,3 +14,10 @@ end
 
 # System Update
 alias update="sudo apt update && sudo apt upgrade -y"
+
+# Package Search
+alias search="apt search"
+
+# Package Install / Uninstall
+alias install="sudo apt install"
+alias uninstall="sudo apt purge"

@@ -18,6 +18,13 @@ end
 # System Update
 alias update="brew update && brew upgrade && brew cleanup"
 
+# Package Search
+alias search="brew search"
+
+# Package Install / Uninstall (routed through brew wrapper to keep Brewfile updated)
+alias install="brew install"
+alias uninstall="brew uninstall"
+
 # Wrap brew install and uninstall to keep Brewfile updated on MacOS
 function brew
     if test (count $argv) -ge 1

@@ -174,6 +174,16 @@ exec fish
 ### System Packages
 To upgrade your system-level packages (installed via Homebrew, apt, or pacman), you can use the aliases provided in your Fish shell (e.g., typing `update` on macOS).
 
+The following package management aliases are available and map to the appropriate tool per OS:
+
+| Alias | macOS | Debian | Arch / CachyOS |
+|-------|-------|--------|----------------|
+| `search <term>` | `brew search` | `apt search` | `paru -Ss` / `yay -Ss` / `pacman -Ss` |
+| `install <pkg>` | `brew install` | `sudo apt install` | `paru -S` / `yay -S` / `sudo pacman -S` |
+| `uninstall <pkg>` | `brew uninstall` | `sudo apt purge` | `paru -Rns` / `yay -Rns` / `sudo pacman -Rns` |
+
+On macOS, `install` and `uninstall` route through the `brew` wrapper function, which automatically keeps your `Brewfile` up to date.
+
 ### Mise Packages (Runtimes & Tools)
 Because most of the modern CLI tools and runtimes (like Node, Python, Zellij, Neovim, Ripgrep) are managed by `mise`, they won't update automatically with your system packages.
 
