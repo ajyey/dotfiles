@@ -6,9 +6,9 @@ theme "rose-pine-moon"
 // Optional: you can customize UI and default layouts here
 default_layout "default"
 
-// Automatically copy to system clipboard using OSC52 (works over SSH!)
-copy_on_select true
-copy_clipboard "system"
+// Do not automatically copy on select. 
+// Use Shift+Drag to bypass Zellij and copy via WezTerm natively with CMD+C
+copy_on_select false
 
 themes {
     rose-pine-moon {
@@ -19,7 +19,7 @@ themes {
         blue "#9ccfd8"
         yellow "#f6c177"
         magenta "#c4a7e7"
-        orange "#ea9a97"
+        orange "#c4a7e7" // Overridden to match WezTerm's purple selection highlight
         cyan "#ea9a97"
         black "#393552"
         white "#e0def4"
