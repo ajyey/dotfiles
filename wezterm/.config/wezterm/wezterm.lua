@@ -136,14 +136,14 @@ config.keys = {
     action = wezterm.action.SpawnTab 'CurrentPaneDomain',
   },
 
-  -- Navigate adjacent tabs (CMD+Shift+[ and CMD+Shift+])
+  -- Navigate adjacent tabs (CMD+Shift+Left/Right Arrow)
   {
-    key = '{',
+    key = 'LeftArrow',
     mods = 'CMD|SHIFT',
     action = wezterm.action.ActivateTabRelative(-1),
   },
   {
-    key = '}',
+    key = 'RightArrow',
     mods = 'CMD|SHIFT',
     action = wezterm.action.ActivateTabRelative(1),
   },
@@ -162,14 +162,14 @@ config.keys = {
     },
   },
 
-  -- Move tab left/right
+  -- Move tab left/right (CMD+Shift+[ and CMD+Shift+])
   {
-    key = 'LeftArrow',
+    key = '[',
     mods = 'CMD|SHIFT',
     action = wezterm.action.MoveTabRelative(-1),
   },
   {
-    key = 'RightArrow',
+    key = ']',
     mods = 'CMD|SHIFT',
     action = wezterm.action.MoveTabRelative(1),
   },

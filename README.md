@@ -217,10 +217,10 @@ The following custom keybindings are configured for WezTerm in this dotfiles rep
 | Navigate Panes | `⌘ + Option + Arrow Keys` |
 | **Tabs** | |
 | New Tab | `⌘ + T` |
-| Navigate Adjacent Tabs | `⌘ + Shift + [` / `]` |
+| Navigate Adjacent Tabs | `⌘ + Shift + Left/Right Arrow` |
 | Jump to Specific Tab | `⌘ + 1` through `9` |
 | Rename Current Tab | `⌘ + R` |
-| Move Tab Left / Right | `⌘ + Shift + Left/Right Arrow` |
+| Move Tab Left / Right | `⌘ + Shift + [` / `]` |
 | **Text Editing** | |
 | Go to Beginning of Line | `⌘ + Left Arrow` |
 | Go to End of Line | `⌘ + Right Arrow` |
