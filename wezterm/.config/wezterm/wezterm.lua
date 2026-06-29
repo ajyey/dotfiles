@@ -153,7 +153,11 @@ config.keys = {
     key = 'r',
     mods = 'CMD',
     action = wezterm.action.PromptInputLine {
-      description = 'Enter new name for tab',
+      description = wezterm.format {
+        { Attribute = { Intensity = 'Bold' } },
+        { Foreground = { Color = '#c4a7e7' } },
+        { Text = 'Enter new name for tab ✏️ :' },
+      },
       action = wezterm.action_callback(function(window, pane, line)
         if line then
           window:active_tab():set_title(line)
