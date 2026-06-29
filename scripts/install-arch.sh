@@ -56,6 +56,7 @@ install_packages() {
     fzf
     fd
     bat
+    ctop
     wakeonlan
     mise
     base-devel

@@ -105,6 +105,17 @@ install_packages() {
   fi
 }
 
+install_ctop() {
+  if ! has ctop; then
+    log "Adding azlux repository and installing ctop..."
+    run_sudo apt-get install -y ca-certificates curl gnupg lsb-release
+    curl -fsSL https://azlux.fr/repo.gpg.key | run_sudo gpg --dearmor -o /usr/share/keyrings/azlux-archive-keyring.gpg --yes
+    echo "deb [arch=\$(dpkg --print-architecture) signed-by=/usr/share/keyrings/azlux-archive-keyring.gpg] http://packages.azlux.fr/debian \$(lsb_release -cs) main" | run_sudo tee /etc/apt/sources.list.d/azlux.list >/dev/null
+    run_sudo apt-get update
+    run_sudo apt-get install -y docker-ctop
+  fi
+}
+
 install_mise() {
   if ! has mise; then
     log "Installing mise via apt"
@@ -218,6 +229,7 @@ install_mise_runtimes() {
 
 cd "$DOTFILES_DIR"
 install_packages
+install_ctop
 install_mise
 install_fisher_plugins
 [ "$STOW_CONFIGS" -eq 1 ] && stow_configs
