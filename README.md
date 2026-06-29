@@ -213,6 +213,14 @@ fisher list > ~/.config/fish/fish_plugins
 
 Personal SSH aliases and Wake-on-LAN shortcuts remain available globally but may only work on your home network. Machine-specific Fish files are ignored: `fish_variables`, `functions/`, and `conf.d/`.
 
+### Remote Dev / SSH Autostart
+When you SSH into a remote machine running this configuration, Fish will automatically launch and attach to a persistent Zellij session named `ssh`. If your connection drops, your workspace is perfectly preserved!
+
+To bypass this auto-start and get a raw shell (for example, to attach to a differently named session), you can inject the `ZELLIJ` environment variable in your SSH command:
+```bash
+ssh -t user@host "env ZELLIJ=1 fish"
+```
+
 ## Saving Changes
 
 Edit configs through their normal `$HOME` paths or directly in this repo, then commit the package file:

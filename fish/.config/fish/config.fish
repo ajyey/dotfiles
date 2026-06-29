@@ -96,10 +96,7 @@ if type -q zoxide
 end
 
 # SSH Connections
-
-# alias debian="ssh -t aj@192.168.68.211"
-# Connect to Proxmox Debian VM and automatically attach to zellij session
-alias debian="ssh -t aj@192.168.68.211 'fish -C \"zellij attach -c debian\"'" 
+alias debian="ssh -t aj@192.168.68.211"
 alias proxmox="ssh root@192.168.68.208" # Connect to Proxmox VE
 alias pbs="ssh root@192.168.68.66" # Connect to Proxmox Backup Server
 alias pi="ssh dietpi@192.168.68.44"         # Connect to Raspberry Pi
@@ -210,5 +207,22 @@ end
 # if test -f /opt/homebrew/Caskroom/miniconda/base/bin/conda
 #     eval (/opt/homebrew/Caskroom/miniconda/base/bin/conda shell.fish hook)
 # end
+
+# ====================================================================
+# SSH Zellij Autostart
+# ====================================================================
+# Automatically launch and attach to a persistent zellij session 
+# on SSH connections to preserve workspace on disconnect.
+# 
+# To bypass this auto-start and get a raw shell, inject ZELLIJ=1:
+# ssh -t user@host "env ZELLIJ=1 fish"
+if status is-interactive
+    and set -q SSH_CONNECTION
+    and type -q zellij
+    # Prevent infinite loops when Zellij spawns inner fish shells
+    if not set -q ZELLIJ
+        exec zellij attach -c ssh
+    end
+end
 
 
