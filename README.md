@@ -195,6 +195,37 @@ mise up
 
 This will read your `mise/.config/mise/config.toml`, download the latest versions, and automatically update your configuration file.
 
+## WezTerm Keybindings
+
+The following custom keybindings are configured for WezTerm in this dotfiles repository:
+
+| Action | Shortcut |
+|--------|----------|
+| **General** | |
+| Open Command Palette | `⌘ + Shift + A` |
+| Open Link under Cursor | `⌘ + Click` (Mouse) |
+| **Search / fzf** | |
+| Search Files & Directories | `⌘ + Shift + F` |
+| Search Git Commit Log | `⌘ + Shift + L` |
+| Search Git Status | `⌘ + Shift + S` |
+| Search Shell Variables | `⌘ + Shift + V` |
+| Search Command History (Atuin) | `⌘ + Shift + R` |
+| **Panes** | |
+| Split Pane Vertically (Left/Right) | `⌘ + D` |
+| Split Pane Horizontally (Top/Bottom) | `⌘ + Shift + D` |
+| Close Pane / Tab | `⌘ + W` |
+| Navigate Panes | `⌘ + Option + Arrow Keys` |
+| **Tabs** | |
+| New Tab | `⌘ + T` |
+| Navigate Adjacent Tabs | `⌘ + Shift + [` / `]` |
+| Jump to Specific Tab | `⌘ + 1` through `9` |
+| Rename Current Tab | `⌘ + R` |
+| Move Tab Left / Right | `⌘ + Shift + Left/Right Arrow` |
+| **Text Editing** | |
+| Go to Beginning of Line | `⌘ + Left Arrow` |
+| Go to End of Line | `⌘ + Right Arrow` |
+| Delete Line | `⌘ + Backspace` |
+
 ## Fish Plugins
 
 Plugins are managed with Fisher and listed in `fish/.config/fish/fish_plugins`.

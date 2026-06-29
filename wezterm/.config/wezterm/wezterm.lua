@@ -162,6 +162,18 @@ config.keys = {
     },
   },
 
+  -- Move tab left/right
+  {
+    key = 'LeftArrow',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action.MoveTabRelative(-1),
+  },
+  {
+    key = 'RightArrow',
+    mods = 'CMD|SHIFT',
+    action = wezterm.action.MoveTabRelative(1),
+  },
+
   -- ==================== Text / Line Editing ====================
   -- Go to beginning of line (sends Ctrl-A)
   {
