@@ -18,8 +18,7 @@ themes {
         magenta "#c4a7e7"
         orange "#c4a7e7" // Overridden to match WezTerm's purple selection highlight
         cyan "#ea9a97"
-        black "#44415a" // <-- Change this from #393552 for a brighter purple selection highlight
-
+        black "#393552"
         white "#e0def4"
     }
 }
