@@ -19,7 +19,7 @@ end
 if type -q paru
     alias update="paru -Syu"
 else if type -q yay
-    alias update="yay -Syu"
+    alias update="yay -Syu --answerclean y --answerdiff y --noconfirm"
 else
     alias update="sudo pacman -Syu"
 end
