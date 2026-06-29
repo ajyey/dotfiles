@@ -178,4 +178,16 @@ for i = 1, 9 do
   })
 end
 
+-- ====================================================================
+-- Mouse Behavior
+-- ====================================================================
+config.mouse_bindings = {
+  -- Cmd-click will open the link under the mouse cursor
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    action = wezterm.action.OpenLinkAtMouseCursor,
+  },
+}
+
 return config
