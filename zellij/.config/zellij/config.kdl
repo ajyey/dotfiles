@@ -8,7 +8,7 @@ default_layout "default"
 
 // Automatically copy to system clipboard using OSC52 (works over SSH!)
 copy_on_select true
-copy_command "osc52"
+copy_clipboard "system"
 
 themes {
     rose-pine-moon {
