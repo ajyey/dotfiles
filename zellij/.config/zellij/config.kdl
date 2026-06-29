@@ -10,7 +10,7 @@ copy_on_select true
 themes {
     rose-pine-moon {
         bg "#c4a7e7"
-        fg "#191724" // Changed to dark so the text is black on the purple highlight
+        fg "#e0def4"
         red "#eb6f92"
         green "#3e8fb0"
         blue "#9ccfd8"
