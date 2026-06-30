@@ -48,3 +48,5 @@ Pull requests should describe the affected package, list validation commands run
 
 ## Documentation Maintenance
 **CRITICAL RULE:** Whenever you add a new tool, package, script, or make architectural changes to this repository, you **MUST** ensure that both `AGENTS.md` and `README.md` are simultaneously updated to document the new work. Never leave the documentation out of sync with the actual repository state.
+
+**KEYD RULE:** The Linux `keyd` keyboard daemon has highly complex behaviors (overloads, inheritance, custom layers, tap vs hold injections). If you ever modify `keyd/etc/keyd/default.conf`, you **MUST** update `keyd.md` to perfectly explain the technical rationale behind the change.
