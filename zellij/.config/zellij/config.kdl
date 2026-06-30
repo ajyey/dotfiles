@@ -32,6 +32,7 @@ keybinds {
     shared_except "locked" {
         // Tab Management
         bind "Alt t" { NewTab; }
+        bind "Alt r" { SwitchToMode "RenameTab"; TabNameInput 0; }
         bind "Alt [" { GoToPreviousTab; }
         bind "Alt ]" { GoToNextTab; }
         bind "Alt 1" { GoToTab 1; }
