@@ -59,6 +59,7 @@ install_packages() {
     ctop
     wakeonlan
     mise
+    keyd
     base-devel
     openssl
     xz
@@ -78,7 +79,7 @@ install_packages() {
   for package in "${packages[@]}"; do
     # Check if package exists in repos or AUR using pacman/shelly? 
     # Just assume they exist or let shelly handle missing ones.
-      available+=("$package")
+    available+=("$package")
   done
 
   if [ "${#available[@]}" -gt 0 ]; then
@@ -187,10 +188,20 @@ install_mise_runtimes() {
   fi
 }
 
+setup_keyd() {
+  if has keyd; then
+    log "Configuring keyd system daemon (requires sudo)"
+    run_sudo mkdir -p /etc/keyd
+    run_sudo cp "$DOTFILES_DIR/keyd/etc/keyd/default.conf" /etc/keyd/default.conf
+    run_sudo systemctl enable --now keyd
+  fi
+}
+
 cd "$DOTFILES_DIR"
 install_packages
 install_fisher_plugins
 [ "$STOW_CONFIGS" -eq 1 ] && stow_configs
+[ "$STOW_CONFIGS" -eq 1 ] && setup_keyd
 [ "$STOW_CONFIGS" -eq 1 ] && install_mise_runtimes
 [ "$SET_DEFAULT_SHELL" -eq 1 ] && set_default_shell
 log "Done"
