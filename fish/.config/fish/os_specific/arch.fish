@@ -16,7 +16,9 @@ if not set -q SSH_AUTH_SOCK
 end
 
 # System Update
-if type -q paru
+if type -q shelly
+    alias update="shelly"
+else if type -q paru
     alias update="paru -Syu"
 else if type -q yay
     alias update="yay -Syu --answerclean y --answerdiff y --noconfirm"
@@ -25,7 +27,9 @@ else
 end
 
 # Package Search
-if type -q paru
+if type -q shelly
+    alias search="shelly search"
+else if type -q paru
     alias search="paru -Ss"
 else if type -q yay
     alias search="yay -Ss"
@@ -34,7 +38,9 @@ else
 end
 
 # Package Install
-if type -q paru
+if type -q shelly
+    alias install="shelly install --upgrade"
+else if type -q paru
     alias install="paru -S"
 else if type -q yay
     alias install="yay -S"
@@ -43,7 +49,9 @@ else
 end
 
 # Package Uninstall (-Rns: remove package + unneeded deps + config files)
-if type -q paru
+if type -q shelly
+    alias uninstall="shelly remove"
+else if type -q paru
     alias uninstall="paru -Rns"
 else if type -q yay
     alias uninstall="yay -Rns"

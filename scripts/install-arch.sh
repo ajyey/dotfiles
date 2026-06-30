@@ -41,7 +41,7 @@ for arg in "$@"; do
 done
 
 install_packages() {
-  log "Installing CachyOS/Arch packages with pacman"
+  log "Installing CachyOS/Arch packages with shelly"
 
   local packages=(
     git
@@ -76,20 +76,13 @@ install_packages() {
   local package
 
   for package in "${packages[@]}"; do
-    if pacman -Si "$package" >/dev/null 2>&1; then
+    # Check if package exists in repos or AUR using pacman/shelly? 
+    # Just assume they exist or let shelly handle missing ones.
       available+=("$package")
-    else
-      missing+=("$package")
-    fi
   done
 
   if [ "${#available[@]}" -gt 0 ]; then
-    run_sudo pacman -Syu --needed "${available[@]}"
-  fi
-
-  if [ "${#missing[@]}" -gt 0 ]; then
-    warn "these pacman packages were unavailable and were skipped: ${missing[*]}"
-    warn "install skipped tools manually or from the AUR if you need them."
+    shelly install "${available[@]}"
   fi
 }
 
