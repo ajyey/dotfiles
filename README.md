@@ -24,7 +24,11 @@ The install scripts set up GNU Stow, Fish, Fisher plugins, Fastfetch, Starship, 
 ├── starship/
 │   └── .config/starship.toml
 ├── wezterm/
-│   └── .config/wezterm/wezterm.lua
+│   └── .config/wezterm/
+│       ├── wezterm.lua
+│       ├── shared.lua
+│       ├── mac.lua
+│       └── linux.lua
 ├── zellij/
 │   └── .config/zellij/config.kdl
 └── mise/
@@ -178,9 +182,9 @@ The following package management aliases are available and map to the appropriat
 
 | Alias | macOS | Debian | Arch / CachyOS |
 |-------|-------|--------|----------------|
-| `search <term>` | `brew search` | `apt search` | `paru -Ss` / `yay -Ss` / `pacman -Ss` |
-| `install <pkg>` | `brew install` | `sudo apt install` | `paru -S` / `yay -S` / `sudo pacman -S` |
-| `uninstall <pkg>` | `brew uninstall` | `sudo apt purge` | `paru -Rns` / `yay -Rns` / `sudo pacman -Rns` |
+| `search <term>` | `brew search` | `apt search` | `shelly search` / `pacman -Ss` |
+| `install <pkg>` | `brew install` | `sudo apt install` | `shelly install` / `sudo pacman -S` |
+| `uninstall <pkg>` | `brew uninstall` | `sudo apt purge` | `shelly remove` / `sudo pacman -Rns` |
 
 On macOS, `install` and `uninstall` route through the `brew` wrapper function, which automatically keeps your `Brewfile` up to date.
 
@@ -194,6 +198,25 @@ mise up
 ```
 
 This will read your `mise/.config/mise/config.toml`, download the latest versions, and automatically update your configuration file.
+
+## Linux Mac-like Keybindings (keyd)
+
+On Arch/CachyOS, this repository uses **`keyd`** to map the `CMD` (Super/Windows) key to behave exactly like macOS across the entire Linux desktop. 
+Because `keyd` runs at the lowest kernel level (evdev), it works flawlessly on both X11 and Wayland.
+
+The global configuration is tracked at `keyd/etc/keyd/default.conf` and is automatically installed and enabled by `scripts/install-arch.sh`. You can safely update and restart the daemon at any time by running `sudo ./scripts/update-keyd.sh`.
+
+**For a comprehensive breakdown of exactly how this works (including the `CMD->Ctrl` inheritance, the `Ctrl+Insert` safe-copy hack, App Switcher, and the Capslock Hyper Key), please read the full documentation in [`keyd.md`](file:///Users/AJ/Development/dotfiles/keyd.md).**
+
+## Modular WezTerm
+
+Because `keyd` translates the `CMD` key into `Ctrl`, WezTerm on Linux must be configured to listen for `Ctrl`, whereas WezTerm on macOS must listen for `CMD`. 
+
+To solve this, the WezTerm configuration in `.config/wezterm/` is completely modular:
+- `shared.lua`: Contains all appearance, fonts, and window behavior.
+- `mac.lua`: Contains the native macOS `CMD` keybindings.
+- `linux.lua`: Contains the translated `CTRL` keybindings (and explicitly routes `Ctrl+Insert` to the Clipboard).
+- `wezterm.lua`: A lightweight entrypoint that dynamically loads the correct files based on your current OS.
 
 ## WezTerm Keybindings
 

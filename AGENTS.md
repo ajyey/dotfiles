@@ -10,6 +10,7 @@ This is a GNU Stow dotfiles repository. Each top-level directory is a Stow packa
 - `wezterm/.config/wezterm/wezterm.lua` contains the WezTerm configuration with fzf.fish keybindings.
 - `zellij/.config/zellij/config.kdl` contains the Zellij terminal multiplexer configuration.
 - `mise/.config/mise/config.toml` manages global runtimes and tools (Node, Python, Go, Zellij, Ripgrep).
+- `keyd/etc/keyd/` contains system-level keyboard remapping configurations for Linux. It is installed manually via install scripts, not Stowed to `$HOME`.
 - `install.sh` generic installation script that detects OS and delegates to `scripts/install-*.sh`.
 - `README.md` documents setup and restore steps.
 
@@ -47,3 +48,5 @@ Pull requests should describe the affected package, list validation commands run
 
 ## Documentation Maintenance
 **CRITICAL RULE:** Whenever you add a new tool, package, script, or make architectural changes to this repository, you **MUST** ensure that both `AGENTS.md` and `README.md` are simultaneously updated to document the new work. Never leave the documentation out of sync with the actual repository state.
+
+**KEYD RULE:** The Linux `keyd` keyboard daemon has highly complex behaviors (overloads, inheritance, custom layers, tap vs hold injections). If you ever modify `keyd/etc/keyd/default.conf`, you **MUST** update `keyd.md` to perfectly explain the technical rationale behind the change.
