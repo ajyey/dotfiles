@@ -178,9 +178,9 @@ The following package management aliases are available and map to the appropriat
 
 | Alias | macOS | Debian | Arch / CachyOS |
 |-------|-------|--------|----------------|
-| `search <term>` | `brew search` | `apt search` | `paru -Ss` / `yay -Ss` / `pacman -Ss` |
-| `install <pkg>` | `brew install` | `sudo apt install` | `paru -S` / `yay -S` / `sudo pacman -S` |
-| `uninstall <pkg>` | `brew uninstall` | `sudo apt purge` | `paru -Rns` / `yay -Rns` / `sudo pacman -Rns` |
+| `search <term>` | `brew search` | `apt search` | `shelly search` / `pacman -Ss` |
+| `install <pkg>` | `brew install` | `sudo apt install` | `shelly install` / `sudo pacman -S` |
+| `uninstall <pkg>` | `brew uninstall` | `sudo apt purge` | `shelly remove` / `sudo pacman -Rns` |
 
 On macOS, `install` and `uninstall` route through the `brew` wrapper function, which automatically keeps your `Brewfile` up to date.
 
@@ -194,6 +194,17 @@ mise up
 ```
 
 This will read your `mise/.config/mise/config.toml`, download the latest versions, and automatically update your configuration file.
+
+## Linux Mac-like Keybindings (keyd)
+
+On Arch/CachyOS, this repository uses **`keyd`** to map the `CMD` (Super/Windows) key to behave exactly like macOS across the entire Linux desktop. 
+Because `keyd` runs at the lowest kernel level (evdev), it works flawlessly on both X11 and Wayland.
+
+The global configuration is tracked at `keyd/etc/keyd/default.conf` and is automatically installed and enabled by `scripts/install-arch.sh`.
+
+- **Global Shortcuts**: `CMD+C`, `CMD+V`, `CMD+Z`, `CMD+A`, `CMD+F`, etc. are automatically translated to their `Ctrl` equivalents.
+- **Text Navigation**: `CMD+Left/Right` translates to `Home/End`, matching macOS behavior.
+- **Terminal Overrides**: Terminals (like WezTerm) natively receive the raw `Super` key unmodified, allowing them to handle their own Mac-like shortcuts natively through their own config files.
 
 ## WezTerm Keybindings
 
