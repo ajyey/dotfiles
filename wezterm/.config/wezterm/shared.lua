@@ -39,5 +39,10 @@ return {
       saturation = 0.0,
       brightness = 0.5,
     }
+
+    -- Allow Left Option (Alt) to function as a true Meta/Alt key in the terminal
+    -- instead of typing macOS special characters (like † or ∑). 
+    -- This is strictly required for our Zellij Alt-key navigation!
+    config.send_composed_key_when_left_alt_is_pressed = false
   end
 }
