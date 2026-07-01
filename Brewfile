@@ -61,6 +61,8 @@ brew "webp"
 brew "cmake"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
+# Top-like interface for container metrics
+brew "ctop"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
 # Isolated development environments using Docker
@@ -239,8 +241,6 @@ cask "1password-cli"
 cask "affine"
 # Application launcher and productivity software
 cask "alfred"
-# Enable Windows-like alt-tab
-cask "alt-tab"
 # Memory training application
 cask "anki"
 # Agent orchestration platform
@@ -299,6 +299,8 @@ cask "devutils"
 cask "diffmerge"
 # Voice and text chat software
 cask "discord"
+# Window peeking utility app
+cask "dockdoor"
 # App to build and share containerised applications and microservices
 cask "docker-desktop"
 # Configurable Dock replacement with widgets, Launchpad and a window switcher
@@ -621,3 +623,6 @@ vscode "zhuangtongfa.material-theme"
 vscode "zignd.html-css-class-completion"
 go "cmd/go"
 go "cmd/gofmt"
+npm "@anthropic-ai/claude-code"
+npm "@qwen-code/qwen-code"
+npm "md-to-pdf"
