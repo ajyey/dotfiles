@@ -28,7 +28,7 @@ end
 
 # Package Search
 if type -q shelly
-    alias search="shelly search"
+    alias search="shelly query"
 else if type -q paru
     alias search="paru -Ss"
 else if type -q yay
