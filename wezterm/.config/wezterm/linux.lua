@@ -11,6 +11,13 @@ return {
     
     config.keys = {
       -- ==================== General ====================
+      -- New Window (keyd maps CMD+N → CTRL+N)
+      {
+        key = 'n',
+        mods = 'CTRL',
+        action = wezterm.action.SpawnWindow,
+      },
+
       -- Command Palette
       {
         key = 'a',
