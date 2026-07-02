@@ -25,8 +25,9 @@ If `CMD` simply became `Ctrl`, we would have a major problem in Terminal emulato
 To fix this, we put specific overrides *inside* the `[meta_mac:C]` layer block. These intercept the keystroke before it becomes `Ctrl`:
 - **Copy/Paste**: `CMD + C` explicitly sends `Ctrl + Insert`. `CMD + V` sends `Shift + Insert`. This is a universal "safe" copy/paste that Linux GUI apps and Terminals support natively.
 - **App Switcher**: `CMD + Tab` doesn't send `Ctrl + Tab`; it uses the `swapm` function to seamlessly translate to `Alt + Tab` and hold the state, perfectly mimicking the macOS app switcher.
-- **Text Navigation**: `CMD + Left Arrow` sends `Home`. `CMD + Right Arrow` sends `End`.
+- **Text Navigation**: `CMD + Left Arrow` sends `Home`. `CMD + Right Arrow` sends `End`. `CMD + Shift + Left/Right` sends `Shift + Home/End` (emulating macOS text selection to the beginning/end of a line).
 - **File Top/Bottom**: `CMD + Up Arrow` sends `Ctrl + Home`.
+- **Tab Reordering**: `CMD + Shift + [` and `CMD + Shift + ]` explicitly send `Ctrl + Shift + [` and `Ctrl + Shift + ]`. These are explicitly mapped to avoid `keyd` inheritance issues. Note that Linux display servers often translate these into the `{` and `}` keysyms before they reach the application.
 
 ### 3. Application Launcher (The "Tap")
 macOS users expect the Start Menu / Application Launcher to behave differently than Windows. By using the `keyd` `overload()` function, we assign dual behaviors to modifiers:
@@ -41,7 +42,12 @@ Your `Capslock` key acts as `Escape` when tapped. However, when held, it acts as
 
 Because `keyd` globally translates the `CMD` key into `Ctrl`, WezTerm on Linux must be configured to listen for `Ctrl`, whereas WezTerm on macOS must listen for `CMD`.
 
-Our WezTerm configuration solves this cleanly by splitting OS-specific keybindings into modular files (`mac.lua` and `linux.lua`). The main `wezterm.lua` dynamically detects your OS and loads the appropriate `CTRL` or `CMD` mappings, including native support for the `Ctrl+Insert` copy/paste hack!
+Our WezTerm configuration solves this cleanly by splitting OS-specific keybindings into modular files (`mac.lua` and `linux.lua`). The main `wezterm.lua` dynamically detects your OS and loads the appropriate mappings.
+
+Due to `keyd` overrides and Linux display server quirks, `linux.lua` contains specific workarounds:
+- **Copy/Paste**: Listens for the universal `Ctrl+Insert` and `Shift+Insert` (instead of standard `CMD+C`/`CMD+V`).
+- **Tab Navigation**: Listens for `Shift+Home` and `Shift+End` to switch tabs. (This is because `keyd` intercepts `CMD+Shift+Left/Right` to emulate macOS text selection globally).
+- **Tab Reordering**: Listens for `{` and `}` as well as `[`. (Wayland/X11 often translates `Shift+[` into the literal `{` keysym, bypassing the `[` mapping entirely).
 
 ## Service Management & Debugging
 

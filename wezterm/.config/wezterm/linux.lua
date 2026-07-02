@@ -110,13 +110,15 @@ return {
         action = wezterm.action.SpawnTab 'CurrentPaneDomain',
       },
       {
-        key = 'LeftArrow',
-        mods = 'CTRL|SHIFT',
+        -- keyd maps CMD+Shift+Left to Shift+Home globally (macOS text selection).
+        key = 'Home',
+        mods = 'SHIFT',
         action = wezterm.action.ActivateTabRelative(-1),
       },
       {
-        key = 'RightArrow',
-        mods = 'CTRL|SHIFT',
+        -- keyd maps CMD+Shift+Right to Shift+End globally.
+        key = 'End',
+        mods = 'SHIFT',
         action = wezterm.action.ActivateTabRelative(1),
       },
       {
@@ -141,8 +143,28 @@ return {
         action = wezterm.action.MoveTabRelative(-1),
       },
       {
+        key = '{',
+        mods = 'CTRL|SHIFT',
+        action = wezterm.action.MoveTabRelative(-1),
+      },
+      {
+        key = '{',
+        mods = 'CTRL',
+        action = wezterm.action.MoveTabRelative(-1),
+      },
+      {
         key = ']',
         mods = 'CTRL|SHIFT',
+        action = wezterm.action.MoveTabRelative(1),
+      },
+      {
+        key = '}',
+        mods = 'CTRL|SHIFT',
+        action = wezterm.action.MoveTabRelative(1),
+      },
+      {
+        key = '}',
+        mods = 'CTRL',
         action = wezterm.action.MoveTabRelative(1),
       },
 
