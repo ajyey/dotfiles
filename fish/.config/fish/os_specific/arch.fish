@@ -58,3 +58,6 @@ else if type -q yay
 else
     alias uninstall="sudo pacman -Rns"
 end
+
+# Added by Antigravity CLI installer
+set -gx PATH "/home/aj/.local/bin" $PATH
