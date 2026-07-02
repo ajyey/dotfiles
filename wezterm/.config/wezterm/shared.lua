@@ -31,6 +31,8 @@ return {
     -- ====================================================================
     -- Behavior
     -- ====================================================================
+    config.warn_about_missing_glyphs = false
+
     config.default_cursor_style = 'BlinkingBar'
     config.scrollback_lines = 100000
 
