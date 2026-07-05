@@ -15,78 +15,62 @@ if not set -q SSH_AUTH_SOCK
     end
 end
 
-# System Update (all sources)
-if type -q shelly
-    alias update="shelly upgrade-all -n"
-else if type -q paru
-    alias update="paru -Syu"
-else if type -q yay
-    alias update="yay -Syu --answerclean y --answerdiff y --noconfirm"
-else
-    alias update="sudo pacman -Syu"
-end
+# Package Management (yay + flatpak)
+if type -q yay
+    alias update="yay -Syu --noconfirm; and if type -q flatpak; flatpak update -y; end"
+    alias uninstall="yay -Rns --noconfirm"
 
-# Package Search (all sources)
-if type -q shelly
-    function search -d "Search across standard, AUR, and Flatpak"
+    function search -d "Search standard, AUR, and Flatpak"
         if test (count $argv) -eq 0
             echo "Usage: search <package...>"
             return 1
         end
-        set_color blue -o; echo "=== Standard Repos ==="; set_color normal
-        shelly query $argv
-        set_color blue -o; echo "=== AUR ==="; set_color normal
-        shelly aur search $argv
-        set_color blue -o; echo "=== Flatpak ==="; set_color normal
-        shelly flatpak search $argv
+        set_color blue -o; echo "=== Standard & AUR (yay) ==="; set_color normal
+        yay -Ss $argv
+        if type -q flatpak
+            set_color blue -o; echo "=== Flatpak ==="; set_color normal
+            flatpak search $argv
+        end
     end
-else if type -q paru
-    alias search="paru -Ss"
-else if type -q yay
-    alias search="yay -Ss"
-else
-    alias search="pacman -Ss"
-end
 
-# Package Install (try standard, then AUR, then Flatpak)
-if type -q shelly
-    function install -d "Install from standard repos, AUR, or Flatpak"
+    function install -d "Install from Standard/AUR, fallback to Flatpak"
         if test (count $argv) -eq 0
             echo "Usage: install <package...>"
             return 1
         end
         for pkg in $argv
-            if shelly query $pkg 2>&1 | grep -q "No package named"
-                if shelly aur search $pkg 2>&1 | grep -q "Total results: 0"
-                    set_color cyan; echo "Trying Flatpak for $pkg..."; set_color normal
-                    shelly flatpak install -n $pkg
-                else
-                    set_color magenta; echo "Installing $pkg from AUR..."; set_color normal
-                    shelly aur install -n $pkg
-                end
+            if yay -Si $pkg >/dev/null 2>&1
+                set_color green; echo "Installing $pkg from Standard/AUR..."; set_color normal
+                yay -S --noconfirm $pkg
+            else if type -q flatpak
+                set_color cyan; echo "Trying Flatpak for $pkg..."; set_color normal
+                flatpak install -y $pkg
             else
-                set_color green; echo "Installing $pkg from standard repos..."; set_color normal
-                shelly install -n $pkg
+                set_color red; echo "Package $pkg not found."; set_color normal
             end
         end
     end
-else if type -q paru
-    alias install="paru -S"
-else if type -q yay
-    alias install="yay -S"
-else
-    alias install="sudo pacman -S"
-end
 
-# Package Uninstall
-if type -q shelly
-    alias uninstall="shelly remove -n"
-    alias aurs="shelly aur"   # Direct AUR commands: aurs install foo, aurs upgrade
-else if type -q paru
-    alias uninstall="paru -Rns"
-else if type -q yay
-    alias uninstall="yay -Rns"
+    function installed -d "Check if a package is installed"
+        if test (count $argv) -eq 0
+            echo "Usage: installed <package...>"
+            return 1
+        end
+        for pkg in $argv
+            if pacman -Q $pkg >/dev/null 2>&1
+                set_color green; echo "✅ $pkg is installed (Standard/AUR)"; set_color normal
+            else if type -q flatpak; and flatpak list --app --columns=application,name | grep -iq $pkg
+                set_color green; echo "✅ $pkg is installed (Flatpak)"; set_color normal
+            else
+                set_color red; echo "❌ $pkg is NOT installed"; set_color normal
+            end
+        end
+    end
 else
+    # Fallback if yay is uninstalled
+    alias update="sudo pacman -Syu"
+    alias search="pacman -Ss"
+    alias install="sudo pacman -S"
     alias uninstall="sudo pacman -Rns"
 end
 
