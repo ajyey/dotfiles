@@ -76,7 +76,7 @@ end
 
 # Zellij session shortcuts
 if type -q zellij
-    alias dev="zellij --session dev"
+    alias dev="zellij attach -c dev"
 end
 
 # Added by Antigravity CLI installer
