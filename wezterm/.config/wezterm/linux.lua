@@ -2,6 +2,9 @@ local wezterm = require 'wezterm'
 
 return {
   apply = function(config)
+    -- Force XWayland instead of native Wayland so that cliboard contents can be shared across wezterm windows/processes
+    config.enable_wayland = false
+
     -- ====================================================================
     -- Keybindings (Linux via keyd)
     -- ====================================================================
@@ -28,10 +31,12 @@ return {
       -- ==================== Copy & Paste (keyd support) ====================
       -- keyd maps CMD+C to Ctrl+Insert and CMD+V to Shift+Insert.
       -- WezTerm natively maps these to PrimarySelection, but we want the Clipboard!
+      -- NOTE: We use ClipboardAndPrimarySelection here because on Wayland, copying 
+      -- strictly to just the Clipboard can fail to sync across completely separate Wezterm window instances!
       {
         key = 'Insert',
         mods = 'CTRL',
-        action = wezterm.action.CopyTo 'Clipboard',
+        action = wezterm.action.CopyTo 'ClipboardAndPrimarySelection',
       },
       {
         key = 'Insert',
