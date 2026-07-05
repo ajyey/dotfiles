@@ -58,6 +58,10 @@ else if type -q yay
 else
     alias uninstall="sudo pacman -Rns"
 end
+# Zellij session shortcuts
+if type -q zellij
+    alias dev="zellij --session dev"
+end
 
 # Added by Antigravity CLI installer
 set -gx PATH "/home/aj/.local/bin" $PATH
