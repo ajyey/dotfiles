@@ -25,8 +25,10 @@ If `CMD` simply became `Ctrl`, we would have a major problem in Terminal emulato
 To fix this, we put specific overrides *inside* the `[meta_mac:C]` layer block. These intercept the keystroke before it becomes `Ctrl`:
 - **Copy/Paste**: `CMD + C` explicitly sends `Ctrl + Insert`. `CMD + V` sends `Shift + Insert`. This is a universal "safe" copy/paste that Linux GUI apps and Terminals support natively.
 - **App Switcher**: `CMD + Tab` doesn't send `Ctrl + Tab`; it uses the `swapm` function to seamlessly translate to `Alt + Tab` and hold the state, perfectly mimicking the macOS app switcher.
-- **Text Navigation**: `CMD + Left Arrow` sends `Home`. `CMD + Right Arrow` sends `End`. `CMD + Shift + Left/Right` sends `Shift + Home/End` (emulating macOS text selection to the beginning/end of a line).
-- **File Top/Bottom**: `CMD + Up Arrow` sends `Ctrl + Home`.
+- **Text Navigation (Line)**: `CMD + Left Arrow` sends `Home`. `CMD + Right Arrow` sends `End`. `CMD + Shift + Left/Right` sends `Shift + Home/End` (emulating macOS text selection to the beginning/end of a line).
+- **Text Navigation (Word)**: The `Option` (Alt) key layer explicitly maps `Option + Left/Right` to send `Ctrl + Left/Right`. Because Linux uses `Ctrl` for word skipping, this perfectly emulates macOS word navigation while typing!
+- **File Top/Bottom**: `CMD + Up/Down Arrow` sends `Ctrl + Home/End`.
+- **Browser History**: `CMD + [` and `CMD + ]` send `Alt + Left/Right` (emulating macOS native browser back/forward navigation).
 - **Tab Reordering**: `CMD + Shift + [` and `CMD + Shift + ]` explicitly send `Ctrl + Shift + [` and `Ctrl + Shift + ]`. These are explicitly mapped to avoid `keyd` inheritance issues. Note that Linux display servers often translate these into the `{` and `}` keysyms before they reach the application.
 
 ### 3. Application Launcher (The "Tap")

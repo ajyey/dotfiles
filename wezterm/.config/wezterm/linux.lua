@@ -175,16 +175,6 @@ return {
 
       -- ==================== Text / Line Editing ====================
       {
-        key = 'LeftArrow',
-        mods = 'CTRL',
-        action = wezterm.action.SendString '\x01',
-      },
-      {
-        key = 'RightArrow',
-        mods = 'CTRL',
-        action = wezterm.action.SendString '\x05',
-      },
-      {
         key = 'Backspace',
         mods = 'CTRL',
         action = wezterm.action.SendString '\x15',
