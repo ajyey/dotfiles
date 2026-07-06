@@ -17,7 +17,15 @@ end
 
 # Package Management (yay + flatpak)
 if type -q yay
-    alias update="yay -Syu --noconfirm; if type -q flatpak; flatpak update -y; end; if type -q mise; mise upgrade --bump; end"
+    function update -d "Update system, flatpaks, and tools"
+        yay -Syu --noconfirm
+        if type -q flatpak
+            flatpak update -y
+        end
+        if type -q mise
+            mise upgrade --bump
+        end
+    end
     alias uninstall="yay -Rns --noconfirm"
 
     function search -d "Search standard, AUR, and Flatpak"
@@ -51,24 +59,52 @@ if type -q yay
         end
     end
 
-    function installed -d "Check if a package is installed"
+    function installed -d "Check if a package is installed (fuzzy match)"
         if test (count $argv) -eq 0
             echo "Usage: installed <package...>"
             return 1
         end
         for pkg in $argv
-            if pacman -Q $pkg >/dev/null 2>&1
-                set_color green; echo "✅ $pkg is installed (Standard/AUR)"; set_color normal
-            else if type -q flatpak; and flatpak list --app --columns=application,name | grep -iq $pkg
-                set_color green; echo "✅ $pkg is installed (Flatpak)"; set_color normal
-            else
-                set_color red; echo "❌ $pkg is NOT installed"; set_color normal
+            set -l found 0
+            
+            # Check pacman
+            set -l pacman_matches (pacman -Qsq $pkg 2>/dev/null)
+            if test -n "$pacman_matches"
+                set found 1
+                set_color green; echo "✅ Found '$pkg' in Standard/AUR:"; set_color normal
+                for match in $pacman_matches
+                    echo "   - "(pacman -Q $match)
+                end
+            end
+
+            # Check flatpak
+            if type -q flatpak
+                set -l fp_matches (flatpak list --app --columns=application,name | grep -i $pkg)
+                if test -n "$fp_matches"
+                    set found 1
+                    set_color green; echo "✅ Found '$pkg' in Flatpak:"; set_color normal
+                    for match in $fp_matches
+                        echo "   - $match"
+                    end
+                end
+            end
+            
+            if test $found -eq 0
+                set_color red; echo "❌ No installed packages found matching '$pkg'"; set_color normal
             end
         end
     end
 else
     # Fallback if yay is uninstalled
-    alias update="sudo pacman -Syu --noconfirm; if type -q flatpak; flatpak update -y; end; if type -q mise; mise upgrade --bump; end"
+    function update -d "Update system, flatpaks, and tools"
+        sudo pacman -Syu --noconfirm
+        if type -q flatpak
+            flatpak update -y
+        end
+        if type -q mise
+            mise upgrade --bump
+        end
+    end
     alias search="pacman -Ss"
     alias install="sudo pacman -S"
     alias uninstall="sudo pacman -Rns"
