@@ -59,7 +59,7 @@ if type -q yay
         end
     end
 
-    function installed -d "Check if a package is installed (fuzzy match)"
+    function installed -d "Check if a package is installed (smart match)"
         if test (count $argv) -eq 0
             echo "Usage: installed <package...>"
             return 1
@@ -67,22 +67,30 @@ if type -q yay
         for pkg in $argv
             set -l found 0
             
-            # Check pacman
-            set -l pacman_matches (pacman -Qsq $pkg 2>/dev/null)
-            if test -n "$pacman_matches"
+            # 1. Exact pacman match
+            set -l exact_match (pacman -Q $pkg 2>/dev/null)
+            if test -n "$exact_match"
                 set found 1
-                set_color green; echo "✅ Found '$pkg' in Standard/AUR:"; set_color normal
-                for match in $pacman_matches
-                    echo "   - "(pacman -Q $match)
+                set_color green; echo "✅ Found exactly '$pkg' (Standard/AUR):"; set_color normal
+                echo "   - $exact_match"
+            else
+                # 2. Fuzzy pacman match (names only)
+                set -l fuzzy_matches (pacman -Qq | grep -i "$pkg" 2>/dev/null)
+                if test -n "$fuzzy_matches"
+                    set found 1
+                    set_color yellow; echo "⚠️  No exact match, but found similar (Standard/AUR):"; set_color normal
+                    for match in $fuzzy_matches
+                        echo "   - "(pacman -Q $match)
+                    end
                 end
             end
 
-            # Check flatpak
+            # 3. Flatpak match
             if type -q flatpak
-                set -l fp_matches (flatpak list --app --columns=application,name | grep -i $pkg)
+                set -l fp_matches (flatpak list --app --columns=application,name | grep -i "$pkg")
                 if test -n "$fp_matches"
                     set found 1
-                    set_color green; echo "✅ Found '$pkg' in Flatpak:"; set_color normal
+                    set_color green; echo "✅ Found '$pkg' (Flatpak):"; set_color normal
                     for match in $fp_matches
                         echo "   - $match"
                     end
