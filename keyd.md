@@ -38,7 +38,11 @@ macOS users expect the Start Menu / Application Launcher to behave differently t
 
 ### 4. The Hyper Key
 Your `Capslock` key acts as `Escape` when tapped. However, when held, it acts as a massive `Hyper` key (`Ctrl + Alt + Shift + Super`), giving you a blank slate to assign global, non-conflicting hotkeys.
-- Example: `Capslock + Space` (`Hyper + Space`) is mapped inside `keyd` to send `Alt + Space`, instantly triggering the KRunner (Alfred-like) popup launcher in KDE Plasma.
+- **App Launcher**: `Capslock + Space` (`Hyper + Space`) is mapped inside `keyd` to send `Alt + Space`, instantly triggering the KRunner (Alfred-like) popup launcher in KDE Plasma.
+- **Window Management (Rectangle style)**: Hyper is mapped to emulate the macOS "Rectangle" app by silently triggering native KDE Plasma tiling shortcuts:
+  - `Hyper + Left/Right/Up/Down`: Snap window to the left, right, top, or bottom half of the screen.
+  - `Hyper + Enter`: Maximize window.
+  - `Hyper + Backspace`: Minimize/Restore window.
 
 ## WezTerm Integration
 
