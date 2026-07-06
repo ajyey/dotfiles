@@ -16,7 +16,7 @@ if not set -q SSH_AUTH_SOCK
 end
 
 # System Update
-alias update="brew update && brew upgrade && brew cleanup"
+alias update="brew update && brew upgrade && brew cleanup; if type -q mise; mise upgrade --bump; end"
 
 # Package Search
 alias search="brew search"

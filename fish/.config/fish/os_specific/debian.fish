@@ -13,7 +13,7 @@ if not set -q SSH_AUTH_SOCK
 end
 
 # System Update
-alias update="sudo apt update && sudo apt upgrade -y"
+alias update="sudo apt update && sudo apt upgrade -y; if type -q mise; mise upgrade --bump; end"
 
 # Package Search
 alias search="apt search"

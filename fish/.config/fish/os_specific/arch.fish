@@ -17,7 +17,7 @@ end
 
 # Package Management (yay + flatpak)
 if type -q yay
-    alias update="yay -Syu --noconfirm; and if type -q flatpak; flatpak update -y; end"
+    alias update="yay -Syu --noconfirm; if type -q flatpak; flatpak update -y; end; if type -q mise; mise upgrade --bump; end"
     alias uninstall="yay -Rns --noconfirm"
 
     function search -d "Search standard, AUR, and Flatpak"
@@ -68,7 +68,7 @@ if type -q yay
     end
 else
     # Fallback if yay is uninstalled
-    alias update="sudo pacman -Syu"
+    alias update="sudo pacman -Syu --noconfirm; if type -q flatpak; flatpak update -y; end; if type -q mise; mise upgrade --bump; end"
     alias search="pacman -Ss"
     alias install="sudo pacman -S"
     alias uninstall="sudo pacman -Rns"
