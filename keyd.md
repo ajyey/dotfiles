@@ -25,11 +25,13 @@ If `CMD` simply became `Ctrl`, we would have a major problem in Terminal emulato
 To fix this, we put specific overrides *inside* the `[meta_mac:C]` layer block. These intercept the keystroke before it becomes `Ctrl`:
 - **Copy/Paste**: `CMD + C` explicitly sends `Ctrl + Insert`. `CMD + V` sends `Shift + Insert`. This is a universal "safe" copy/paste that Linux GUI apps and Terminals support natively.
 - **App Switcher**: `CMD + Tab` doesn't send `Ctrl + Tab`; it uses the `swapm` function to seamlessly translate to `Alt + Tab` and hold the state, perfectly mimicking the macOS app switcher.
-- **Text Navigation (Line)**: `CMD + Left Arrow` sends `Home`. `CMD + Right Arrow` sends `End`. `CMD + Shift + Left/Right` sends `Shift + Home/End` (emulating macOS text selection to the beginning/end of a line).
-- **Text Navigation (Word)**: The `Option` (Alt) key layer explicitly maps `Option + Left/Right` to send `Ctrl + Left/Right`. Because Linux uses `Ctrl` for word skipping, this perfectly emulates macOS word navigation while typing!
+- **Text Navigation (Line)**: `CMD + Left/Right Arrow` sends `Home/End`. `CMD + Shift + Left/Right` sends `Shift + Home/End` (macOS text selection). `CMD + Backspace` sends `Ctrl + U` (the universal Linux Readline shortcut to delete to the beginning of the line). `CMD + Delete` sends `Ctrl + K` (delete to end of line).
+- **Text Navigation (Word)**: The `Option` (Alt) key layer maps `Option + Left/Right` to `Ctrl + Left/Right` (skipping words). `Option + Backspace` maps to `Ctrl + Backspace` (deleting words). *Note: Terminals expect `Alt+Backspace` for word deletion, so WezTerm intercepts this and manually translates it!*
+- **Composite Layers for Shift**: In `keyd`, you cannot bind shifted keys (like `S-left`) inside a standard layer. Instead, shifted behaviors are mapped in dedicated composite layers like `[alt+shift]` and `[meta_mac+shift]`.
 - **File Top/Bottom**: `CMD + Up/Down Arrow` sends `Ctrl + Home/End`.
 - **Browser History**: `CMD + [` and `CMD + ]` send `Alt + Left/Right` (emulating macOS native browser back/forward navigation).
-- **Tab Reordering**: `CMD + Shift + [` and `CMD + Shift + ]` explicitly send `Ctrl + Shift + [` and `Ctrl + Shift + ]`. These are explicitly mapped to avoid `keyd` inheritance issues. Note that Linux display servers often translate these into the `{` and `}` keysyms before they reach the application.
+- **Tab Reordering**: `CMD + Shift + [` and `CMD + Shift + ]` explicitly send `Ctrl + Shift + [` and `Ctrl + Shift + ]`. Because `keyd` recognizes shifted brackets as their physical symbols, these are mapped in the config as `{` and `}` to prevent `keyd`'s cascading inheritance from incorrectly applying shift.
+- **Tab Switching (1..9)**: `CMD + 1..9` natively inherits `Ctrl` and sends `Ctrl + 1..9`, seamlessly switching tabs in both browsers and WezTerm. `Option + 1..9` natively sends `Alt + 1..9`, passing cleanly through WezTerm to switch Zellij tabs!
 
 ### 3. Application Launcher (The "Tap")
 macOS users expect the Start Menu / Application Launcher to behave differently than Windows. By using the `keyd` `overload()` function, we assign dual behaviors to modifiers:
@@ -44,6 +46,12 @@ Your `Capslock` key acts as `Escape` when tapped. However, when held, it acts as
   - `Hyper + Enter`: Maximize window.
   - `Hyper + Backspace`: Minimize/Restore window.
 
+## Zellij Integration
+
+Because we override the `Option` (Alt) layer in `keyd` for macOS text navigation, it introduces some conflicts with terminal multiplexers like Zellij:
+- **Pane Navigation**: Zellij normally uses `Alt + Arrow` to switch panes. But because `Option + Left/Right` skips words (`Ctrl + Left/Right`), Zellij pane navigation is explicitly remapped to **`Option + Shift + Arrow`**.
+- **Tab Navigation**: Zellij tabs are navigated using `Option + 1..9` (which naturally outputs `Alt + 1..9`). This works perfectly because WezTerm is configured to exclusively use `Ctrl + 1..9`.
+
 ## WezTerm Integration
 
 Because `keyd` globally translates the `CMD` key into `Ctrl`, WezTerm on Linux must be configured to listen for `Ctrl`, whereas WezTerm on macOS must listen for `CMD`.
@@ -52,8 +60,9 @@ Our WezTerm configuration solves this cleanly by splitting OS-specific keybindin
 
 Due to `keyd` overrides and Linux display server quirks, `linux.lua` contains specific workarounds:
 - **Copy/Paste**: Listens for the universal `Ctrl+Insert` and `Shift+Insert` (instead of standard `CMD+C`/`CMD+V`).
-- **Tab Navigation**: Listens for `Shift+Home` and `Shift+End` to switch tabs. (This is because `keyd` intercepts `CMD+Shift+Left/Right` to emulate macOS text selection globally).
-- **Tab Reordering**: Listens for `{` and `}` as well as `[`. (Wayland/X11 often translates `Shift+[` into the literal `{` keysym, bypassing the `[` mapping entirely).
+- **Tab Navigation**: Listens strictly for `Ctrl + 1..9` for numbered tabs to avoid colliding with Zellij. Also listens for `Shift+Home` and `Shift+End` to cycle tabs (since `keyd` translates `CMD+Shift+Left/Right` into these for text selection).
+- **Word Deletion**: Listens for `Ctrl + Backspace` (which `keyd` sends when `Option + Backspace` is pressed) and actively translates it into the raw `Alt + Backspace` escape code (`\x1b\x7f`). This bridges the gap between GUI apps (which use `Ctrl`) and Terminal shells (which expect `Alt`).
+- **Tab Reordering**: Listens for `{` and `}`. (Wayland/X11 often translates `Shift+[` into the literal `{` keysym).
 
 ## Service Management & Debugging
 
