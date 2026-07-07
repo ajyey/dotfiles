@@ -174,7 +174,14 @@ return {
       },
 
       -- ==================== Text / Line Editing ====================
-      -- (Native shell behavior is used for Backspace)
+      -- keyd maps Option+Backspace to Ctrl+Backspace (which works perfectly in GUI apps).
+      -- Terminals usually expect Alt+Backspace for word deletion, so we manually 
+      -- intercept Ctrl+Backspace and send the Alt+Backspace ANSI escape sequence!
+      {
+        key = 'Backspace',
+        mods = 'CTRL',
+        action = wezterm.action.SendString '\x1b\x7f',
+      },
     }
 
     -- Add tab navigation for CMD+1 through CMD+9
