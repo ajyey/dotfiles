@@ -174,11 +174,7 @@ return {
       },
 
       -- ==================== Text / Line Editing ====================
-      {
-        key = 'Backspace',
-        mods = 'CTRL',
-        action = wezterm.action.SendString '\x15',
-      },
+      -- (Native shell behavior is used for Backspace)
     }
 
     -- Add tab navigation for CMD+1 through CMD+9
