@@ -174,6 +174,19 @@ return {
       },
 
       -- ==================== Text / Line Editing ====================
+      -- keyd maps Option+Left/Right to Ctrl+Left/Right for global word navigation.
+      -- To make Zellij pane navigation (Alt+Left/Right) work natively, we intercept 
+      -- the Ctrl+Left/Right signal inside Wezterm and translate it back to Alt+Left/Right!
+      {
+        key = 'LeftArrow',
+        mods = 'CTRL',
+        action = wezterm.action.SendString '\x1b[1;3D',
+      },
+      {
+        key = 'RightArrow',
+        mods = 'CTRL',
+        action = wezterm.action.SendString '\x1b[1;3C',
+      },
       -- keyd maps Option+Backspace to Ctrl+Backspace (which works perfectly in GUI apps).
       -- Terminals usually expect Alt+Backspace for word deletion, so we manually 
       -- intercept Ctrl+Backspace and send the Alt+Backspace ANSI escape sequence!
@@ -185,11 +198,12 @@ return {
     }
 
     -- Add tab navigation for CMD+1 through CMD+9
-    -- Note: keyd maps CMD+1..9 to Alt+1..9 natively, so we listen for ALT
+    -- Note: keyd natively translates CMD+1..9 into Ctrl+1..9, so we listen for CTRL.
+    -- This perfectly separates Wezterm tabs (CTRL) from Zellij tabs (ALT)!
     for i = 1, 9 do
       table.insert(config.keys, {
         key = tostring(i),
-        mods = 'ALT',
+        mods = 'CTRL',
         action = wezterm.action.ActivateTab(i - 1),
       })
     end
