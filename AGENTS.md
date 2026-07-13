@@ -9,6 +9,7 @@ This is a GNU Stow dotfiles repository. Each top-level directory is a Stow packa
 - `starship/.config/starship.toml` contains the Starship prompt theme.
 - `wezterm/.config/wezterm/wezterm.lua` contains the WezTerm configuration with fzf.fish keybindings.
 - `zellij/.config/zellij/config.kdl` contains the Zellij terminal multiplexer configuration.
+- `niri/.config/niri/config.kdl` contains the Niri scrollable-tiling Wayland compositor configuration.
 - `mise/.config/mise/config.toml` manages global runtimes and tools (Node, Python, Go, Zellij, Ripgrep).
 - `keyd/etc/keyd/` contains system-level keyboard remapping configurations for Linux. It is installed manually via install scripts, not Stowed to `$HOME`.
 - `install.sh` generic installation script that detects OS and delegates to `scripts/install-*.sh`.
@@ -18,7 +19,7 @@ Do not commit generated or machine-specific Fish files. `.gitignore` excludes `f
 
 ## Build, Test, and Development Commands
 
-- `stow fish`, `stow fastfetch`, `stow starship`, `stow wezterm`, `stow zellij`, `stow mise`: symlink a package into `$HOME`.
+- `stow fish`, `stow fastfetch`, `stow starship`, `stow wezterm`, `stow zellij`, `stow niri`, `stow mise`: symlink a package into `$HOME`.
 - `stow -D fish`: remove Fish symlinks without deleting repository files.
 - `fish -n fish/.config/fish/config.fish`: syntax-check the main Fish config.
 - `fastfetch --config fastfetch/.config/fastfetch/config.jsonc`: preview Fastfetch output.

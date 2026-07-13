@@ -1,6 +1,6 @@
 # Dotfiles Managed with GNU Stow
 
-This repo manages dotfiles with [GNU Stow](https://www.gnu.org/software/stow/) by symlinking package directories into `$HOME`. It currently tracks Fish shell, Fastfetch, Starship, WezTerm, Zellij, and global Mise configuration.
+This repo manages dotfiles with [GNU Stow](https://www.gnu.org/software/stow/) by symlinking package directories into `$HOME`. It currently tracks Fish shell, Fastfetch, Starship, WezTerm, Zellij, Niri, and global Mise configuration.
 
 ## Requirements
 
@@ -31,6 +31,10 @@ The install scripts set up GNU Stow, Fish, Fisher plugins, Fastfetch, Starship, 
 │       └── linux.lua
 ├── zellij/
 │   └── .config/zellij/config.kdl
+├── niri/
+│   └── .config/niri/
+│       ├── config.kdl
+│       └── dms/
 └── mise/
     └── .config/mise/config.toml
 ```
@@ -156,6 +160,7 @@ stow -t ~ fastfetch
 stow -t ~ starship
 stow -t ~ wezterm
 stow -t ~ zellij
+stow -t ~ niri
 stow -t ~ mise
 ```
 
