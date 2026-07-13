@@ -6,7 +6,7 @@ Because `keyd` runs at the lowest kernel level (`evdev`), it intercepts keystrok
 
 ## Core Concepts
 
-The configuration is located in `keyd/etc/keyd/default.conf`. You can update and restart the daemon at any time by running `sudo ./scripts/update-keyd.sh`.
+The configurations are located in `keyd/etc/keyd/` (split into `kde.conf` and `niri.conf`). You can update and restart the daemon at any time for your current desktop by running `sudo ./scripts/update-keyd.sh`. The script automatically detects if you are running KDE or Niri!
 
 ### 1. The Inheritance Trick (`CMD` becomes `Ctrl`)
 To emulate macOS, we mapped the physical `CMD` (leftmeta) key to activate a custom modifier layer called `meta_mac`. 

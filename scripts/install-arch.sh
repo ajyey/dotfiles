@@ -191,9 +191,7 @@ install_mise_runtimes() {
 setup_keyd() {
   if has keyd; then
     log "Configuring keyd system daemon (requires sudo)"
-    run_sudo mkdir -p /etc/keyd
-    run_sudo cp "$DOTFILES_DIR/keyd/etc/keyd/default.conf" /etc/keyd/default.conf
-    run_sudo systemctl enable --now keyd
+    run_sudo "$DOTFILES_DIR/scripts/update-keyd.sh"
   fi
 }
 
