@@ -638,8 +638,6 @@ window-rule {
 
 binds {
     // Command is translated by keyd; Hyper is Caps Lock held and emits all four modifiers.
-    Alt+Tab repeat=false hotkey-overlay-title="Command + Tab: Application Switcher" { spawn "noctalia" "msg" "window-switcher"; }
-    Alt+Shift+Tab repeat=false hotkey-overlay-title="Command + Shift + Tab: Application Switcher" { spawn "noctalia" "msg" "window-switcher"; }
     Alt+Grave hotkey-overlay-title="Command + `: Next Window in Column" { focus-window-down-or-top; }
 
     // Hyper: applications and shell surfaces.

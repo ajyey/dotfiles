@@ -10,9 +10,9 @@ Input is split into three roles:
 - **Option** (`Alt`) remains Alt but maps arrows and Delete/Backspace to Linux word-navigation shortcuts.
 - **Hyper** (hold Caps Lock) emits Ctrl+Alt+Shift+Super. Niri owns this uncommon chord for compositor and Noctalia actions. Tap Caps Lock for Escape.
 
-Hyper+Tab is the exception: `keyd` emits `F20`, which Niri reserves for Noctalia's window switcher. This prevents the all-modifier Tab chord from overlapping Command's Alt+Tab path.
+Hyper+Tab is the exception: `keyd` emits `F20`, which Niri reserves for Noctalia's window switcher. Command+Tab is not bound by Niri; its standard Alt+Tab output is left for the session's native switcher.
 
-After Command+Tab opens Noctalia's switcher, `keyd` enters `app_switch_state`. The layer keeps Alt held until Command is released, which commits the selected window. Tab and Right emit Alt+Tab; Backtick and Left emit Alt+Shift+Tab. Keeping Alt on every chord is important because temporarily releasing it makes Noctalia commit early.
+After Command+Tab opens the native switcher, `keyd` enters `app_switch_state`. The layer keeps Alt held until Command is released, which commits the selected window. Tab and Right emit Alt+Tab; Backtick and Left emit Alt+Shift+Tab. The Backtick binding uses keyd's canonical `grave` key name. Niri deliberately leaves both chords unbound so the switcher receives them directly.
 
 Noctalia must accept the Alt-modified navigation chords in `~/.config/noctalia/config.toml`:
 
@@ -29,7 +29,7 @@ Command and Option are plain layers in the Niri profile, so tapping either key d
 | Physical shortcut | Emitted shortcut | Niri/application behavior |
 |---|---|---|
 | Command+Space | Hyper+Space | Toggle Vicinae |
-| Command+Tab | Alt+Tab | Open Noctalia's application switcher |
+| Command+Tab | Alt+Tab | Open the native application switcher |
 | Command+` | Alt+` | Cycle windows in the focused column |
 | Command+Shift+3 | Ctrl+Print | Capture the focused screen |
 | Command+Shift+4 | Print | Open Niri's region screenshot UI |
