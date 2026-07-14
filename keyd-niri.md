@@ -45,11 +45,12 @@ Hyper already contains Shift, so it cannot have a separate Hyper+Shift tier. Dis
 | Hyper+Enter | WezTerm | Hyper+Space | Vicinae |
 | Hyper+Tab (`F24`) | Previous workspace toggle | Hyper+O | Niri overview |
 | Hyper+C/V | Control Center / clipboard | Hyper+, | Noctalia settings |
-| Hyper+L/Q | Lock / close window | Hyper+Arrow | Move focus |
-| Hyper+W/A/S/D | Move window or column | Hyper+1..9 | Focus workspace |
-| Hyper+PageUp/PageDown | Change workspace | Hyper+Home/End | Move column between workspaces |
-| Hyper+R/-/= | Resize column | Hyper+F/M/G | Maximize column / maximize window / fullscreen |
-| Hyper+T | Toggle tabbed column | Hyper+/ | Show Niri hotkeys |
+| Hyper+L/Q | Lock / close window | Hyper+Left/Right | Focus columns |
+| Hyper+Up/Down | Previous / next workspace | Hyper+W/A/S/D | Move window or column |
+| Hyper+1..9 | Focus workspace | Hyper+PageUp/PageDown | Change workspace |
+| Hyper+Home/End | Move column between workspaces | Hyper+R/-/= | Resize column |
+| Hyper+F/M/G | Maximize column / maximize window / fullscreen | Hyper+T | Toggle tabbed column |
+| Hyper+/ | Show Niri hotkeys | | |
 
 Media and brightness keys call Noctalia IPC so its OSD stays synchronized.
 
