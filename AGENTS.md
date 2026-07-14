@@ -8,7 +8,7 @@ This is a GNU Stow dotfiles repository. Each configuration package mirrors its d
 - `fastfetch/`, `starship/`, `wezterm/`, `zellij/`, `niri/`, and `mise/` contain their respective files under `.config/`.
 - `keyd/etc/keyd/` contains Linux keyboard mappings installed at the system level rather than Stowed into `$HOME`.
 - `install.sh` detects the host OS and delegates to `scripts/install-{arch,debian,mac}.sh`; `scripts/update-keyd.sh` deploys the appropriate keyd profile.
-- `README.md` covers installation and usage; `keyd.md` explains keyboard-remapping behavior.
+- `README.md` covers installation and usage. `keyd.md` documents the KDE keyboard profile; `keyd-niri.md` documents Niri and Noctalia bindings.
 
 Do not commit generated Fish state. `.gitignore` excludes `fish_variables`, generated `functions/`, `conf.d/`, and completions; keep `fish_plugins` tracked.
 
@@ -39,4 +39,4 @@ Use short, focused, imperative commits. Recent history commonly uses Conventiona
 
 ## Documentation Maintenance
 
-When adding a tool, package, script, or architectural change, update both `AGENTS.md` and `README.md`. Any change to `keyd/etc/keyd/kde.conf` or `keyd/etc/keyd/niri.conf` must also update `keyd.md` with the technical rationale.
+When adding a tool, package, script, or architectural change, update both `AGENTS.md` and `README.md`. Changes to `keyd/etc/keyd/kde.conf` must update `keyd.md`; changes to `keyd/etc/keyd/niri.conf` must update `keyd-niri.md`. Explain the technical rationale, layer behavior, and compositor-side bindings.

@@ -209,9 +209,12 @@ This will read your `mise/.config/mise/config.toml`, download the latest version
 On Arch/CachyOS, this repository uses **`keyd`** to map the `CMD` (Super/Windows) key to behave exactly like macOS across the entire Linux desktop. 
 Because `keyd` runs at the lowest kernel level (evdev), it works flawlessly on both X11 and Wayland.
 
-The desktop configurations are tracked in `keyd/etc/keyd/` (as `kde.conf` and `niri.conf`) and are automatically installed and enabled by `scripts/install-arch.sh`. You can safely update and restart the daemon at any time for your current desktop by running `sudo ./scripts/update-keyd.sh`. The script will automatically detect whether you are running Plasma or Niri and deploy the appropriate configuration!
+The desktop configurations are tracked in `keyd/etc/keyd/` as `kde.conf` and `niri.conf`. `scripts/install-arch.sh` installs the detected profile; `sudo ./scripts/update-keyd.sh [kde|niri]` can deploy one explicitly.
 
-**For a comprehensive breakdown of exactly how this works (including the `CMD->Ctrl` inheritance, the `Ctrl+Insert` safe-copy hack, App Switcher, and the Capslock Hyper Key), please read the full documentation in [`keyd.md`](file:///Users/AJ/Development/dotfiles/keyd.md).**
+The profiles have separate guides because their compositor shortcuts differ:
+
+- [`keyd.md`](keyd.md) documents the KDE Plasma profile.
+- [`keyd-niri.md`](keyd-niri.md) documents the Niri profile, its Hyper bindings, and Noctalia integration.
 
 ## Modular WezTerm
 

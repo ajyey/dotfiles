@@ -346,7 +346,8 @@ window-rule {
     clip-to-geometry true
 }
 
-binds {
+// Keep the upstream defaults as a reference; the active Hyper map follows.
+/-binds {
     // Keys consist of modifiers separated by + signs, followed by an XKB key name
     // in the end. To find an XKB name for a particular key, you may use a program
     // like wev.
@@ -524,8 +525,8 @@ binds {
     Mod+7 { focus-workspace 7; }
     Mod+8 { focus-workspace 8; }
     Mod+9 { focus-workspace 9; }
-    Mod+Ctrl+1 { move-column-to-workspace 1; }
-    Mod+Ctrl+2 { move-column-to-workspace 2; }
+    Ctrl+Shift+1 { move-column-to-workspace 1; }
+    Ctrl+Shift+2 { move-column-to-workspace 2; }
     Mod+Ctrl+3 { move-column-to-workspace 3; }
     Mod+Ctrl+4 { move-column-to-workspace 4; }
     Mod+Ctrl+5 { move-column-to-workspace 5; }
@@ -559,7 +560,7 @@ binds {
     Mod+Ctrl+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
 
-    Mod+F { maximize-column; }
+    Mod+Shift+Ctrl+Alt+F { maximize-column; }
     Mod+Shift+F { fullscreen-window; }
 
     // While maximize-column leaves gaps and borders around the window,
@@ -630,4 +631,82 @@ binds {
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
     Mod+Shift+P { power-off-monitors; }
+
+    // Open vicinae as app launcher
+    Mod+Shift+Ctrl+Alt+Space hotkey-overlay-title="Vicinae Launcher" { spawn "vicinae" "toggle"; }
+}
+
+binds {
+    // Command is translated by keyd; Hyper is Caps Lock held and emits all four modifiers.
+    Alt+Tab repeat=false hotkey-overlay-title="Command + Tab: Application Switcher" { spawn "noctalia" "msg" "window-switcher"; }
+    Alt+Shift+Tab repeat=false hotkey-overlay-title="Command + Shift + Tab: Application Switcher" { spawn "noctalia" "msg" "window-switcher"; }
+    Alt+Grave hotkey-overlay-title="Command + `: Next Window in Column" { focus-window-down-or-top; }
+
+    // Hyper: applications and shell surfaces.
+    Mod+Ctrl+Alt+Shift+Return repeat=false hotkey-overlay-title="Hyper + Enter: WezTerm" { spawn "wezterm"; }
+    Mod+Ctrl+Alt+Shift+Space repeat=false hotkey-overlay-title="Command/Hyper + Space: Vicinae" { spawn "vicinae" "toggle"; }
+    // keyd emits F20 for Hyper+Tab to keep it distinct from Command/Alt+Tab.
+    F20 repeat=false hotkey-overlay-title="Hyper + Tab: Window Switcher" { spawn "noctalia" "msg" "window-switcher"; }
+    Mod+Ctrl+Alt+Shift+O repeat=false hotkey-overlay-title="Hyper + O: Overview" { toggle-overview; }
+    Mod+Ctrl+Alt+Shift+C repeat=false hotkey-overlay-title="Hyper + C: Control Center" { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
+    Mod+Ctrl+Alt+Shift+V repeat=false hotkey-overlay-title="Hyper + V: Clipboard" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
+    Mod+Ctrl+Alt+Shift+Comma repeat=false hotkey-overlay-title="Hyper + ,: Noctalia Settings" { spawn "noctalia" "msg" "settings-toggle"; }
+    Mod+Ctrl+Alt+Shift+L repeat=false hotkey-overlay-title="Hyper + L: Lock" { spawn "noctalia" "msg" "session" "lock"; }
+
+    // Hyper: focus and movement. Arrows focus; WASD moves.
+    Mod+Ctrl+Alt+Shift+Left  { focus-column-left; }
+    Mod+Ctrl+Alt+Shift+Down  { focus-window-down; }
+    Mod+Ctrl+Alt+Shift+Up    { focus-window-up; }
+    Mod+Ctrl+Alt+Shift+Right { focus-column-right; }
+    Mod+Ctrl+Alt+Shift+A { move-column-left; }
+    Mod+Ctrl+Alt+Shift+D { move-column-right; }
+    Mod+Ctrl+Alt+Shift+W { move-window-up; }
+    Mod+Ctrl+Alt+Shift+S { move-window-down; }
+    Mod+Ctrl+Alt+Shift+Q repeat=false { close-window; }
+
+    // Hyper: workspaces.
+    Mod+Ctrl+Alt+Shift+1 { focus-workspace 1; }
+    Mod+Ctrl+Alt+Shift+2 { focus-workspace 2; }
+    Mod+Ctrl+Alt+Shift+3 { focus-workspace 3; }
+    Mod+Ctrl+Alt+Shift+4 { focus-workspace 4; }
+    Mod+Ctrl+Alt+Shift+5 { focus-workspace 5; }
+    Mod+Ctrl+Alt+Shift+6 { focus-workspace 6; }
+    Mod+Ctrl+Alt+Shift+7 { focus-workspace 7; }
+    Mod+Ctrl+Alt+Shift+8 { focus-workspace 8; }
+    Mod+Ctrl+Alt+Shift+9 { focus-workspace 9; }
+    Mod+Ctrl+Alt+Shift+Page_Up   { focus-workspace-up; }
+    Mod+Ctrl+Alt+Shift+Page_Down { focus-workspace-down; }
+    Mod+Ctrl+Alt+Shift+Home { move-column-to-workspace-up; }
+    Mod+Ctrl+Alt+Shift+End  { move-column-to-workspace-down; }
+
+    // Hyper: layout.
+    Mod+Ctrl+Alt+Shift+R repeat=false { switch-preset-column-width; }
+    Mod+Ctrl+Alt+Shift+Minus { set-column-width "-10%"; }
+    Mod+Ctrl+Alt+Shift+Equal { set-column-width "+10%"; }
+    Mod+Ctrl+Alt+Shift+F repeat=false { maximize-column; }
+    Mod+Ctrl+Alt+Shift+M repeat=false { maximize-window-to-edges; }
+    Mod+Ctrl+Alt+Shift+G repeat=false { fullscreen-window; }
+    Mod+Ctrl+Alt+Shift+T repeat=false { toggle-column-tabbed-display; }
+
+    // Native and macOS-style screenshot shortcuts.
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Alt+Print { screenshot-window; }
+
+    // Noctalia provides OSD feedback and avoids separate media/brightness helpers.
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-down"; }
+    XF86AudioMute allow-when-locked=true { spawn "noctalia" "msg" "volume-mute"; }
+    XF86AudioMicMute allow-when-locked=true { spawn "noctalia" "msg" "mic-mute"; }
+    XF86AudioPlay allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
+    XF86AudioPause allow-when-locked=true { spawn "noctalia" "msg" "media" "toggle"; }
+    XF86AudioStop allow-when-locked=true { spawn "noctalia" "msg" "media" "stop"; }
+    XF86AudioPrev allow-when-locked=true { spawn "noctalia" "msg" "media" "previous"; }
+    XF86AudioNext allow-when-locked=true { spawn "noctalia" "msg" "media" "next"; }
+    XF86MonBrightnessUp allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
+
+    Mod+Ctrl+Alt+Shift+Slash repeat=false { show-hotkey-overlay; }
+    Mod+Ctrl+Alt+Shift+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Ctrl+Alt+Delete { quit; }
 }
