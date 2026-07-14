@@ -10,7 +10,7 @@ Input is split into three roles:
 - **Option** (`Alt`) remains Alt but maps arrows and Delete/Backspace to Linux word-navigation shortcuts.
 - **Hyper** (hold Caps Lock) emits Ctrl+Alt+Shift+Super. Niri owns this uncommon chord for compositor and Noctalia actions. Tap Caps Lock for Escape.
 
-Hyper+Tab is the exception: `keyd` emits `F20`, which Niri reserves for Noctalia's window switcher. Command+Tab is not bound by Niri; its standard Alt+Tab output is left for the session's native switcher.
+Hyper+Tab is the exception: `keyd` emits `F24`, which Niri reserves for toggling to the previously focused workspace. `F20` is avoided because the standard evdev `inet` symbols map it to microphone mute. Command+Tab is not bound by Niri; its standard Alt+Tab output is left for the session's native switcher.
 
 After Command+Tab opens the native switcher, `keyd` enters `app_switch_state`. The layer keeps Alt held until Command is released, which commits the selected window. Tab and Right emit Alt+Tab; Backtick and Left emit Alt+Shift+Tab. The Backtick binding uses keyd's canonical `grave` key name. Niri deliberately leaves both chords unbound so the switcher receives them directly.
 
@@ -43,7 +43,7 @@ Hyper already contains Shift, so it cannot have a separate Hyper+Shift tier. Dis
 | Shortcut | Action | Shortcut | Action |
 |---|---|---|---|
 | Hyper+Enter | WezTerm | Hyper+Space | Vicinae |
-| Hyper+Tab (`F20`) | Noctalia window switcher | Hyper+O | Niri overview |
+| Hyper+Tab (`F24`) | Previous workspace toggle | Hyper+O | Niri overview |
 | Hyper+C/V | Control Center / clipboard | Hyper+, | Noctalia settings |
 | Hyper+L/Q | Lock / close window | Hyper+Arrow | Move focus |
 | Hyper+W/A/S/D | Move window or column | Hyper+1..9 | Focus workspace |
