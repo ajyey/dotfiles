@@ -53,7 +53,7 @@ Hyper already contains Shift, so it cannot have a separate Hyper+Shift tier. Dis
 | Hyper+vertical wheel | Focus stacked window, then workspace | Hyper+horizontal wheel | Focus columns |
 | Hyper+Home/End | Move column between workspaces | Hyper+R/-/= | Resize column |
 | Hyper+F/M/G | Maximize column / maximize window / fullscreen | Hyper+T | Toggle tabbed column |
-| Hyper+/ | Show Niri hotkeys | | |
+| Hyper+/ | Show Niri hotkeys | Hyper+Escape | Suspend the system |
 
 Media and brightness keys call Noctalia IPC so its OSD stays synchronized.
 

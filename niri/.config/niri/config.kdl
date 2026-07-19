@@ -719,6 +719,6 @@ binds {
     XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
 
     Mod+Ctrl+Alt+Shift+Slash repeat=false { show-hotkey-overlay; }
-    Mod+Ctrl+Alt+Shift+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+    Mod+Ctrl+Alt+Shift+Escape repeat=false allow-inhibiting=false { spawn "systemctl" "suspend"; }
     Ctrl+Alt+Delete { quit; }
 }
