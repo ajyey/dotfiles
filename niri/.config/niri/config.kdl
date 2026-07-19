@@ -641,7 +641,10 @@ binds {
 
     // Hyper: applications and shell surfaces.
     Mod+Ctrl+Alt+Shift+Return repeat=false hotkey-overlay-title="Hyper + Enter: WezTerm" { spawn "wezterm"; }
-    Mod+Ctrl+Alt+Shift+Space repeat=false hotkey-overlay-title="Command/Hyper + Space: Vicinae" { spawn "vicinae" "toggle"; }
+    
+
+    Mod+Ctrl+Alt+Shift+E repeat=false allow-inhibiting=false hotkey-overlay-title="Hyper + E: Vesktop" { spawn "vesktop"; }
+    Mod+Ctrl+Alt+Shift+Space repeat=false allow-inhibiting=false hotkey-overlay-title="Command/Hyper + Space: Vicinae" { spawn "vicinae" "toggle"; }
     // keyd emits F24 for Hyper+Tab to keep it distinct from Command/Alt+Tab.
     F24 repeat=false hotkey-overlay-title="Hyper + Tab: Previous Workspace" { focus-workspace-previous; }
     Mod+Ctrl+Alt+Shift+O repeat=false hotkey-overlay-title="Hyper + O: Overview" { toggle-overview; }
