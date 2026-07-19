@@ -49,6 +49,8 @@ Hyper already contains Shift, so it cannot have a separate Hyper+Shift tier. Dis
 | Hyper+Up/Down | Focus stacked window, then previous / next workspace | Hyper+W/S | Reorder window within a stacked column |
 | Hyper+A/D | Move column left / right | Hyper+1..9 | Focus workspace |
 | Hyper+[/] | Combine with or separate from adjacent column | Hyper+PageUp/PageDown | Move window to previous / next workspace |
+| Hyper+H/Y/0 | Decrease / increase / reset stacked-window height | Hyper+. | Expel window from stacked column |
+| Hyper+vertical wheel | Focus stacked window, then workspace | Hyper+horizontal wheel | Focus columns |
 | Hyper+Home/End | Move column between workspaces | Hyper+R/-/= | Resize column |
 | Hyper+F/M/G | Maximize column / maximize window / fullscreen | Hyper+T | Toggle tabbed column |
 | Hyper+/ | Show Niri hotkeys | | |

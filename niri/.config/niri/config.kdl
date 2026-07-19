@@ -664,7 +664,17 @@ binds {
     Mod+Ctrl+Alt+Shift+S { move-window-down; }
     Mod+Ctrl+Alt+Shift+BracketLeft  { consume-or-expel-window-left; }
     Mod+Ctrl+Alt+Shift+BracketRight { consume-or-expel-window-right; }
+    Mod+Ctrl+Alt+Shift+Period { expel-window-from-column; }
+    Mod+Ctrl+Alt+Shift+H { set-window-height "-10%"; }
+    Mod+Ctrl+Alt+Shift+Y { set-window-height "+10%"; }
+    Mod+Ctrl+Alt+Shift+0 { reset-window-height; }
     Mod+Ctrl+Alt+Shift+Q repeat=false { close-window; }
+
+    // Hyper + wheel follows the same stacked-window, workspace, and column navigation model.
+    Mod+Ctrl+Alt+Shift+WheelScrollDown cooldown-ms=150 { focus-window-or-workspace-down; }
+    Mod+Ctrl+Alt+Shift+WheelScrollUp cooldown-ms=150 { focus-window-or-workspace-up; }
+    Mod+Ctrl+Alt+Shift+WheelScrollRight cooldown-ms=150 { focus-column-right; }
+    Mod+Ctrl+Alt+Shift+WheelScrollLeft cooldown-ms=150 { focus-column-left; }
 
     // Hyper: workspaces.
     Mod+Ctrl+Alt+Shift+1 { focus-workspace 1; }
