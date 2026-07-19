@@ -1,42 +1,35 @@
-# Repository Guidelines
+# Repository Guide
 
-## Project Structure & Module Organization
+## Repository Model
 
-This is a GNU Stow dotfiles repository. Each configuration package mirrors its destination under `$HOME`:
+- This is a GNU Stow repository: each user-config package mirrors its path below `$HOME` (for example, `fish/.config/fish/config.fish` becomes `~/.config/fish/config.fish`).
+- `keyd/` is the exception. It contains system configuration; `scripts/update-keyd.sh` copies one profile to `/etc/keyd/default.conf` and reloads or enables the service. Do not Stow it.
+- `install.sh` only detects Debian, Arch, or macOS and delegates to `scripts/install-*.sh`. These scripts install packages and Fisher plugins; `--stow` also backs up conflicting files to `~/.dotfiles-backup/<timestamp>/`, Stows configs, and installs Mise runtimes. Avoid running an installer merely to validate edits.
+- Arch Stows `niri`; Debian and macOS do not. All three Stow `fish fastfetch starship wezterm zellij mise`.
+- Fish loads exactly one file from `fish/.config/fish/os_specific/` based on `uname` and `/etc/{debian_version,arch-release}`. Keep OS-specific paths and package-manager behavior in the matching file.
+- Do not add generated Fisher state. `.gitignore` excludes `fish_variables`, `functions/`, `conf.d/`, and `completions/`; `fish/.config/fish/fish_plugins` is the tracked plugin source.
 
-- `fish/.config/fish/` contains the Fish startup config, tracked plugin list, and OS-specific settings in `os_specific/`.
-- `fastfetch/`, `starship/`, `wezterm/`, `zellij/`, `niri/`, and `mise/` contain their respective files under `.config/`.
-- `keyd/etc/keyd/` contains Linux keyboard mappings installed at the system level rather than Stowed into `$HOME`.
-- `install.sh` detects the host OS and delegates to `scripts/install-{arch,debian,mac}.sh`; `scripts/update-keyd.sh` deploys the appropriate keyd profile.
-- `README.md` covers installation and usage. `keyd.md` documents the KDE keyboard profile; `keyd-niri.md` documents Niri and Noctalia bindings.
+## Coupled Configuration
 
-Do not commit generated Fish state. `.gitignore` excludes `fish_variables`, generated `functions/`, `conf.d/`, and completions; keep `fish_plugins` tracked.
+- Linux shortcuts pass through `keyd` before WezTerm, Zellij, and Niri. When changing emitted key chords, inspect the consumers in `wezterm/.config/wezterm/linux.lua`, `zellij/.config/zellij/config.kdl`, and `niri/.config/niri/config.kdl` rather than treating a profile in isolation.
+- Keep `keyd.md` synchronized with `keyd/etc/keyd/kde.conf`. Keep `keyd-niri.md` synchronized with both `keyd/etc/keyd/niri.conf` and matching Niri/Noctalia bindings.
+- `wezterm/.config/wezterm/wezterm.lua` applies `shared.lua`, then `mac.lua` or `linux.lua` from `wezterm.target_triple`.
+- `mise/.config/mise/config.toml` is global runtime state. Install scripts run `mise install` only when `--stow` is supplied; Fish update functions use `mise upgrade --bump`, which may rewrite pinned versions.
+- The macOS `brew` Fish wrapper regenerates the root `Brewfile` after `brew install` or `brew uninstall`. `scripts/install-mac.sh --brewfile` installs that full machine inventory, not only core dotfile dependencies.
 
-## Build, Test, and Development Commands
+## Focused Validation
 
-Run commands from the repository root.
+There is no aggregate test task or CI workflow. Run validators relevant to changed files from the repository root:
 
-- `./install.sh --stow`: install supported dependencies and Stow user configurations for the detected OS.
-- `stow -t ~ fish` (or another package): create that package's home-directory symlinks.
-- `stow -D fish`: remove Fish symlinks without deleting repository files.
-- `fish -n fish/.config/fish/config.fish`: syntax-check the main Fish configuration.
-- `fastfetch --config fastfetch/.config/fastfetch/config.jsonc`: preview Fastfetch changes.
-- `fisher update`: synchronize plugins from `fish_plugins`.
+```bash
+bash -n install.sh scripts/*.sh
+fish -n fish/.config/fish/config.fish fish/.config/fish/os_specific/*.fish
+fastfetch --config fastfetch/.config/fastfetch/config.jsonc
+wezterm --config-file wezterm/.config/wezterm/wezterm.lua show-keys --key-table default
+keyd check keyd/etc/keyd/kde.conf
+keyd check keyd/etc/keyd/niri.conf
+niri validate -c niri/.config/niri/config.kdl
+stow -n -v -t "$HOME" fish  # replace fish with the changed package
+```
 
-## Coding Style & Naming Conventions
-
-Follow the surrounding format. Use four-space indentation inside Fish functions and `# ===` comments for major sections. Guard optional tools with `if type -q <tool>` or file checks so startup remains portable. Keep TOML settings grouped and quoted; indent JSONC with four spaces.
-
-Define cross-platform aliases separately in `mac.fish`, `arch.fish`, and `debian.fish`, using the correct package manager for each platform.
-
-## Testing Guidelines
-
-There is no automated test suite or coverage target. Validate every changed format with its native tool. For Fish changes, run `fish -n` and start a fresh shell with `exec fish`. Test prompt, terminal, compositor, and glyph changes interactively in their target environment.
-
-## Commit & Pull Request Guidelines
-
-Use short, focused, imperative commits. Recent history commonly uses Conventional Commit forms such as `fix(wezterm): ...`, `feat(keyd): ...`, and `docs: ...`; plain imperative messages are also present. Pull requests should identify affected packages, list validation performed, and disclose OS, path, hardware, or required-tool assumptions. Include screenshots only for visible UI changes.
-
-## Documentation Maintenance
-
-When adding a tool, package, script, or architectural change, update both `AGENTS.md` and `README.md`. Changes to `keyd/etc/keyd/kde.conf` must update `keyd.md`; changes to `keyd/etc/keyd/niri.conf` must update `keyd-niri.md`. Explain the technical rationale, layer behavior, and compositor-side bindings.
+After syntax validation, terminal, compositor, prompt, glyph, and keyboard behavior still require interactive testing on the target OS. Apply a keyd profile explicitly with `sudo ./scripts/update-keyd.sh kde` or `sudo ./scripts/update-keyd.sh niri`; omitting the profile auto-detects the desktop and defaults to KDE if detection fails.
