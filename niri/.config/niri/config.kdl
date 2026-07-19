@@ -653,15 +653,15 @@ binds {
     Mod+Ctrl+Alt+Shift+Comma repeat=false hotkey-overlay-title="Hyper + ,: Noctalia Settings" { spawn "noctalia" "msg" "settings-toggle"; }
     Mod+Ctrl+Alt+Shift+L repeat=false hotkey-overlay-title="Hyper + L: Lock" { spawn "noctalia" "msg" "session" "lock"; }
 
-    // Hyper: Up/Down traverses stacked windows and then workspaces; WASD reorders windows.
-    Mod+Ctrl+Alt+Shift+Left  { focus-column-left; }
+    // Hyper navigation continues into adjacent workspaces or monitors at layout boundaries.
+    Mod+Ctrl+Alt+Shift+Left  { focus-column-or-monitor-left; }
     Mod+Ctrl+Alt+Shift+Down  { focus-window-or-workspace-down; }
     Mod+Ctrl+Alt+Shift+Up    { focus-window-or-workspace-up; }
-    Mod+Ctrl+Alt+Shift+Right { focus-column-right; }
-    Mod+Ctrl+Alt+Shift+A { move-column-left; }
-    Mod+Ctrl+Alt+Shift+D { move-column-right; }
-    Mod+Ctrl+Alt+Shift+W { move-window-up; }
-    Mod+Ctrl+Alt+Shift+S { move-window-down; }
+    Mod+Ctrl+Alt+Shift+Right { focus-column-or-monitor-right; }
+    Mod+Ctrl+Alt+Shift+A { move-column-left-or-to-monitor-left; }
+    Mod+Ctrl+Alt+Shift+D { move-column-right-or-to-monitor-right; }
+    Mod+Ctrl+Alt+Shift+W { move-window-up-or-to-workspace-up; }
+    Mod+Ctrl+Alt+Shift+S { move-window-down-or-to-workspace-down; }
     Mod+Ctrl+Alt+Shift+BracketLeft  { consume-or-expel-window-left; }
     Mod+Ctrl+Alt+Shift+BracketRight { consume-or-expel-window-right; }
     Mod+Ctrl+Alt+Shift+Period { expel-window-from-column; }

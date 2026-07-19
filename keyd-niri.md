@@ -45,9 +45,9 @@ Hyper already contains Shift, so it cannot have a separate Hyper+Shift tier. Dis
 | Hyper+Enter | WezTerm | Hyper+Space | Vicinae |
 | Hyper+Tab (`F24`) | Previous workspace toggle | Hyper+O | Niri overview |
 | Hyper+C/V | Control Center / clipboard | Hyper+, | Noctalia settings |
-| Hyper+L/Q | Lock / close window | Hyper+Left/Right | Focus columns |
-| Hyper+Up/Down | Focus stacked window, then previous / next workspace | Hyper+W/S | Reorder window within a stacked column |
-| Hyper+A/D | Move column left / right | Hyper+1..9 | Focus workspace |
+| Hyper+L/Q | Lock / close window | Hyper+Left/Right | Focus column, then adjacent monitor |
+| Hyper+Up/Down | Focus stacked window, then previous / next workspace | Hyper+W/S | Reorder stacked window, then move it between workspaces |
+| Hyper+A/D | Move column, then to adjacent monitor | Hyper+1..9 | Focus workspace |
 | Hyper+[/] | Combine with or separate from adjacent column | Hyper+PageUp/PageDown | Move window to previous / next workspace |
 | Hyper+H/Y/0 | Decrease / increase / reset stacked-window height | Hyper+. | Expel window from stacked column |
 | Hyper+vertical wheel | Focus stacked window, then workspace | Hyper+horizontal wheel | Focus columns |
