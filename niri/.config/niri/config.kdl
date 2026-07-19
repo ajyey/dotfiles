@@ -317,12 +317,15 @@ window-rule {
     default-column-width {}
 }
 
-// Open the Firefox picture-in-picture player as floating by default.
+// Keep browser picture-in-picture players above the scrolling layout.
 window-rule {
-    // This app-id regular expression will work for both:
-    // - host Firefox (app-id is "firefox")
-    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match app-id=r#"^(firefox|org\.mozilla\.firefox|brave-browser|com\.brave\.Browser)$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+// Calculators are more useful as temporary floating utilities.
+window-rule {
+    match app-id=r#"^(org\.gnome\.Calculator|org\.kde\.kcalc|qalculate-gtk)$"#
     open-floating true
 }
 
@@ -654,56 +657,58 @@ binds {
     Mod+Ctrl+Alt+Shift+L repeat=false hotkey-overlay-title="Hyper + L: Lock" { spawn "noctalia" "msg" "session" "lock"; }
 
     // Hyper navigation continues into adjacent workspaces or monitors at layout boundaries.
-    Mod+Ctrl+Alt+Shift+Left  { focus-column-or-monitor-left; }
-    Mod+Ctrl+Alt+Shift+Down  { focus-window-or-workspace-down; }
-    Mod+Ctrl+Alt+Shift+Up    { focus-window-or-workspace-up; }
-    Mod+Ctrl+Alt+Shift+Right { focus-column-or-monitor-right; }
-    Mod+Ctrl+Alt+Shift+A { move-column-left-or-to-monitor-left; }
-    Mod+Ctrl+Alt+Shift+D { move-column-right-or-to-monitor-right; }
-    Mod+Ctrl+Alt+Shift+W { move-window-up-or-to-workspace-up; }
-    Mod+Ctrl+Alt+Shift+S { move-window-down-or-to-workspace-down; }
-    Mod+Ctrl+Alt+Shift+BracketLeft  { consume-or-expel-window-left; }
-    Mod+Ctrl+Alt+Shift+BracketRight { consume-or-expel-window-right; }
-    Mod+Ctrl+Alt+Shift+Period { expel-window-from-column; }
-    Mod+Ctrl+Alt+Shift+H { set-window-height "-10%"; }
-    Mod+Ctrl+Alt+Shift+Y { set-window-height "+10%"; }
-    Mod+Ctrl+Alt+Shift+0 { reset-window-height; }
-    Mod+Ctrl+Alt+Shift+Q repeat=false { close-window; }
+    Mod+Ctrl+Alt+Shift+Left hotkey-overlay-title="Hyper + Left: Focus Column or Monitor Left" { focus-column-or-monitor-left; }
+    Mod+Ctrl+Alt+Shift+Down hotkey-overlay-title="Hyper + Down: Focus Window or Workspace Down" { focus-window-or-workspace-down; }
+    Mod+Ctrl+Alt+Shift+Up hotkey-overlay-title="Hyper + Up: Focus Window or Workspace Up" { focus-window-or-workspace-up; }
+    Mod+Ctrl+Alt+Shift+Right hotkey-overlay-title="Hyper + Right: Focus Column or Monitor Right" { focus-column-or-monitor-right; }
+    Mod+Ctrl+Alt+Shift+A hotkey-overlay-title="Hyper + A: Move Column Left" { move-column-left-or-to-monitor-left; }
+    Mod+Ctrl+Alt+Shift+D hotkey-overlay-title="Hyper + D: Move Column Right" { move-column-right-or-to-monitor-right; }
+    Mod+Ctrl+Alt+Shift+W hotkey-overlay-title="Hyper + W: Move Window Up" { move-window-up-or-to-workspace-up; }
+    Mod+Ctrl+Alt+Shift+S hotkey-overlay-title="Hyper + S: Move Window Down" { move-window-down-or-to-workspace-down; }
+    Mod+Ctrl+Alt+Shift+BracketLeft hotkey-overlay-title="Hyper + [: Stack or Unstack Left" { consume-or-expel-window-left; }
+    Mod+Ctrl+Alt+Shift+BracketRight hotkey-overlay-title="Hyper + ]: Stack or Unstack Right" { consume-or-expel-window-right; }
+    Mod+Ctrl+Alt+Shift+Period hotkey-overlay-title="Hyper + .: Expel Window from Stack" { expel-window-from-column; }
+    Mod+Ctrl+Alt+Shift+H hotkey-overlay-title="Hyper + H: Decrease Window Height" { set-window-height "-10%"; }
+    Mod+Ctrl+Alt+Shift+Y hotkey-overlay-title="Hyper + Y: Increase Window Height" { set-window-height "+10%"; }
+    Mod+Ctrl+Alt+Shift+0 hotkey-overlay-title="Hyper + 0: Reset Window Height" { reset-window-height; }
+    Mod+Ctrl+Alt+Shift+Q repeat=false hotkey-overlay-title="Hyper + Q: Close Window" { close-window; }
 
     // Hyper + wheel follows the same stacked-window, workspace, and column navigation model.
-    Mod+Ctrl+Alt+Shift+WheelScrollDown cooldown-ms=150 { focus-window-or-workspace-down; }
-    Mod+Ctrl+Alt+Shift+WheelScrollUp cooldown-ms=150 { focus-window-or-workspace-up; }
-    Mod+Ctrl+Alt+Shift+WheelScrollRight cooldown-ms=150 { focus-column-right; }
-    Mod+Ctrl+Alt+Shift+WheelScrollLeft cooldown-ms=150 { focus-column-left; }
+    Mod+Ctrl+Alt+Shift+WheelScrollDown cooldown-ms=150 hotkey-overlay-title="Hyper + Wheel Down: Focus Window or Workspace Down" { focus-window-or-workspace-down; }
+    Mod+Ctrl+Alt+Shift+WheelScrollUp cooldown-ms=150 hotkey-overlay-title="Hyper + Wheel Up: Focus Window or Workspace Up" { focus-window-or-workspace-up; }
+    Mod+Ctrl+Alt+Shift+WheelScrollRight cooldown-ms=150 hotkey-overlay-title="Hyper + Wheel Right: Focus Column Right" { focus-column-right; }
+    Mod+Ctrl+Alt+Shift+WheelScrollLeft cooldown-ms=150 hotkey-overlay-title="Hyper + Wheel Left: Focus Column Left" { focus-column-left; }
 
     // Hyper: workspaces.
-    Mod+Ctrl+Alt+Shift+1 { focus-workspace 1; }
-    Mod+Ctrl+Alt+Shift+2 { focus-workspace 2; }
-    Mod+Ctrl+Alt+Shift+3 { focus-workspace 3; }
-    Mod+Ctrl+Alt+Shift+4 { focus-workspace 4; }
-    Mod+Ctrl+Alt+Shift+5 { focus-workspace 5; }
-    Mod+Ctrl+Alt+Shift+6 { focus-workspace 6; }
-    Mod+Ctrl+Alt+Shift+7 { focus-workspace 7; }
-    Mod+Ctrl+Alt+Shift+8 { focus-workspace 8; }
-    Mod+Ctrl+Alt+Shift+9 { focus-workspace 9; }
-    Mod+Ctrl+Alt+Shift+Page_Up   { move-window-to-workspace-up; }
-    Mod+Ctrl+Alt+Shift+Page_Down { move-window-to-workspace-down; }
-    Mod+Ctrl+Alt+Shift+Home { move-column-to-workspace-up; }
-    Mod+Ctrl+Alt+Shift+End  { move-column-to-workspace-down; }
+    Mod+Ctrl+Alt+Shift+1 hotkey-overlay-title="Hyper + 1: Focus Workspace 1" { focus-workspace 1; }
+    Mod+Ctrl+Alt+Shift+2 hotkey-overlay-title="Hyper + 2: Focus Workspace 2" { focus-workspace 2; }
+    Mod+Ctrl+Alt+Shift+3 hotkey-overlay-title="Hyper + 3: Focus Workspace 3" { focus-workspace 3; }
+    Mod+Ctrl+Alt+Shift+4 hotkey-overlay-title="Hyper + 4: Focus Workspace 4" { focus-workspace 4; }
+    Mod+Ctrl+Alt+Shift+5 hotkey-overlay-title="Hyper + 5: Focus Workspace 5" { focus-workspace 5; }
+    Mod+Ctrl+Alt+Shift+6 hotkey-overlay-title="Hyper + 6: Focus Workspace 6" { focus-workspace 6; }
+    Mod+Ctrl+Alt+Shift+7 hotkey-overlay-title="Hyper + 7: Focus Workspace 7" { focus-workspace 7; }
+    Mod+Ctrl+Alt+Shift+8 hotkey-overlay-title="Hyper + 8: Focus Workspace 8" { focus-workspace 8; }
+    Mod+Ctrl+Alt+Shift+9 hotkey-overlay-title="Hyper + 9: Focus Workspace 9" { focus-workspace 9; }
+    Mod+Ctrl+Alt+Shift+U hotkey-overlay-title="Hyper + U: Move Workspace Up" { move-workspace-up; }
+    Mod+Ctrl+Alt+Shift+J hotkey-overlay-title="Hyper + J: Move Workspace Down" { move-workspace-down; }
+    Mod+Ctrl+Alt+Shift+Page_Up hotkey-overlay-title="Hyper + Page Up: Move Window to Workspace Up" { move-window-to-workspace-up; }
+    Mod+Ctrl+Alt+Shift+Page_Down hotkey-overlay-title="Hyper + Page Down: Move Window to Workspace Down" { move-window-to-workspace-down; }
+    Mod+Ctrl+Alt+Shift+Home hotkey-overlay-title="Hyper + Home: Move Column to Workspace Up" { move-column-to-workspace-up; }
+    Mod+Ctrl+Alt+Shift+End hotkey-overlay-title="Hyper + End: Move Column to Workspace Down" { move-column-to-workspace-down; }
 
     // Hyper: layout.
-    Mod+Ctrl+Alt+Shift+R repeat=false { switch-preset-column-width; }
-    Mod+Ctrl+Alt+Shift+Minus { set-column-width "-10%"; }
-    Mod+Ctrl+Alt+Shift+Equal { set-column-width "+10%"; }
-    Mod+Ctrl+Alt+Shift+F repeat=false { maximize-column; }
-    Mod+Ctrl+Alt+Shift+M repeat=false { maximize-window-to-edges; }
-    Mod+Ctrl+Alt+Shift+G repeat=false { fullscreen-window; }
-    Mod+Ctrl+Alt+Shift+T repeat=false { toggle-column-tabbed-display; }
+    Mod+Ctrl+Alt+Shift+R repeat=false hotkey-overlay-title="Hyper + R: Cycle Column Width" { switch-preset-column-width; }
+    Mod+Ctrl+Alt+Shift+Minus hotkey-overlay-title="Hyper + -: Decrease Column Width" { set-column-width "-10%"; }
+    Mod+Ctrl+Alt+Shift+Equal hotkey-overlay-title="Hyper + =: Increase Column Width" { set-column-width "+10%"; }
+    Mod+Ctrl+Alt+Shift+F repeat=false hotkey-overlay-title="Hyper + F: Maximize Column" { maximize-column; }
+    Mod+Ctrl+Alt+Shift+M repeat=false hotkey-overlay-title="Hyper + M: Maximize Window" { maximize-window-to-edges; }
+    Mod+Ctrl+Alt+Shift+G repeat=false hotkey-overlay-title="Hyper + G: Fullscreen Window" { fullscreen-window; }
+    Mod+Ctrl+Alt+Shift+T repeat=false hotkey-overlay-title="Hyper + T: Toggle Tabbed Column" { toggle-column-tabbed-display; }
 
     // Native and macOS-style screenshot shortcuts.
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Print hotkey-overlay-title="Command + Shift + 4: Region Screenshot" { screenshot; }
+    Ctrl+Print hotkey-overlay-title="Command + Shift + 3: Screen Screenshot" { screenshot-screen; }
+    Alt+Print hotkey-overlay-title="Alt + Print: Window Screenshot" { screenshot-window; }
 
     // Noctalia provides OSD feedback and avoids separate media/brightness helpers.
     XF86AudioRaiseVolume allow-when-locked=true { spawn "noctalia" "msg" "volume-up"; }
@@ -718,7 +723,7 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
 
-    Mod+Ctrl+Alt+Shift+Slash repeat=false { show-hotkey-overlay; }
-    Mod+Ctrl+Alt+Shift+Escape repeat=false allow-inhibiting=false { spawn "systemctl" "suspend"; }
+    Mod+Ctrl+Alt+Shift+Slash repeat=false hotkey-overlay-title="Hyper + /: Show Hotkeys" { show-hotkey-overlay; }
+    Mod+Ctrl+Alt+Shift+Escape repeat=false allow-inhibiting=false hotkey-overlay-title="Hyper + Escape: Suspend" { spawn "systemctl" "suspend"; }
     Ctrl+Alt+Delete { quit; }
 }
