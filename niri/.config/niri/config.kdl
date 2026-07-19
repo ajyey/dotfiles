@@ -653,10 +653,10 @@ binds {
     Mod+Ctrl+Alt+Shift+Comma repeat=false hotkey-overlay-title="Hyper + ,: Noctalia Settings" { spawn "noctalia" "msg" "settings-toggle"; }
     Mod+Ctrl+Alt+Shift+L repeat=false hotkey-overlay-title="Hyper + L: Lock" { spawn "noctalia" "msg" "session" "lock"; }
 
-    // Hyper: arrows navigate, A/D move columns, and W/S reorder stacked windows.
+    // Hyper: Up/Down traverses stacked windows and then workspaces; WASD reorders windows.
     Mod+Ctrl+Alt+Shift+Left  { focus-column-left; }
-    Mod+Ctrl+Alt+Shift+Down  { focus-workspace-down; }
-    Mod+Ctrl+Alt+Shift+Up    { focus-workspace-up; }
+    Mod+Ctrl+Alt+Shift+Down  { focus-window-or-workspace-down; }
+    Mod+Ctrl+Alt+Shift+Up    { focus-window-or-workspace-up; }
     Mod+Ctrl+Alt+Shift+Right { focus-column-right; }
     Mod+Ctrl+Alt+Shift+A { move-column-left; }
     Mod+Ctrl+Alt+Shift+D { move-column-right; }
