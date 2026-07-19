@@ -194,10 +194,10 @@ layout {
     border {
         // The settings are the same as for the focus ring.
         // If you enable the border, you probably want to disable the focus ring.
-        off
+        on
 
-        width 4
-        active-color "#ffc87f"
+        width 1
+        active-color "#7fc8ff"
         inactive-color "#505050"
 
         // Color of the border around windows that request your attention.
@@ -653,7 +653,7 @@ binds {
     Mod+Ctrl+Alt+Shift+Comma repeat=false hotkey-overlay-title="Hyper + ,: Noctalia Settings" { spawn "noctalia" "msg" "settings-toggle"; }
     Mod+Ctrl+Alt+Shift+L repeat=false hotkey-overlay-title="Hyper + L: Lock" { spawn "noctalia" "msg" "session" "lock"; }
 
-    // Hyper: Left/Right focus columns, Up/Down switch workspaces, and WASD moves windows.
+    // Hyper: arrows navigate, A/D move columns, and W/S reorder stacked windows.
     Mod+Ctrl+Alt+Shift+Left  { focus-column-left; }
     Mod+Ctrl+Alt+Shift+Down  { focus-workspace-down; }
     Mod+Ctrl+Alt+Shift+Up    { focus-workspace-up; }
@@ -662,6 +662,8 @@ binds {
     Mod+Ctrl+Alt+Shift+D { move-column-right; }
     Mod+Ctrl+Alt+Shift+W { move-window-up; }
     Mod+Ctrl+Alt+Shift+S { move-window-down; }
+    Mod+Ctrl+Alt+Shift+BracketLeft  { consume-or-expel-window-left; }
+    Mod+Ctrl+Alt+Shift+BracketRight { consume-or-expel-window-right; }
     Mod+Ctrl+Alt+Shift+Q repeat=false { close-window; }
 
     // Hyper: workspaces.
@@ -674,8 +676,8 @@ binds {
     Mod+Ctrl+Alt+Shift+7 { focus-workspace 7; }
     Mod+Ctrl+Alt+Shift+8 { focus-workspace 8; }
     Mod+Ctrl+Alt+Shift+9 { focus-workspace 9; }
-    Mod+Ctrl+Alt+Shift+Page_Up   { focus-workspace-up; }
-    Mod+Ctrl+Alt+Shift+Page_Down { focus-workspace-down; }
+    Mod+Ctrl+Alt+Shift+Page_Up   { move-window-to-workspace-up; }
+    Mod+Ctrl+Alt+Shift+Page_Down { move-window-to-workspace-down; }
     Mod+Ctrl+Alt+Shift+Home { move-column-to-workspace-up; }
     Mod+Ctrl+Alt+Shift+End  { move-column-to-workspace-down; }
 
