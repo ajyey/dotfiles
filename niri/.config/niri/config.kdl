@@ -735,7 +735,10 @@ binds {
     XF86MonBrightnessUp allow-when-locked=true { spawn "noctalia" "msg" "brightness-up"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "noctalia" "msg" "brightness-down"; }
 
-    Mod+Ctrl+Alt+Shift+Slash repeat=false hotkey-overlay-title="Hyper + /: Show Hotkeys" { show-hotkey-overlay; }
+    // Show hotkeys
+    // Mod+Ctrl+Alt+Shift+Slash repeat=false hotkey-overlay-title="Hyper + /: Show Hotkeys" { show-hotkey-overlay; }
+    // use the Keymap niri plugin instead of the built in hotkey overlay - the plugin is a bit nicer
+    Mod+Ctrl+Alt+Shift+Slash repeat=false hotkey-overlay-title="Hyper + /: Show Hotkeys" { spawn "noctalia" "msg" "panel-toggle" "blackbartblues/keymap:panel"; }
     Mod+Ctrl+Alt+Shift+Escape repeat=false allow-inhibiting=false hotkey-overlay-title="Hyper + Escape: Suspend" { spawn "systemctl" "suspend"; }
     Ctrl+Alt+Delete { quit; }
 }
