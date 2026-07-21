@@ -28,6 +28,14 @@ if type -q yay
     end
     alias uninstall="yay -Rns --noconfirm"
 
+    function reinstall -d "Force rebuild and reinstall an AUR package"
+        if test (count $argv) -eq 0
+            echo "Usage: reinstall <package...>"
+            return 1
+        end
+        yay -S --rebuild --redownload --noconfirm $argv
+    end
+
     function search -d "Search standard, AUR, and Flatpak"
         if test (count $argv) -eq 0
             echo "Usage: search <package...>"
