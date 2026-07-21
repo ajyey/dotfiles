@@ -50,7 +50,7 @@ return {
     -- ====================================================================
     -- Appearance & Theme
     -- ====================================================================
-    config.color_scheme = 'rose-pine-moon'
+    config.color_scheme = 'Noctalia'
     -- Match Kitty's primary font and observed fallback order.
     config.font = wezterm.font_with_fallback {
       'Noto Sans Mono',
