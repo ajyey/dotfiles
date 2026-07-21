@@ -51,6 +51,12 @@ return {
     -- Appearance & Theme
     -- ====================================================================
     config.color_scheme = 'rose-pine-moon'
+    -- Match Kitty's primary font and observed fallback order.
+    config.font = wezterm.font_with_fallback {
+      'Noto Sans Mono',
+      'FiraCode Nerd Font',
+      'DejaVu Sans Mono',
+    }
     config.font_size = 15.0
 
     -- Override highlight/selection colors for better contrast
