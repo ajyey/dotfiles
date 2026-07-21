@@ -35,6 +35,7 @@ return {
 
     config.default_cursor_style = 'BlinkingBar'
     config.scrollback_lines = 100000
+    config.alternate_buffer_wheel_scroll_speed = 1
 
     -- Dim inactive panes
     config.inactive_pane_hsb = {
