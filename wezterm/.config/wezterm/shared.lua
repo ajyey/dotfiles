@@ -18,7 +18,8 @@ wezterm.on('format-tab-title', function(tab, tabs, panes, config, hover, max_wid
   -- Internal separator cells use a visible Rose Pine highlight instead of the
   -- tab bar's base color. Reserve two edge cells and two title-padding cells.
   local separator_background = '#393552'
-  local title = wezterm.truncate_right(tab.active_pane.title, max_width - 4)
+  local numbered_title = string.format('%d: %s', tab.tab_index + 1, tab.active_pane.title)
+  local title = wezterm.truncate_right(numbered_title, max_width - 4)
   local elements = {}
 
   -- Skip the first tab's leading edge so the tab strip starts flush left.
