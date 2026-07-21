@@ -216,6 +216,29 @@ The profiles have separate guides because their compositor shortcuts differ:
 - [`keyd.md`](keyd.md) documents the KDE Plasma profile.
 - [`keyd-niri.md`](keyd-niri.md) documents the Niri profile, its Hyper bindings, and Noctalia integration.
 
+## KDE Applications Under Niri
+
+The Niri package also Stows `.config/environment.d/10-kde-on-niri.conf` so Dolphin and other KDE applications use the palette and application metadata from `~/.config/kdeglobals`:
+
+```conf
+QT_QPA_PLATFORMTHEME=kde
+XDG_MENU_PREFIX=plasma-
+```
+
+These variables belong in `environment.d` rather than only Niri's `environment` block. KDE portals and other systemd-activated user services start outside Niri's child-process environment and need the variables from the user manager at login.
+
+The setup expects `plasma-integration` for the KDE Qt platform theme. Dolphin integration additionally benefits from `systemsettings`, `xdg-desktop-portal-kde`, `ffmpegthumbnailer`, and `ffmpegthumbs`.
+
+After adding or changing the environment file, apply it with:
+
+```bash
+stow -t "$HOME" niri
+systemctl --user daemon-reexec
+XDG_MENU_PREFIX=plasma- kbuildsycoca6 --noincremental
+```
+
+Log out and back into Niri afterward. Existing launchers, portals, and applications cannot inherit environment changes retroactively. Selecting the KDE portal as the default file picker is separate from Dolphin theming and requires a user `xdg-desktop-portal` preference file.
+
 ## Modular WezTerm
 
 Because `keyd` translates the `CMD` key into `Ctrl`, WezTerm on Linux must be configured to listen for `Ctrl`, whereas WezTerm on macOS must listen for `CMD`. 
