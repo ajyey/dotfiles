@@ -1,6 +1,6 @@
 # Dotfiles Managed with GNU Stow
 
-This repo manages dotfiles with [GNU Stow](https://www.gnu.org/software/stow/) by symlinking package directories into `$HOME`. It currently tracks Fish shell, Fastfetch, Starship, WezTerm, Zellij, and global Mise configuration.
+This repo manages dotfiles with [GNU Stow](https://www.gnu.org/software/stow/) by symlinking package directories into `$HOME`. It currently tracks Fish shell, Fastfetch, Starship, WezTerm, Zellij, Niri, and global Mise configuration.
 
 ## Requirements
 
@@ -31,6 +31,10 @@ The install scripts set up GNU Stow, Fish, Fisher plugins, Fastfetch, Starship, 
 │       └── linux.lua
 ├── zellij/
 │   └── .config/zellij/config.kdl
+├── niri/
+│   └── .config/niri/
+│       ├── config.kdl
+│       └── dms/
 └── mise/
     └── .config/mise/config.toml
 ```
@@ -156,6 +160,7 @@ stow -t ~ fastfetch
 stow -t ~ starship
 stow -t ~ wezterm
 stow -t ~ zellij
+stow -t ~ niri
 stow -t ~ mise
 ```
 
@@ -204,9 +209,12 @@ This will read your `mise/.config/mise/config.toml`, download the latest version
 On Arch/CachyOS, this repository uses **`keyd`** to map the `CMD` (Super/Windows) key to behave exactly like macOS across the entire Linux desktop. 
 Because `keyd` runs at the lowest kernel level (evdev), it works flawlessly on both X11 and Wayland.
 
-The global configuration is tracked at `keyd/etc/keyd/default.conf` and is automatically installed and enabled by `scripts/install-arch.sh`. You can safely update and restart the daemon at any time by running `sudo ./scripts/update-keyd.sh`.
+The desktop configurations are tracked in `keyd/etc/keyd/` as `kde.conf` and `niri.conf`. `scripts/install-arch.sh` installs the detected profile; `sudo ./scripts/update-keyd.sh [kde|niri]` can deploy one explicitly.
 
-**For a comprehensive breakdown of exactly how this works (including the `CMD->Ctrl` inheritance, the `Ctrl+Insert` safe-copy hack, App Switcher, and the Capslock Hyper Key), please read the full documentation in [`keyd.md`](file:///Users/AJ/Development/dotfiles/keyd.md).**
+The profiles have separate guides because their compositor shortcuts differ:
+
+- [`keyd.md`](keyd.md) documents the KDE Plasma profile.
+- [`keyd-niri.md`](keyd-niri.md) documents the Niri profile, its Hyper bindings, and Noctalia integration.
 
 ## Modular WezTerm
 

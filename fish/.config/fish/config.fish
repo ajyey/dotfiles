@@ -99,7 +99,7 @@ end
 alias debian="ssh -t aj@192.168.68.211"
 alias proxmox="ssh root@192.168.68.208" # Connect to Proxmox VE
 alias pbs="ssh root@192.168.68.66" # Connect to Proxmox Backup Server
-alias pi="ssh dietpi@192.168.68.44"         # Connect to Raspberry Pi
+alias dietpi="ssh dietpi@192.168.68.44"         # Connect to Raspberry Pi
 alias synology="ssh aj@192.168.68.69"       # Connect to Synology NAS
 alias cachy="ssh aj@192.168.68.166"         # Connect to CachyOS machine (Ethernet)
 

@@ -2,8 +2,7 @@ local wezterm = require 'wezterm'
 
 return {
   apply = function(config)
-    -- Force XWayland instead of native Wayland so that cliboard contents can be shared across wezterm windows/processes
-    config.enable_wayland = false
+    config.enable_wayland = true
 
     -- ====================================================================
     -- Keybindings (Linux via keyd)

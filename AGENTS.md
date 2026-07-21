@@ -1,52 +1,35 @@
-# Repository Guidelines
+# Repository Guide
 
-## Project Structure & Module Organization
+## Repository Model
 
-This is a GNU Stow dotfiles repository. Each top-level directory is a Stow package whose internal paths mirror `$HOME`.
+- This is a GNU Stow repository: each user-config package mirrors its path below `$HOME` (for example, `fish/.config/fish/config.fish` becomes `~/.config/fish/config.fish`).
+- `keyd/` is the exception. It contains system configuration; `scripts/update-keyd.sh` copies one profile to `/etc/keyd/default.conf` and reloads or enables the service. Do not Stow it.
+- `install.sh` only detects Debian, Arch, or macOS and delegates to `scripts/install-*.sh`. These scripts install packages and Fisher plugins; `--stow` also backs up conflicting files to `~/.dotfiles-backup/<timestamp>/`, Stows configs, and installs Mise runtimes. Avoid running an installer merely to validate edits.
+- Arch Stows `niri`; Debian and macOS do not. All three Stow `fish fastfetch starship wezterm zellij mise`.
+- Fish loads exactly one file from `fish/.config/fish/os_specific/` based on `uname` and `/etc/{debian_version,arch-release}`. Keep OS-specific paths and package-manager behavior in the matching file.
+- Do not add generated Fisher state. `.gitignore` excludes `fish_variables`, `functions/`, `conf.d/`, and `completions/`; `fish/.config/fish/fish_plugins` is the tracked plugin source.
 
-- `fish/.config/fish/` contains Fish shell configuration, completions, and `fish_plugins`. OS-specific configurations are in `fish/.config/fish/os_specific/`.
-- `fastfetch/.config/fastfetch/config.jsonc` contains the Fastfetch startup display.
-- `starship/.config/starship.toml` contains the Starship prompt theme.
-- `wezterm/.config/wezterm/wezterm.lua` contains the WezTerm configuration with fzf.fish keybindings.
-- `zellij/.config/zellij/config.kdl` contains the Zellij terminal multiplexer configuration.
-- `mise/.config/mise/config.toml` manages global runtimes and tools (Node, Python, Go, Zellij, Ripgrep).
-- `keyd/etc/keyd/` contains system-level keyboard remapping configurations for Linux. It is installed manually via install scripts, not Stowed to `$HOME`.
-- `install.sh` generic installation script that detects OS and delegates to `scripts/install-*.sh`.
-- `README.md` documents setup and restore steps.
+## Coupled Configuration
 
-Do not commit generated or machine-specific Fish files. `.gitignore` excludes `fish_variables`, `functions/`, and `conf.d/`; keep `fish_plugins` tracked.
+- Linux shortcuts pass through `keyd` before WezTerm, Zellij, and Niri. When changing emitted key chords, inspect the consumers in `wezterm/.config/wezterm/linux.lua`, `zellij/.config/zellij/config.kdl`, and `niri/.config/niri/config.kdl` rather than treating a profile in isolation.
+- Keep `keyd.md` synchronized with `keyd/etc/keyd/kde.conf`. Keep `keyd-niri.md` synchronized with both `keyd/etc/keyd/niri.conf` and matching Niri/Noctalia bindings.
+- `wezterm/.config/wezterm/wezterm.lua` applies `shared.lua`, then `mac.lua` or `linux.lua` from `wezterm.target_triple`.
+- `mise/.config/mise/config.toml` is global runtime state. Install scripts run `mise install` only when `--stow` is supplied; Fish update functions use `mise upgrade --bump`, which may rewrite pinned versions.
+- The macOS `brew` Fish wrapper regenerates the root `Brewfile` after `brew install` or `brew uninstall`. `scripts/install-mac.sh --brewfile` installs that full machine inventory, not only core dotfile dependencies.
 
-## Build, Test, and Development Commands
+## Focused Validation
 
-- `stow fish`, `stow fastfetch`, `stow starship`, `stow wezterm`, `stow zellij`, `stow mise`: symlink a package into `$HOME`.
-- `stow -D fish`: remove Fish symlinks without deleting repository files.
-- `fish -n fish/.config/fish/config.fish`: syntax-check the main Fish config.
-- `fastfetch --config fastfetch/.config/fastfetch/config.jsonc`: preview Fastfetch output.
-- `starship explain`: inspect the active prompt modules after stowing Starship config.
-- `fisher update`: install Fish plugins listed in `fish_plugins`.
-- `./install.sh --stow`: generic installation and stow command.
+There is no aggregate test task or CI workflow. Run validators relevant to changed files from the repository root:
 
-Run commands from the repository root unless a tool requires the live `$HOME` path.
+```bash
+bash -n install.sh scripts/*.sh
+fish -n fish/.config/fish/config.fish fish/.config/fish/os_specific/*.fish
+fastfetch --config fastfetch/.config/fastfetch/config.jsonc
+wezterm --config-file wezterm/.config/wezterm/wezterm.lua show-keys --key-table default
+keyd check keyd/etc/keyd/kde.conf
+keyd check keyd/etc/keyd/niri.conf
+niri validate -c niri/.config/niri/config.kdl
+stow -n -v -t "$HOME" fish  # replace fish with the changed package
+```
 
-## Coding Style & Naming Conventions
-
-Use the style already present in each config file. Fish scripts use 4-space indentation inside functions and `# ===` section comments for major groups. Prefer guarded integrations such as `if type -q starship` or `if test -f ...` so configs remain portable across machines.
-
-TOML files use quoted strings and grouped module sections. JSONC files use 4-space indentation and may include comments where supported.
-
-Cross-platform aliases (such as `update` and `search`) are defined in each `os_specific/*.fish` file separately. When adding a new cross-platform alias, add it to all three files — `mac.fish`, `arch.fish`, and `debian.fish` — using the appropriate package-manager command for each OS. Use `if type -q <tool>` guards where needed so the alias degrades gracefully.
-
-## Testing Guidelines
-
-There is no formal automated test suite. Validate changed configs with the relevant tool before committing. For Fish changes, run `fish -n` and open a new Fish shell or `exec fish` to verify aliases, PATH changes, and startup behavior. For visual prompt or Fastfetch changes, test in a terminal that supports Nerd Font glyphs.
-
-## Commit & Pull Request Guidelines
-
-Recent commits use short, imperative messages such as `adds starship`, `add zoxide`, and `fix iterm vars`. Keep messages concise and focused on one config change.
-
-Pull requests should describe the affected package, list validation commands run, and call out machine-specific assumptions such as macOS paths, LAN host aliases, or required tools like `eza`, `zoxide`, `mise`, `fastfetch`, `starship`, `zellij`, `bat`, and `ctop`.
-
-## Documentation Maintenance
-**CRITICAL RULE:** Whenever you add a new tool, package, script, or make architectural changes to this repository, you **MUST** ensure that both `AGENTS.md` and `README.md` are simultaneously updated to document the new work. Never leave the documentation out of sync with the actual repository state.
-
-**KEYD RULE:** The Linux `keyd` keyboard daemon has highly complex behaviors (overloads, inheritance, custom layers, tap vs hold injections). If you ever modify `keyd/etc/keyd/default.conf`, you **MUST** update `keyd.md` to perfectly explain the technical rationale behind the change.
+After syntax validation, terminal, compositor, prompt, glyph, and keyboard behavior still require interactive testing on the target OS. Apply a keyd profile explicitly with `sudo ./scripts/update-keyd.sh kde` or `sudo ./scripts/update-keyd.sh niri`; omitting the profile auto-detects the desktop and defaults to KDE if detection fails.

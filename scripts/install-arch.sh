@@ -126,7 +126,7 @@ backup_stow_conflicts() {
   local target
   local backup_target
 
-  for package in fish fastfetch starship wezterm zellij mise; do
+  for package in fish fastfetch starship wezterm zellij niri mise; do
     while IFS= read -r -d '' source; do
       relative_path="${source#"$DOTFILES_DIR/$package/"}"
       target="$HOME/$relative_path"
@@ -160,7 +160,7 @@ stow_configs() {
 
   log "Stowing dotfile packages"
   cd "$DOTFILES_DIR"
-  stow -t "$HOME" fish fastfetch starship wezterm zellij mise
+  stow -t "$HOME" fish fastfetch starship wezterm zellij niri mise
 }
 
 set_default_shell() {
@@ -191,9 +191,7 @@ install_mise_runtimes() {
 setup_keyd() {
   if has keyd; then
     log "Configuring keyd system daemon (requires sudo)"
-    run_sudo mkdir -p /etc/keyd
-    run_sudo cp "$DOTFILES_DIR/keyd/etc/keyd/default.conf" /etc/keyd/default.conf
-    run_sudo systemctl enable --now keyd
+    run_sudo "$DOTFILES_DIR/scripts/update-keyd.sh"
   fi
 }
 
