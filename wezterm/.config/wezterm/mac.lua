@@ -2,6 +2,7 @@ local wezterm = require 'wezterm'
 
 return {
   apply = function(config)
+  config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
     -- ====================================================================
     -- Keybindings (macOS native)
     -- ====================================================================
