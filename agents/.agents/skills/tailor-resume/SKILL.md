@@ -19,9 +19,9 @@ Automates tailoring a LaTeX resume for a target job posting URL using the Crawl4
 ## Workflow Execution Steps
 
 Before starting, record the absolute directory from which the user invoked the
-skill as `INVOCATION_DIR`. Use this original directory for the repository check
-at the end of the workflow, even if later commands operate in `/tmp` or the
-output directory.
+skill as `INVOCATION_DIR`. Use this original directory for base-resume source
+selection and the repository check at the end of the workflow, even if later
+commands operate in `/tmp` or the output directory.
 
 ### Step 1: Scrape Job Posting Details (Crawl4AI)
 
@@ -33,17 +33,41 @@ it available at the following installed path:
 python3 ~/.agents/skills/tailor-resume/resources/tailor-resume.py "<JOB_URL>" --scrape-only
 ```
 
-### Step 2: Fetch the Private Base Resume from GitHub
+### Step 2: Select the Base Resume Source
 
-Confirm that GitHub CLI is installed and authenticated:
+First, determine whether `INVOCATION_DIR` is inside the configured base resume
+repository:
+
+```bash
+REPO_ROOT="$(git -C "$INVOCATION_DIR" rev-parse --show-toplevel 2>/dev/null || true)"
+if test -n "$REPO_ROOT"; then
+  REMOTE_URL="$(git -C "$REPO_ROOT" remote get-url origin 2>/dev/null || true)"
+fi
+```
+
+Normalize GitHub SSH and HTTPS origins, including an optional `.git` suffix, to
+the `owner/repository` form. Compare the result case-insensitively with
+`${BASE_RESUME_REPO:-ajyey/resume}`.
+
+If they match and `$REPO_ROOT/${BASE_RESUME_PATH:-resume.tex}` exists, use that
+local file as the source of truth. This must include any uncommitted local edits.
+Snapshot it to `/tmp/base_resume.tex` before tailoring so later changes can be
+compared safely:
+
+```bash
+cp "$REPO_ROOT/${BASE_RESUME_PATH:-resume.tex}" /tmp/base_resume.tex
+```
+
+Do not require GitHub CLI or fetch from GitHub when the local base resume is
+available. Otherwise, confirm that GitHub CLI is installed and authenticated:
 
 ```bash
 command -v gh
 gh auth status
 ```
 
-Fetch `resume.tex` from the private `ajyey/resume` repository and save the raw
-LaTeX to a temporary working file:
+Then fetch `resume.tex` from the private `ajyey/resume` repository and save the
+raw LaTeX to the same temporary working file:
 
 ```bash
 python3 ~/.agents/skills/tailor-resume/resources/tailor-resume.py --fetch-base-only > /tmp/base_resume.tex
@@ -53,14 +77,15 @@ The helper defaults to repository `ajyey/resume`, ref `master`, and path
 `resume.tex`. Override these with `--base-resume-repo`, `--base-resume-ref`, and
 `--base-resume-path`, or the corresponding `BASE_RESUME_*` environment variables.
 
-Read `/tmp/base_resume.tex` as the base document for tailoring. Never print GitHub
-credentials or include them in generated files.
+Read `/tmp/base_resume.tex` as the base document for tailoring. Record whether
+the source was local or fetched. Never print GitHub credentials or include them
+in generated files.
 
 ### Step 3: LLM Resume Tailoring
 
 Act as an expert technical resume writer and ATS optimization specialist. Treat
-the fetched resume as the source of truth and the scraped job description as the
-target. Tailor the resume without changing its underlying facts.
+the selected base resume as the source of truth and the scraped job description
+as the target. Tailor the resume without changing its underlying facts.
 
 #### Non-Negotiable Truthfulness Rules
 
@@ -177,21 +202,9 @@ python3 ~/.agents/skills/tailor-resume/resources/tailor-resume.py \
 
 ### Step 6: Offer to Update the Base Resume Repository
 
-After tailoring and compilation succeed, determine whether `INVOCATION_DIR` is
-inside the configured base resume repository:
-
-```bash
-REPO_ROOT="$(git -C "$INVOCATION_DIR" rev-parse --show-toplevel 2>/dev/null || true)"
-if test -n "$REPO_ROOT"; then
-  REMOTE_URL="$(git -C "$REPO_ROOT" remote get-url origin 2>/dev/null || true)"
-fi
-```
-
-Normalize GitHub SSH and HTTPS origins, including an optional `.git` suffix, to
-the `owner/repository` form. Compare the result case-insensitively with
-`${BASE_RESUME_REPO:-ajyey/resume}`. Do not prompt when the invocation directory
-is not in a Git worktree, has no recognizable GitHub origin, or identifies a
-different repository.
+After tailoring and compilation succeed, use the repository identity determined
+in Step 2. Do not prompt when the invocation directory is not in a Git worktree,
+has no recognizable GitHub origin, or identifies a different repository.
 
 When the repositories match, confirm that
 `$REPO_ROOT/${BASE_RESUME_PATH:-resume.tex}` exists. Then prompt the user:
@@ -203,7 +216,7 @@ When the repositories match, confirm that
 If the user declines, leave the base resume unchanged. If the user accepts:
 
 - Re-read the local base resume immediately before editing it.
-- Compare the fetched base, tailored artifact, and current local base. Apply the
+- Compare the base snapshot, tailored artifact, and current local base. Apply the
   tailored content changes as a minimal patch rather than blindly copying the
   entire generated file.
 - Preserve unrelated local changes. If local changes overlap the tailored
