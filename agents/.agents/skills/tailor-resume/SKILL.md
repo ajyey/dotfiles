@@ -199,6 +199,23 @@ Save the generated LaTeX code to
 For example, a Linear resume is written under
 `$INVOCATION_DIR/tailored-resumes/linear/` by default.
 
+Before saving, add a short LaTeX comment block near the top of the tailored
+`.tex`, after any original introductory comments and before `\documentclass`.
+Include the exact job posting URL supplied by the user, the inferred company and
+position, the same UTC timestamp used in the artifact name, and a concise summary
+of the final content changes. Prefix every line with `%` so the block cannot
+affect compilation. Keep the URL on one line and use additional `% Changes:`
+lines when the summary needs to wrap. For example:
+
+```tex
+% Tailored resume metadata
+% Job URL: https://example.com/jobs/123
+% Target: Example Company - Staff Software Engineer
+% Generated: 20260723T041500Z
+% Changes: Prioritized platform architecture and technical leadership.
+% Changes: Removed less relevant frontend bullets and reordered skills.
+```
+
 Check for `pdflatex` on `PATH`. On macOS, also check MacTeX's standard path:
 
 ```bash
@@ -227,10 +244,22 @@ then recompile and inspect it again. These revisions count toward the five total
 rewrite passes. Stop when the PDF is one page or when further reduction would
 damage truthfulness, readability, or essential career context.
 
+After the final timestamped PDF passes inspection, create a second, identical PDF
+in the same company directory with a stable recruiter-friendly name:
+
+```bash
+cp "$OUTPUT_DIR/$ARTIFACT_BASENAME.pdf" "$OUTPUT_DIR/Andrew-Leonard-Resume.pdf"
+```
+
+Keep the timestamped PDF as the archival artifact. The stable filename represents
+the latest tailored resume for that company and may be overwritten by a later
+run. Do not create a second `.tex` file.
+
 ### Step 5: Deliver Output to User
 
-- Provide file links to the timestamped `.tex` and `.pdf` using their resolved
-  absolute paths under `$OUTPUT_DIR`.
+- Provide file links to the timestamped `.tex`, timestamped `.pdf`, and
+  `Andrew-Leonard-Resume.pdf` using their resolved absolute paths under
+  `$OUTPUT_DIR`.
 - Report the initial and updated ATS estimates, strongest keyword matches, and
   important remaining gaps separately from the LaTeX artifact.
 - Summarize the resume sections, bullet points, and skills changed, plus any
@@ -255,6 +284,8 @@ If the user declines, leave the base resume unchanged. If the user accepts:
 - Compare the base snapshot, tailored artifact, and current local base. Apply the
   tailored content changes as a minimal patch rather than blindly copying the
   entire generated file.
+- Do not copy the tailored artifact's metadata comment block into the base resume
+  unless the user explicitly requests it.
 - Preserve unrelated local changes. If local changes overlap the tailored
   sections, show the conflict and ask how to proceed before editing those lines.
 - Compile the updated local base resume with its repository's documented build
