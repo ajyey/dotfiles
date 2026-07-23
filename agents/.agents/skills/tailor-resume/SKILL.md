@@ -18,6 +18,11 @@ Automates tailoring a LaTeX resume for a target job posting URL using the Crawl4
 
 ## Workflow Execution Steps
 
+Before starting, record the absolute directory from which the user invoked the
+skill as `INVOCATION_DIR`. Use this original directory for the repository check
+at the end of the workflow, even if later commands operate in `/tmp` or the
+output directory.
+
 ### Step 1: Scrape Job Posting Details (Crawl4AI)
 
 Run the helper bundled with this skill. Its repository source is
@@ -169,3 +174,42 @@ python3 ~/.agents/skills/tailor-resume/resources/tailor-resume.py \
   important remaining gaps separately from the LaTeX artifact.
 - Summarize the resume sections, bullet points, and skills changed, plus any
   iteration notes or unanswered evidence questions.
+
+### Step 6: Offer to Update the Base Resume Repository
+
+After tailoring and compilation succeed, determine whether `INVOCATION_DIR` is
+inside the configured base resume repository:
+
+```bash
+REPO_ROOT="$(git -C "$INVOCATION_DIR" rev-parse --show-toplevel 2>/dev/null || true)"
+if test -n "$REPO_ROOT"; then
+  REMOTE_URL="$(git -C "$REPO_ROOT" remote get-url origin 2>/dev/null || true)"
+fi
+```
+
+Normalize GitHub SSH and HTTPS origins, including an optional `.git` suffix, to
+the `owner/repository` form. Compare the result case-insensitively with
+`${BASE_RESUME_REPO:-ajyey/resume}`. Do not prompt when the invocation directory
+is not in a Git worktree, has no recognizable GitHub origin, or identifies a
+different repository.
+
+When the repositories match, confirm that
+`$REPO_ROOT/${BASE_RESUME_PATH:-resume.tex}` exists. Then prompt the user:
+
+> Tailoring is complete and this was run from the base resume repository. Do
+> you want to update `<base-resume-path>` with the changes made while tailoring?
+> I will show the diff and will not commit or push it.
+
+If the user declines, leave the base resume unchanged. If the user accepts:
+
+- Re-read the local base resume immediately before editing it.
+- Compare the fetched base, tailored artifact, and current local base. Apply the
+  tailored content changes as a minimal patch rather than blindly copying the
+  entire generated file.
+- Preserve unrelated local changes. If local changes overlap the tailored
+  sections, show the conflict and ask how to proceed before editing those lines.
+- Compile the updated local base resume with its repository's documented build
+  command when one exists; otherwise compile it with the bundled helper.
+- Show the resulting `git diff` for the base resume path and report compilation
+  status.
+- Never commit or push the base resume unless the user explicitly asks.
