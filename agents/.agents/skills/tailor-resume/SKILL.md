@@ -187,7 +187,7 @@ slugify() {
 
 COMPANY_SLUG="$(slugify "$COMPANY_NAME")"
 POSITION_SLUG="$(slugify "$POSITION_TITLE")"
-OUTPUT_ROOT="${TAILORED_RESUME_OUTPUT_DIR:-$HOME/Documents/tailored-resumes}"
+OUTPUT_ROOT="${TAILORED_RESUME_OUTPUT_DIR:-$INVOCATION_DIR/tailored-resumes}"
 OUTPUT_DIR="$OUTPUT_ROOT/${COMPANY_SLUG:-unknown-company}"
 mkdir -p "$OUTPUT_DIR"
 TIMESTAMP="$(date -u '+%Y%m%dT%H%M%SZ')"
@@ -197,7 +197,7 @@ ARTIFACT_BASENAME="tailored-resume-${COMPANY_SLUG:-unknown-company}-${POSITION_S
 Save the generated LaTeX code to
 `$OUTPUT_DIR/$ARTIFACT_BASENAME.tex`. Use the exact same basename for the PDF.
 For example, a Linear resume is written under
-`~/Documents/tailored-resumes/linear/` by default.
+`$INVOCATION_DIR/tailored-resumes/linear/` by default.
 
 Check for `pdflatex` on `PATH`. On macOS, also check MacTeX's standard path:
 
