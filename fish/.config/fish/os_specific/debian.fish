@@ -32,9 +32,9 @@ alias uninstall="sudo apt purge"
 function texwatch --description "Watch .tex file for changes and auto-compile PDF with latexmk"
     set -l tex $argv[1]
     if test -z "$tex"
-        set -l tex_files (path filter -f *.tex 2>/dev/null)
+        set -l tex_files (path filter -f -- *.tex 2>/dev/null)
         if test (count $tex_files) -gt 0
-            set tex (ls -t $tex_files 2>/dev/null | head -n1)
+            set tex (command ls -t -- $tex_files 2>/dev/null | head -n1)
         end
     end
 
