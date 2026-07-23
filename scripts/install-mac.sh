@@ -14,7 +14,7 @@ Usage: scripts/install-mac.sh [options]
 Install dependencies for this dotfiles repo on macOS.
 
 Options:
-  --stow               Stow fish, fastfetch, and starship configs after install
+  --stow               Stow supported configs and shared agent skills after install
   --set-default-shell  Change the user's login shell to fish
   --brewfile           Install packages from Brewfile instead of defaults
   --skip-brew          Skip installing Homebrew packages (useful for testing)
@@ -113,7 +113,7 @@ backup_stow_conflicts() {
   local target
   local backup_target
 
-  for package in fish fastfetch starship wezterm zellij mise; do
+  for package in fish fastfetch starship wezterm zellij mise agents; do
     while IFS= read -r -d '' source; do
       relative_path="${source#"$DOTFILES_DIR/$package/"}"
       target="$HOME/$relative_path"
@@ -147,7 +147,7 @@ stow_configs() {
 
   log "Stowing dotfile packages"
   cd "$DOTFILES_DIR"
-  stow -t "$HOME" fish fastfetch starship wezterm zellij mise
+  stow -t "$HOME" fish fastfetch starship wezterm zellij mise agents
 }
 
 set_default_shell() {
