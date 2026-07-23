@@ -1,6 +1,6 @@
 # Dotfiles Managed with GNU Stow
 
-This repo manages dotfiles with [GNU Stow](https://www.gnu.org/software/stow/) by symlinking package directories into `$HOME`. It currently tracks Fish shell, Fastfetch, Starship, WezTerm, Zellij, Niri, and global Mise configuration.
+This repo manages dotfiles with [GNU Stow](https://www.gnu.org/software/stow/) by symlinking package directories into `$HOME`. It currently tracks Fish shell, Fastfetch, Starship, WezTerm, Zellij, Niri, global Mise configuration, and shared LLM agent skills.
 
 ## Requirements
 
@@ -14,6 +14,10 @@ The install scripts set up GNU Stow, Fish, Fisher plugins, Fastfetch, Starship, 
 
 ```bash
 ~/.dotfiles/
+├── agents/
+│   └── .agents/skills/
+│       ├── README.md
+│       └── tailor-resume/SKILL.md
 ├── fish/
 │   └── .config/fish/
 │       ├── config.fish
@@ -40,6 +44,19 @@ The install scripts set up GNU Stow, Fish, Fisher plugins, Fastfetch, Starship, 
 ```
 
 Each top-level directory is a Stow package whose internal paths mirror `$HOME`.
+
+## Agent Skills
+
+Shared LLM agent skills live under `agents/.agents/skills/` and are Stowed to `~/.agents/skills` on macOS, Debian, and Arch/CachyOS. Add each skill in its own directory with `SKILL.md` as its entrypoint:
+
+```text
+agents/.agents/skills/
+└── example-skill/
+    ├── SKILL.md
+    └── resources/
+```
+
+Running any installer with `--stow` links all tracked skills. To apply only this package manually, run `stow -t "$HOME" agents` from the repository root.
 
 ## macOS Setup
 
