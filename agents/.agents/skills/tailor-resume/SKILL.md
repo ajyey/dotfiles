@@ -130,6 +130,11 @@ Rewrite only these sections unless the user requests otherwise:
 
 Apply these constraints:
 
+- Target a one-page resume whenever possible. Select content by relevance to the
+  job description rather than trying to preserve every base-resume detail.
+- Keep the strongest achievements that provide truthful evidence for the job's
+  responsibilities and required skills. Remove or condense unrelated bullets,
+  projects, and skills before reducing relevant evidence.
 - Keep each role to at most five or six bullets.
 - Keep exactly two bullets per project.
 - Use JD terminology wherever it truthfully describes existing experience.
@@ -146,13 +151,19 @@ Preserve the LaTeX document structure while editing its content:
   `\textbackslash{}`, `\{`, and `\}` when those characters are literal text.
 - **Artifact format:** Write a complete raw LaTeX document without Markdown fences.
 
+Do not force the resume onto one page by shrinking fonts, margins, or spacing, or
+by otherwise changing the preserved layout. Do not remove essential chronology,
+job titles, employers, dates, or education solely to meet the page target. If a
+clear and truthful one-page version is not possible, keep the shortest readable
+version and explain why it exceeds one page.
+
 #### Rescore and Iterate
 
 After each rewrite:
 
 - Recalculate the estimated ATS score.
 - Record a concise list of changes.
-- Iterate up to three total rewrite passes or stop early once the score reaches 95.
+- Iterate up to five total rewrite passes or stop early once the score reaches 95.
 - Stop if another pass would require unsupported evidence or make the resume less
   truthful, readable, or technically accurate.
 - If the score cannot improve because evidence is missing, identify the exact
@@ -160,14 +171,33 @@ After each rewrite:
 
 ### Step 4: Host System LaTeX PDF Compilation
 
-Use a portable output directory rather than a Linux-specific home path:
+Infer the company name and position title from the scraped job description.
+Create concise, lowercase ASCII slugs by replacing each run of non-alphanumeric
+characters with one hyphen and trimming leading or trailing hyphens. Use
+`unknown-company` or `unknown-position` only when the corresponding value cannot
+be inferred. Create a company-specific directory under the portable output root,
+then build a shared basename with a UTC timestamp so repeated runs do not
+overwrite earlier artifacts:
 
 ```bash
-OUTPUT_DIR="${TAILORED_RESUME_OUTPUT_DIR:-$HOME/Downloads/tailored-resume}"
+slugify() {
+  printf '%s' "$1" | LC_ALL=C tr '[:upper:]' '[:lower:]' |
+    sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//'
+}
+
+COMPANY_SLUG="$(slugify "$COMPANY_NAME")"
+POSITION_SLUG="$(slugify "$POSITION_TITLE")"
+OUTPUT_ROOT="${TAILORED_RESUME_OUTPUT_DIR:-$HOME/Documents/tailored-resumes}"
+OUTPUT_DIR="$OUTPUT_ROOT/${COMPANY_SLUG:-unknown-company}"
 mkdir -p "$OUTPUT_DIR"
+TIMESTAMP="$(date -u '+%Y%m%dT%H%M%SZ')"
+ARTIFACT_BASENAME="tailored-resume-${COMPANY_SLUG:-unknown-company}-${POSITION_SLUG:-unknown-position}-${TIMESTAMP}"
 ```
 
-Save the generated LaTeX code to `$OUTPUT_DIR/Tailored_Resume.tex`.
+Save the generated LaTeX code to
+`$OUTPUT_DIR/$ARTIFACT_BASENAME.tex`. Use the exact same basename for the PDF.
+For example, a Linear resume is written under
+`~/Documents/tailored-resumes/linear/` by default.
 
 Check for `pdflatex` on `PATH`. On macOS, also check MacTeX's standard path:
 
@@ -187,13 +217,19 @@ Compile through the bundled helper, which runs `pdflatex` twice with
 
 ```bash
 python3 ~/.agents/skills/tailor-resume/resources/tailor-resume.py \
-  --compile-tex "$OUTPUT_DIR/Tailored_Resume.tex" \
-  --output-pdf "$OUTPUT_DIR/Tailored_Resume.pdf"
+  --compile-tex "$OUTPUT_DIR/$ARTIFACT_BASENAME.tex" \
+  --output-pdf "$OUTPUT_DIR/$ARTIFACT_BASENAME.pdf"
 ```
+
+Inspect the compiled PDF's page count. If it exceeds one page, perform another
+content-selection pass that removes or condenses the least JD-relevant material,
+then recompile and inspect it again. These revisions count toward the five total
+rewrite passes. Stop when the PDF is one page or when further reduction would
+damage truthfulness, readability, or essential career context.
 
 ### Step 5: Deliver Output to User
 
-- Provide file links to the generated `.tex` and `.pdf` using their resolved
+- Provide file links to the timestamped `.tex` and `.pdf` using their resolved
   absolute paths under `$OUTPUT_DIR`.
 - Report the initial and updated ATS estimates, strongest keyword matches, and
   important remaining gaps separately from the LaTeX artifact.
