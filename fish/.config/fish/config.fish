@@ -117,6 +117,23 @@ function gc
     git commit -m "$argv"
 end
 
+# LaTeX Live Watch Function - Usage: texwatch [file.tex]
+# Continuously watches a .tex file for changes and auto-compiles to PDF using latexmk.
+function texwatch --description "Watch .tex file for changes and auto-compile PDF with latexmk"
+    set -l tex $argv[1]
+    if test -z "$tex"
+        set tex (ls -t *.tex 2>/dev/null | head -n1)
+    end
+
+    if test -z "$tex"
+        echo "No .tex file found in the current directory."
+        return 1
+    end
+
+    echo "Watching: $tex"
+    latexmk -pdf -pvc -interaction=nonstopmode -halt-on-error "$tex"
+end
+
 # ====================================================================
 # Tool Configurations
 # ====================================================================
