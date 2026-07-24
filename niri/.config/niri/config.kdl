@@ -655,7 +655,11 @@ binds {
     Alt+Grave hotkey-overlay-title="Command + `: Next Window in Column" { focus-window-down-or-top; }
 
     // Hyper: applications and shell surfaces.
-    Mod+Ctrl+Alt+Shift+Return repeat=false hotkey-overlay-title="Hyper + Enter: WezTerm" { spawn "wezterm"; }
+    // If WezTerm is already focused, open a new window.
+    // Otherwise focus an existing WezTerm window, or launch one if none exists.
+    Mod+Ctrl+Alt+Shift+Return repeat=false hotkey-overlay-title="Hyper + Enter: WezTerm" {
+      spawn-sh "app_id=org.wezfurlong.wezterm; focused=$(niri msg --json focused-window | jq -r '.app_id // empty'); if [ \"$focused\" = \"$app_id\" ]; then wezterm & else id=$(niri msg --json windows | jq -r --arg id \"$app_id\" '[.[] | select(.app_id==$id)] | first | .id // empty'); [ -n \"$id\" ] && niri msg action focus-window --id \"$id\" || wezterm & fi"
+    }
     
 
     Mod+Ctrl+Alt+Shift+E repeat=false allow-inhibiting=false hotkey-overlay-title="Hyper + E: Vesktop" { spawn "vesktop"; }

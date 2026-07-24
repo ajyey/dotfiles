@@ -42,7 +42,7 @@ Hyper already contains Shift, so it cannot have a separate Hyper+Shift tier. Dis
 
 | Shortcut | Action | Shortcut | Action |
 |---|---|---|---|
-| Hyper+Enter | WezTerm | Hyper+Space | Vicinae |
+| Hyper+Enter | WezTerm (focus, launch, or new window if focused) | Hyper+Space | Vicinae |
 | Hyper+Tab (`F24`) | Previous workspace toggle | Hyper+O | Niri overview |
 | Hyper+C/V | Control Center / clipboard | Hyper+, | Noctalia settings |
 | Hyper+L/Q | Lock / close window | Hyper+Left/Right | Focus column, then adjacent monitor |
