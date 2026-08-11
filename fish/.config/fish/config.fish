@@ -59,6 +59,12 @@ end
 # Shell Management
 alias reload="exec fish"                    # Reload Fish shell
 
+# Desktop Session Management (SDDM Display Manager)
+# Toggles the default desktop session and autologin target in /etc/sddm.conf
+# between KDE Plasma (plasma) and Niri / Noctalia (niri).
+alias use-plasma="sudo sed -i -e 's/Session=.*/Session=plasma/' -e 's/DefaultSession=.*/DefaultSession=plasma/' /etc/sddm.conf; and echo 'Default session set to KDE Plasma'"
+alias use-niri="sudo sed -i -e 's/Session=.*/Session=niri/' -e 's/DefaultSession=.*/DefaultSession=niri/' /etc/sddm.conf; and echo 'Default session set to Niri'"
+
 # System Update
 # (Update aliases are configured in os_specific files)
 
