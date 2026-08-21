@@ -222,13 +222,13 @@ end
 # 
 # To bypass this auto-start and get a raw shell, inject ZELLIJ=1:
 # ssh -t user@host "env ZELLIJ=1 fish"
-if status is-interactive
-    and set -q SSH_CONNECTION
-    and type -q zellij
-    # Prevent infinite loops when Zellij spawns inner fish shells
-    if not set -q ZELLIJ
-        exec zellij attach -c ssh
-    end
-end
+# if status is-interactive
+#     and set -q SSH_CONNECTION
+#     and type -q zellij
+#     # Prevent infinite loops when Zellij spawns inner fish shells
+#     if not set -q ZELLIJ
+#         exec zellij attach -c ssh
+#     end
+# end
 
 
